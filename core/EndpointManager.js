@@ -1,6 +1,14 @@
+/*
+
+*/
+
 class EndpointManager {
-    handle(req, res) {
-        return res.send(true);
+    constructor() {
+        return false;
+    }
+
+    handle(endpoint, req, res, data) {
+
     }
 }
 

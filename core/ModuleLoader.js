@@ -8,14 +8,14 @@ const Collection = require("./Collection");
 class ModuleLoader {
     contructor(app) {
         this.app = app;
-        this.modules = new Collection();
+        this.modules = new Map();
     }
 
     loadModules(dir) {
-        const modules = fs.readdirSync(path.join(__dirname, "../", dir));
+        const modules = fs.readdirSync(path.join(__dirname, "..", dir));
 
         for (const item of modules) {
-            const location = path.join(__dirname, "../", dir, item, "main.js");
+            const location = path.join(__dirname, "..", dir, item, "main.js");
             if (!fs.existsSync(location)) continue;
 
             const Module = require(location);

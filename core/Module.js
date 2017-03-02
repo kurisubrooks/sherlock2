@@ -1,12 +1,10 @@
-const config = require("../config");
-const keychain = require("../keychain.json");
+const config = require("../config.json");
 const Logger = require("./Logger");
 const { error, toUpper } = require("./Util");
 
 class Module {
-    constructor(client, data = {}) {
+    constructor(data = {}) {
         this.config = config;
-        this.keychain = keychain;
 
         this.name = data.name;
         this.description = data.description;
