@@ -1,0 +1,17 @@
+{
+  "name": "sherlock",
+  "version": "2.0.0",
+  "main": "index.js",
+  "author": "kurisubrooks",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "description": "",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "chalk": "^1.1.3",
+    "express": "^4.14.1",
+    "moment": "^2.17.1"
+  }
+}
