@@ -1,6 +1,6 @@
 class EndpointManager {
     handle(req, res) {
-        return true;
+        return res.send(true);
     }
 }
 

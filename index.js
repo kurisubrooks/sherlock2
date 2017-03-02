@@ -21,5 +21,5 @@ const http = require("http").createServer(app);
 const loader = new ModuleLoader(app).loadModules("./modules/"); // eslint-disable-line no-unused-vars
 const request = new RequestHandler(app); // eslint-disable-line no-unused-vars
 
-http.listen(80, Logger.info("Core", "Server Started on Port 80"));
-// https.listen(443, Logger.info("Core", "Server Started on Port 443"));
+http.listen(80, Logger.info("Core", "Listening on Port 80"));
+// https.listen(443, Logger.info("Core", "Listening on Port 443"));
