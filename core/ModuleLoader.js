@@ -6,9 +6,9 @@ const Logger = require("./Logger");
 const Collection = require("./Collection");
 
 class ModuleLoader {
-    contructor(app) {
+    constructor(app) {
         this.app = app;
-        this.modules = new Map();
+        this.modules = new Collection();
     }
 
     loadModules(dir) {
