@@ -6,9 +6,8 @@ const Logger = require("./Util/Logger");
 const Collection = require("./Util/Collection");
 
 class EndpointHandler {
-    constructor(express, app) {
+    constructor(app) {
         this.app = app;
-        this.express = express;
         this.endpoints = new Collection();
         this.routes = new Collection();
     }

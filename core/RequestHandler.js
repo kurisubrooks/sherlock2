@@ -8,7 +8,7 @@ class RequestHandler {
         this.express = express;
         this.router = this.express.Router(); // eslint-disable-line new-cap
         this.app.use(this.router);
-        this.handler = new EndpointHandler(this.express, this.app);
+        this.handler = new EndpointHandler(this.app);
         this.handler.loadModules("endpoints");
         this.routes = this.handler.routes;
         this.handleRoutes();
