@@ -6,9 +6,11 @@ const Logger = require("./Util/Logger");
 const Collection = require("./Util/Collection");
 
 class EndpointHandler {
-    constructor(app) {
+    constructor(express, app) {
         this.app = app;
+        this.express = express;
         this.endpoints = new Collection();
+        this.routes = new Collection();
     }
 
     loadModules(dir) {
@@ -26,6 +28,7 @@ class EndpointHandler {
 
             Logger.info("Loaded", Util.toUpper(instance.name));
             this.endpoints.set(instance.name, instance);
+            this.routes.set(instance.route, instance);
         }
     }
 

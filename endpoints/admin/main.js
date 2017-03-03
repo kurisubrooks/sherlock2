@@ -5,7 +5,7 @@ class AdminEndpoint extends Endpoint {
         super({
             name: "admin",
             description: "administrative thing",
-            route: "/api/"
+            route: "/api/:endpoint"
         });
     }
 
