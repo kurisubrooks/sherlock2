@@ -1,6 +1,6 @@
-const Module = require("../../core/Module.js");
+const Endpoint = require("../../core/Endpoint");
 
-class AdminModule extends Module {
+class AdminModule extends Endpoint {
     constructor() {
         super({
             name: "admin",
@@ -9,7 +9,7 @@ class AdminModule extends Module {
     }
 
     async run(req, res, data) {
-        return data;
+        return res.send({ ok: true, data });
     }
 }
 

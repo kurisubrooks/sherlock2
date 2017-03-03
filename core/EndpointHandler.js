@@ -1,9 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 
-const Util = require("./Util");
-const Logger = require("./Logger");
-const Collection = require("./Collection");
+const Util = require("./Util/Util");
+const Logger = require("./Util/Logger");
+const Collection = require("./Util/Collection");
 
 class ModuleLoader {
     constructor(app) {
@@ -31,18 +31,8 @@ class ModuleLoader {
 
     runModule(endpoint, req, res, data) {
         const module = this.modules.get(endpoint);
+        if (!module) return res.status(404).send({ ok: false, error: "Missing Endpoint" });
         return module.run(req, res, data);
-    }
-
-    matchModule(mentioned, args) {
-        return args;
-        /*
-        const commandName = mentioned && args.length > 0
-            ? args.splice(0, 2)[1].toLowerCase()
-            : args.splice(0, 1)[0].slice(config.sign.length).toLowerCase();
-        const command = this.modules.get(commandName) || this.aliases.get(commandName);
-        return { command, commandName };
-        */
     }
 }
 

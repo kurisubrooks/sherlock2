@@ -9,8 +9,7 @@ const express = require("express");
 const bodyparser = require("body-parser");
 const app = express();
 
-const Logger = require("./core/Logger");
-const ModuleLoader = require("./core/ModuleLoader");
+const Logger = require("./core/Util/Logger");
 const RequestHandler = require("./core/RequestHandler");
 
 const key = fs.readFileSync(path.join(__dirname, "secure", "api.kurisubrooks.com.key"), "utf8");
@@ -22,9 +21,6 @@ app.use(bodyparser.urlencoded({ extended: false }));
 
 const http = require("http").createServer(app);
 const https = require("https").createServer(options, app);
-
-const loader = new ModuleLoader(app);
-loader.loadModules("./modules/");
 const request = new RequestHandler(app); // eslint-disable-line no-unused-vars
 
 http.listen(80, Logger.info("Core", "Listening on Port 80"));

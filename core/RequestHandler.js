@@ -1,12 +1,13 @@
 const config = require("../config.json");
-const Logger = require("./Logger");
-const EndpointManager = require("./EndpointManager");
+const Logger = require("./Util/Logger");
+const EndpointHandler = require("./EndpointHandler");
 
 class RequestHandler {
     constructor(app) {
         this.app = app;
         this.app.use(this.handle.bind(this));
-        this.manager = new EndpointManager();
+        this.handler = new EndpointHandler(app);
+        this.handler.loadModules("modules");
     }
 
     handle(req, res) {
@@ -20,7 +21,7 @@ class RequestHandler {
 
         res.set("Access-Control-Allow-Origin", "*");
         Logger.success("Router", log);
-        return this.manager.handle(route.endpoint, req, res, data);
+        return this.handler.runModule(route.endpoint, req, res, data);
     }
 
     route(url) {
