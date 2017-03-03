@@ -31,8 +31,8 @@ class RequestHandler {
         const ip = req.ip.replace("::ffff:", "");
         const url = req.url.split("?")[0];
         const endpoint = req.params.endpoint;
-        const params = req.method === "POST" ? req.body : req.query;
-        const data = Object.keys(params).length > 0 ? params : null;
+        const body = req.method === "POST" ? req.body : req.query;
+        const data = Object.keys(body).length > 0 ? body : null;
         const log = `${ip} ${url} ${data ? JSON.stringify(data) : ""}`;
 
         if (!endpoint || !this.handler.endpoints.get(endpoint)) {
