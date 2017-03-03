@@ -21,7 +21,7 @@ app.use(bodyparser.urlencoded({ extended: false }));
 
 const http = require("http").createServer(app);
 const https = require("https").createServer(options, app);
-const request = new RequestHandler(app); // eslint-disable-line no-unused-vars
+const request = new RequestHandler(express, app); // eslint-disable-line no-unused-vars
 
 http.listen(80, Logger.info("Core", "Listening on Port 80"));
 https.listen(443, Logger.info("Core", "Listening on Port 443"));

@@ -3,11 +3,13 @@ const Logger = require("./Util/Logger");
 const EndpointHandler = require("./EndpointHandler");
 
 class RequestHandler {
-    constructor(app) {
+    constructor(express, app) {
         this.app = app;
+        this.express = express;
+        this.router = this.express.Router(); // eslint-disable-line new-cap
         this.app.use(this.handle.bind(this));
         this.handler = new EndpointHandler(app);
-        this.handler.loadModules("modules");
+        this.handler.loadModules("endpoints");
     }
 
     handle(req, res) {
