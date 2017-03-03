@@ -4,7 +4,6 @@
 global.Promise = require("bluebird");
 const fs = require("fs");
 const path = require("path");
-
 const express = require("express");
 const bodyparser = require("body-parser");
 const app = express();
