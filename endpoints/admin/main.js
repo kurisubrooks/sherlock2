@@ -1,10 +1,11 @@
 const Endpoint = require("../../core/Endpoint");
 
-class AdminModule extends Endpoint {
+class AdminEndpoint extends Endpoint {
     constructor() {
         super({
             name: "admin",
-            description: "idfk"
+            description: "idfk",
+            route: "/api/"
         });
     }
 
@@ -13,4 +14,4 @@ class AdminModule extends Endpoint {
     }
 }
 
-module.exports = AdminModule;
+module.exports = AdminEndpoint;
