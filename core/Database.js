@@ -13,8 +13,8 @@ class Database {
 
     static get models() {
         return {
-            User: require("./Database/User"),
-            Data: require("./Database/Data")
+            User: require("./Database/User")
+            // Data: require("./Database/Data")
         };
     }
 
@@ -44,7 +44,7 @@ class Database {
         const user = await Database.models.User.findOne({ where: { token } });
         return user
             ? { ok: true, author: user.author }
-            : { ok: false, code: 500, error: "Unable to find Token in Database" };
+            : { ok: false, error: "Unable to Authenticate Token", input: token };
     }
 
     static generateToken() {
