@@ -29,7 +29,7 @@ class Database {
         if (!username) return { ok: false, error: "Missing Username" };
         if (!password) return { ok: false, error: "Missing Password" };
         const user = await Database.models.User.findOne({ where: { username } });
-        if (!user) return { ok: false, error: "Unable to find User in Database" };
+        if (!user) return { ok: false, error: "User does not exist" };
         return bcrypt.compareSync(password, user.hash)
             ? { ok: true, token: user.token }
             : { ok: false, error: "Incorrect Password" };
@@ -38,7 +38,8 @@ class Database {
     static async newUser(data) {
         if (!data) return { ok: false, error: "Missing Data" };
         if (!data.username) return { ok: false, error: "Missing Username" };
-
+        const check = await Database.models.User.findOne({ where: { username: data.username } });
+        if (check) return { ok: false, error: "Username already exists" };
         const token = Database.generateToken();
         const hash = bcrypt.hashSync(data.password, 10);
 
@@ -58,10 +59,10 @@ class Database {
 
     static async deleteUser(token) {
         if (!token) return { ok: false, error: "Missing Token" };
-        const found = await Database.models.User.findOne({ where: { token } });
-        if (!found) return { ok: false, error: "Unable to find User in Database" };
-        await found.destroy();
-        return { ok: true };
+        const user = await Database.models.User.findOne({ where: { token } });
+        if (!user) return { ok: false, error: "User does not exist" };
+        await user.destroy();
+        return { ok: true, username: user.username };
     }
 
     static async newApplication(data) {
@@ -71,7 +72,7 @@ class Database {
         if (!data.description) return { ok: false, error: "Missing Description" };
         if (!data.url) return { ok: false, error: "Missing URL" };
         const user = await Database.models.User.findOne({ where: { token: data.token } });
-        if (!user) return { ok: false, error: "Unable to find User in Database" };
+        if (!user) return { ok: false, error: "User does not exist" };
         const applications = JSON.parse(user.applications);
         applications.push({ name: data.name, description: data.description, url: data.url });
         await user.update({ applications: JSON.stringify(applications) });
