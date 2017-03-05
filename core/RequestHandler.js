@@ -34,7 +34,7 @@ class RequestHandler {
 
         const ip = req.ip.replace("::ffff:", "");
         const url = req.url.split("?")[0];
-        const endpoint = req.params.endpoint;
+        const endpoint = req.params.name;
         const auth = req.headers.authorization;
         const body = req.method === "GET" ? req.query : req.body;
         const data = Object.keys(body).length > 0 ? body : null;
