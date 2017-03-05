@@ -7,7 +7,7 @@ if (!args.token) return console.error("Missing --token");
 
 const generate = async () => {
     const user = await Database.deleteUser({ token: args.token });
-    return console.log(user);
+    return console.log(`Deleted ${user.username}`);
 };
 
 return generate();
