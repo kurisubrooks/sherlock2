@@ -8,8 +8,8 @@ if (!args.password) return console.error("Missing --password");
 
 const generate = async () => {
     const user = await Database.newUser({
-        username: args.username.toLowerCase(),
-        password: args.password
+        username: String(args.username),
+        password: String(args.password)
     });
 
     if (user.ok) return console.log(`User Created.\nUsername: ${user.username}\nToken: ${user.token}`);
