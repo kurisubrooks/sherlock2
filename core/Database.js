@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const crypto = require("crypto");
+const bcrypt = require("bcrypt");
 const path = require("path");
 
 const database = new Sequelize({
@@ -24,15 +25,27 @@ class Database {
             : { ok: false, error: "Unable to Authenticate Token", input: token };
     }
 
+    static async checkLogin(username, password) {
+        if (!username) return { ok: false, error: "Missing Username" };
+        if (!password) return { ok: false, error: "Missing Password" };
+        const user = await Database.models.User.findOne({ where: { username } });
+        if (!user) return { ok: false, error: "Unable to find User in Database" };
+        return bcrypt.compareSync(password, user.hash)
+            ? { ok: true, token: user.token }
+            : { ok: false, error: "Incorrect Password" };
+    }
+
     static async newUser(data) {
         if (!data) return { ok: false, error: "Missing Data" };
         if (!data.username) return { ok: false, error: "Missing Username" };
 
         const token = Database.generateToken();
+        const hash = bcrypt.hashSync(data.password, 10);
 
         await Database.models.User.create({
             token: token,
             username: data.username,
+            password: hash,
             applications: JSON.stringify([]),
             permissions: JSON.stringify({}),
             data: JSON.stringify({}),

@@ -7,6 +7,7 @@ const Users = Database.db.define("users", {
 
     token: Sequelize.STRING,
     username: Sequelize.STRING,
+    password: Sequelize.STRING,
     applications: Sequelize.STRING,
     permissions: Sequelize.STRING,
     data: Sequelize.STRING

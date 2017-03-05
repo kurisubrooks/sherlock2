@@ -9,6 +9,7 @@
   },
   "description": "",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "bluebird": "^3.4.7",
     "body-parser": "^1.17.0",
     "chalk": "^1.1.3",
