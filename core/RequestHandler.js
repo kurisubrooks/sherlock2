@@ -21,9 +21,6 @@ class RequestHandler {
             this.router.all(item.route, this.handle.bind(this));
         }
 
-        // Root
-        this.router.all("/", (req, res) => res.send("Hello"));
-
         // 404
         this.router.all("*", this.handle.bind(this));
     }
@@ -34,38 +31,38 @@ class RequestHandler {
 
         const ip = req.ip.replace("::ffff:", "");
         const url = req.url.split("?")[0];
-        const endpoint = req.params.name;
         const auth = req.headers.authorization;
         const body = req.method === "GET" ? req.query : req.body;
         const data = Object.keys(body).length > 0 ? body : null;
+        const route = this.routes.get(req.route.path);
 
-        if (!endpoint || !this.handler.endpoints.get(endpoint)) {
-            res.status(404).send({ ok: false, error: "Unknown Endpoint" });
-            return this.log(false, ip, url, data, null, "Unknown Endpoint");
+        if (!route) {
+            res.status(404).send({ ok: false, error: "Missing/Unknown Endpoint" });
+            return this.log(false, ip, url, data, null, "MISSING_ENDPOINT");
         }
 
         if (!auth) {
-            res.status(401).send({ ok: false, error: "Authorization Required" });
-            return this.log(false, ip, url, data, null, "Missing Token");
+            res.status(401).send({ ok: false, error: "Authentication Required" });
+            return this.log(false, ip, url, data, null, "NO_TOKEN");
         }
 
         const user = await Database.checkToken(auth);
 
         if (!user.ok) {
-            res.status(401).send(user);
-            return this.log(false, ip, url, data, user, "Bad Token");
+            res.status(401).send({ ok: false, error: user.error });
+            return this.log(false, ip, url, data, user, "BAD_TOKEN");
         }
 
         this.log(true, ip, url, data, user);
         res.set("Access-Control-Allow-Origin", "*");
-        return this.handler.runModule(endpoint, req, res, data);
+        return route.run(req, res, data);
     }
 
     log(ok, ip, url, data, auth, error) {
         const style = ok ? "success" : "error";
         const indicator = ok ? "✓" : "✘";
-        const user = auth && auth.ok ? auth.author : ip;
-        return Logger[style]("Router", `${user} ${indicator} ${url}${data ? ` ${JSON.stringify(data)}` : ""}${error ? ` (Reason: ${error})` : ""}`);
+        const user = auth && auth.ok ? auth.username : ip;
+        return Logger[style]("Router", `${user} ${indicator} ${url}${data ? ` ${JSON.stringify(data)}` : ""}${error ? ` - ${error}` : ""}`);
     }
 }
 

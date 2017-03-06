@@ -30,12 +30,6 @@ class EndpointHandler {
             this.routes.set(instance.route, instance);
         }
     }
-
-    runModule(endpoint, req, res, data) {
-        const route = this.endpoints.get(endpoint);
-        if (!route) return res.status(404).send({ ok: false, error: "Missing Endpoint" });
-        return route.run(req, res, data);
-    }
 }
 
 module.exports = EndpointHandler;
