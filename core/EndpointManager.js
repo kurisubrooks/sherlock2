@@ -11,18 +11,18 @@ class EndpointManager {
         this.routes = new Collection();
     }
 
-    loadModules(dir) {
-        const folders = fs.readdirSync(path.join(__dirname, "..", dir));
+    loadModules(directory) {
+        const folders = fs.readdirSync(path.join(__dirname, "..", directory));
 
-        for (const items of folders) {
-            const files = fs.readdirSync(path.join(__dirname, "..", dir, items));
+        for (const folder of folders) {
+            const location = path.join(__dirname, "..", directory, folder);
+            if (!fs.statSync(location).isDirectory()) continue;
+            const files = fs.readdirSync(location);
 
             for (const file of files) {
-                const item = path.join(__dirname, "..", dir, items, file);
-
                 if (path.extname(file) !== ".js") continue;
 
-                const Endpoint = require(item);
+                const Endpoint = require(path.join(__dirname, "..", directory, folder, file));
                 const instance = new Endpoint(this.app);
 
                 if (instance.disabled) continue;
