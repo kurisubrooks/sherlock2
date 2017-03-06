@@ -13,21 +13,26 @@ class EndpointManager {
     }
 
     loadModules(dir) {
-        const endpoints = fs.readdirSync(path.join(__dirname, "..", dir));
+        const folders = fs.readdirSync(path.join(__dirname, "..", dir));
 
-        for (const item of endpoints) {
-            const location = path.join(__dirname, "..", dir, item, "main.js");
-            if (!fs.existsSync(location)) continue;
+        for (const items of folders) {
+            const files = fs.readdirSync(path.join(__dirname, "..", dir, items));
 
-            const Endpoint = require(location);
-            const instance = new Endpoint(this.app);
+            for (const file of files) {
+                const item = path.join(__dirname, "..", dir, items, file);
 
-            if (instance.disabled) continue;
-            if (this.endpoints.has(instance.name)) throw new Error("Endpoints cannot have the same name");
+                if (path.extname(file) !== ".js") continue;
 
-            Logger.info("Loaded", Util.toUpper(instance.name));
-            this.endpoints.set(instance.name, instance);
-            this.routes.set(instance.route, instance);
+                const Endpoint = require(item);
+                const instance = new Endpoint(this.app);
+
+                if (instance.disabled) continue;
+                if (this.endpoints.has(instance.name)) throw new Error("Endpoints cannot have the same name");
+
+                Logger.info("Loaded", Util.toUpper(instance.name));
+                this.endpoints.set(instance.name, instance);
+                this.routes.set(instance.route, instance);
+            }
         }
     }
 }
