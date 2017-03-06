@@ -1,4 +1,5 @@
 const Endpoint = require("../../core/Endpoint");
+const path = require("path");
 
 class Panel extends Endpoint {
     constructor() {
@@ -9,8 +10,8 @@ class Panel extends Endpoint {
         });
     }
 
-    async run(req, res, data) {
-        return res.send({ ok: true });
+    async run(req, res) {
+        return res.sendFile(path.join(__dirname, "pages", "login.html"));
     }
 }
 
