@@ -5,7 +5,7 @@ const Util = require("./Util/Util");
 const Logger = require("./Util/Logger");
 const Collection = require("./Util/Collection");
 
-class EndpointHandler {
+class EndpointManager {
     constructor(app) {
         this.app = app;
         this.endpoints = new Collection();
@@ -32,4 +32,4 @@ class EndpointHandler {
     }
 }
 
-module.exports = EndpointHandler;
+module.exports = EndpointManager;
