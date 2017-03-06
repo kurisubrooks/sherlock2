@@ -39,17 +39,17 @@ class RequestHandler {
 
         if (!route) {
             res.status(404).send({ ok: false, error: "Missing/Unknown Endpoint" });
-            return this.log(false, ip, url, data, user, "MISSING_ENDPOINT");
+            return this.log(false, ip, url, data, user, "MISSING_ENDPOINT", 404);
         }
 
         if (route.token && !token) {
             res.status(401).send({ ok: false, error: "Authentication Required" });
-            return this.log(false, ip, url, data, user, "NO_TOKEN");
+            return this.log(false, ip, url, data, user, "NO_TOKEN", 401);
         }
 
         if (route.token && !user.ok) {
             res.status(401).send({ ok: false, error: user.error });
-            return this.log(false, ip, url, data, user, "BAD_TOKEN");
+            return this.log(false, ip, url, data, user, "BAD_TOKEN", 401);
         }
 
         this.log(true, ip, url, data, user);
@@ -57,11 +57,11 @@ class RequestHandler {
         return route.run(req, res, data);
     }
 
-    log(ok, ip, url, data, auth, error) {
+    log(ok, ip, url, data, auth, error, code) {
         const style = ok ? "success" : "error";
         const indicator = ok ? "✓" : "✘";
         const user = auth && auth.ok ? auth.username : ip;
-        return Logger[style]("Router", `${user} ${indicator} ${url}${data ? ` ${JSON.stringify(data)}` : ""}${error ? ` - ${error}` : ""}`);
+        return Logger[style]("Router", `${user} ${indicator} ${url}${data ? ` ${JSON.stringify(data)}` : ""}${error ? ` - ${error}` : ""}${code ? ` ${code}` : ""}`);
     }
 }
 
