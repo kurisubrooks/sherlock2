@@ -35,7 +35,7 @@ class RequestHandler {
         const body = req.method === "GET" ? req.query : req.body;
         const data = Object.keys(body).length > 0 ? body : null;
         const route = this.routes.get(req.route.path);
-        const user = token ? await Database.checkToken(token) : false;
+        const user = token ? await Database.checkToken(token) : { ok: false };
 
         if (!route) {
             res.status(404).send({ ok: false, error: "Missing/Unknown Endpoint" });
