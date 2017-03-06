@@ -8,7 +8,6 @@ const Collection = require("./Util/Collection");
 class EndpointManager {
     constructor(app) {
         this.app = app;
-        this.endpoints = new Collection();
         this.routes = new Collection();
     }
 
@@ -27,10 +26,9 @@ class EndpointManager {
                 const instance = new Endpoint(this.app);
 
                 if (instance.disabled) continue;
-                if (this.endpoints.has(instance.name)) throw new Error("Endpoints cannot have the same name");
+                if (this.routes.has(instance.route)) throw new Error("Endpoints cannot have the same route");
 
-                Logger.info("Loaded", Util.toUpper(instance.name));
-                this.endpoints.set(instance.name, instance);
+                Logger.info("Loaded", Util.toUpper(instance.route));
                 this.routes.set(instance.route, instance);
             }
         }
