@@ -42,14 +42,16 @@ class RequestHandler {
             return this.log(false, ip, url, data, user, "MISSING_ENDPOINT", 404);
         }
 
-        if (route.token && !token) {
-            res.status(401).send({ ok: false, error: "Authentication Required" });
-            return this.log(false, ip, url, data, user, "NO_TOKEN", 401);
-        }
+        if (route.token) {
+            if (!token) {
+                res.status(401).send({ ok: false, error: "Authentication Required" });
+                return this.log(false, ip, url, data, user, "NO_TOKEN", 401);
+            }
 
-        if (route.token && !user.ok) {
-            res.status(401).send({ ok: false, error: user.error });
-            return this.log(false, ip, url, data, user, "BAD_TOKEN", 401);
+            if (!user.ok) {
+                res.status(401).send({ ok: false, error: user.error });
+                return this.log(false, ip, url, data, user, "BAD_TOKEN", 401);
+            }
         }
 
         this.log(true, ip, url, data, user);
