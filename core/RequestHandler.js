@@ -63,7 +63,7 @@ class RequestHandler {
         const style = ok ? "success" : "error";
         const indicator = ok ? "✓" : "✘";
         const user = auth && auth.ok ? auth.username : ip;
-        return Logger[style]("Router", `${user} ${indicator} ${url}${data ? ` ${JSON.stringify(data)}` : ""}${error ? ` - ${error}` : ""}${code ? ` ${code}` : ""}`);
+        return Logger[style]("Router", `${user} ${url} ${data ? `${JSON.stringify(data)} ` : ""}${indicator} ${error ? error : ""}${code ? ` ${code}` : ""}`);
     }
 }
 
