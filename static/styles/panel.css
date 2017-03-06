@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
 *,
 *::before,
 *::after {
@@ -10,6 +12,10 @@ html, body {
     background: linear-gradient(135deg, #35394A 0%, #1F222E 100%);
     font-family: "Roboto", Helvetica, Arial, sans-serif;
     height: 100%;
+}
+
+input:focus {
+    outline: none;
 }
 
 .login {
@@ -71,6 +77,45 @@ html, body {
     background: rgba(255, 255, 255, 0.03);
     color: #DDD;
 }
-.login input:focus {
-    outline: none;
+
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.container .sidebar {
+    display: inline-flex;
+    height: 100%;
+    width: 260px;
+    background: #EEE;
+    box-shadow: 0px 4px 13px -2px rgba(0, 0, 0, 0.25);
+}
+
+.container .content {
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: 100%;
+    width: calc(100% - 260px);
+}
+
+.container .content .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    display: block;
+    height: 56px;
+    width: calc(100% - 260px);
+    background: #FFF;
+    border-bottom: 2px solid #EEE;
+}
+
+.container .content .main {
+    display: block;
+    flex-grow: 1;
+    padding-top: 56px;
+    background: #FAFAFA;
+    box-shadow: 0px 4px 13px -2px rgba(0, 0, 0, 0.25);
 }
