@@ -1,5 +1,7 @@
+const path = require("path");
 const express = require("express");
 const bodyparser = require("body-parser");
+const handlebars = require("express-handlebars");
 
 const config = require("../config.json");
 const Logger = require("./Util/Logger");
@@ -13,6 +15,9 @@ class RequestHandler {
         this.server = app;
         this.server.use(bodyparser.json());
         this.server.use(bodyparser.urlencoded({ extended: false }));
+        this.server.engine(".hbs", handlebars({ defaultLayout: "single", extname: ".hbs" }));
+        this.server.set("view engine", ".hbs");
+        this.server.use("/static", this.express.static(path.join(__dirname, "..", "static")));
         this.server.use(this.router);
         this.handler = new EndpointManager(this.server);
         this.handler.loadModules("endpoints");
