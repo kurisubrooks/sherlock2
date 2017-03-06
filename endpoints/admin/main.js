@@ -1,11 +1,13 @@
 const Endpoint = require("../../core/Endpoint");
 
-class AdminEndpoint extends Endpoint {
+class Admin extends Endpoint {
     constructor() {
         super({
             name: "admin",
             description: "administrative thing",
-            route: "/api/:name"
+            route: "/api/admin",
+            token: true,
+            admin: true
         });
     }
 
@@ -19,4 +21,4 @@ class AdminEndpoint extends Endpoint {
     }
 }
 
-module.exports = AdminEndpoint;
+module.exports = Admin;
