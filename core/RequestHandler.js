@@ -1,15 +1,20 @@
-const Database = require("./Database");
-const Logger = require("./Util/Logger");
+const express = require("express");
+const bodyparser = require("body-parser");
+
 const config = require("../config.json");
+const Logger = require("./Util/Logger");
+const Database = require("./Database");
 const EndpointManager = require("./EndpointManager");
 
 class RequestHandler {
-    constructor(express, app) {
-        this.app = app;
+    constructor(app) {
         this.express = express;
         this.router = this.express.Router(); // eslint-disable-line new-cap
-        this.app.use(this.router);
-        this.handler = new EndpointManager(this.app);
+        this.server = app;
+        this.server.use(bodyparser.json());
+        this.server.use(bodyparser.urlencoded({ extended: false }));
+        this.server.use(this.router);
+        this.handler = new EndpointManager(this.server);
         this.handler.loadModules("endpoints");
         this.routes = this.handler.routes;
         this.handleRoutes();
