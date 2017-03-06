@@ -31,24 +31,23 @@ class RequestHandler {
 
         const ip = req.ip.replace("::ffff:", "");
         const url = req.url.split("?")[0];
-        const auth = req.headers.authorization;
+        const token = req.headers.authorization;
         const body = req.method === "GET" ? req.query : req.body;
         const data = Object.keys(body).length > 0 ? body : null;
         const route = this.routes.get(req.route.path);
+        const user = token ? await Database.checkToken(token) : false;
 
         if (!route) {
             res.status(404).send({ ok: false, error: "Missing/Unknown Endpoint" });
-            return this.log(false, ip, url, data, null, "MISSING_ENDPOINT");
+            return this.log(false, ip, url, data, user, "MISSING_ENDPOINT");
         }
 
-        if (!auth) {
+        if (route.token && !token) {
             res.status(401).send({ ok: false, error: "Authentication Required" });
-            return this.log(false, ip, url, data, null, "NO_TOKEN");
+            return this.log(false, ip, url, data, user, "NO_TOKEN");
         }
 
-        const user = await Database.checkToken(auth);
-
-        if (!user.ok) {
+        if (route.token && !user.ok) {
             res.status(401).send({ ok: false, error: user.error });
             return this.log(false, ip, url, data, user, "BAD_TOKEN");
         }
