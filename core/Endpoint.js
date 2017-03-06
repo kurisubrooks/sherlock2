@@ -10,6 +10,8 @@ class Endpoint {
         this.description = data.description;
         this.disabled = data.disabled || false;
         this.route = data.route;
+        this.token = data.token;
+        this.admin = data.admin;
 
         if (!this.name) throw new Error("Endpoint Name is required");
         if (!this.description) throw new Error("Endpoint Description is required");
@@ -18,6 +20,8 @@ class Endpoint {
         if (typeof this.description !== "string") throw new TypeError("Endpoint description must be a string");
         if (typeof this.disabled !== "boolean") throw new TypeError("Endpoint disabled property must be a boolean");
         if (typeof this.route !== "string") throw new TypeError("Endpoint route property must be a string");
+        if (typeof this.token !== "boolean") throw new TypeError("Endpoint token property must be a boolean");
+        if (typeof this.admin !== "boolean") throw new TypeError("Endpoint admin property must be a boolean");
     }
 
     run() {
