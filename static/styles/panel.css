@@ -7,18 +7,64 @@
 html, body {
     margin: 0;
     padding: 0;
-    background: #EEE;
+    background: linear-gradient(135deg, #35394A 0%, #1F222E 100%);
     font-family: "Roboto", Helvetica, Arial, sans-serif;
     height: 100%;
 }
 
 .login {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    color: #AFB1BE;
+    padding: 50px 80px;
 }
 
-.login .box {
-    max-width: 400px;
-    background: red;
+.login .title {
+    margin: 0 0 20px;
+    font-size: 24px;
+    padding-bottom: 20px;
+}
+
+.login input[type=text],
+.login input[type=password] {
+    display: block;
+    -webkit-appearance: none;
+    font: inherit;
+    width: 100%;
+    font-size: 14px;
+    padding: 0.75em 1em;
+    margin-bottom: 10px;
+    border-radius: 0.2em;
+    border: 2px solid #393D52;
+    background: rgba(255, 255, 255, 0.02);
+    color: #AFB1BE;
+}
+
+.login input[type=submit] {
+    display: inline-block;
+    padding: 0.75em 2em;
+    margin-top: 20px;
+    border-radius: 20px;
+    float: right;
+    cursor: pointer;
+    text-transform: uppercase;
+    -webkit-appearance: none;
+
+    font-size: 14px;
+    font-family: inherit;
+    background: transparent;
+    border: 2px solid #393D52;
+    color: #AFB1BE;
+}
+
+.login input[type=submit]:hover {
+    background: rgba(255, 255, 255, 0.02);
+    color: #DDD;
+}
+
+.login input:focus {
+    outline: none;
 }
