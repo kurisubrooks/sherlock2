@@ -19,6 +19,7 @@ class Database {
     }
 
     static async checkToken(token) {
+        if (!token) return { ok: false, error: "Missing Token" };
         const user = await Database.models.User.findOne({ where: { token } });
         return user
             ? { ok: true, username: user.username, token }
