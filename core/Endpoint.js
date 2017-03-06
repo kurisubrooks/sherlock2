@@ -10,8 +10,8 @@ class Endpoint {
         this.description = data.description;
         this.disabled = data.disabled || false;
         this.route = data.route;
-        this.token = data.token;
-        this.admin = data.admin;
+        this.token = data.token || false;
+        this.admin = data.admin || false;
 
         if (!this.name) throw new Error("Endpoint Name is required");
         if (!this.description) throw new Error("Endpoint Description is required");
