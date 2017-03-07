@@ -14,7 +14,8 @@ class PanelNewUser extends Endpoint {
         return res.render("panel/views/layout", {
             title: "New User",
             active: "new_user",
-            content: "partials/new_user.ejs"
+            content: "partials/new_user.ejs",
+            data: { }
         });
     }
 }

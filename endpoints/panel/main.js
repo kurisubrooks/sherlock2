@@ -14,7 +14,8 @@ class Panel extends Endpoint {
         return res.render("panel/views/layout", {
             title: "Panel",
             active: "system",
-            content: "main"
+            content: "main",
+            data: { }
         });
     }
 }
