@@ -14,9 +14,10 @@ class RequestHandler {
         this.router = this.express.Router(); // eslint-disable-line new-cap
         this.server = app;
         this.server.use(bodyparser.json());
-        this.server.use(bodyparser.urlencoded({ extended: false }));
+        this.server.use(bodyparser.urlencoded({ extended: true }));
         this.server.engine(".hbs", handlebars({ defaultLayout: "single", extname: ".hbs" }));
         this.server.set("view engine", ".hbs");
+        this.server.use(this.express.static("public"));
         this.server.use("/static", this.express.static(path.join(__dirname, "..", "static")));
         this.server.use(this.router);
         this.handler = new EndpointManager(this.server);
@@ -42,8 +43,7 @@ class RequestHandler {
         const ip = req.ip.replace("::ffff:", "");
         const url = req.url.split("?")[0];
         const token = req.headers.authorization;
-        const body = req.method === "GET" ? req.query : req.body;
-        const data = Object.keys(body).length > 0 ? body : null;
+        const data = req.method === "GET" ? req.query : req.body;
         const route = this.routes.get(req.route.path);
         const user = token ? await Database.checkToken(token) : { ok: false };
 
@@ -73,7 +73,8 @@ class RequestHandler {
         const style = ok ? "success" : "error";
         const indicator = ok ? "✓" : "✘";
         const user = auth && auth.ok ? auth.username : ip;
-        return Logger[style]("Router", `${user} ${url} ${data ? `${JSON.stringify(data)} ` : ""}${indicator} ${error ? error : ""}${code ? ` ${code}` : ""}`);
+        const body = Object.keys(data).length > 0 ? data : null;
+        return Logger[style]("Router", `${user} ${url} ${body ? `${JSON.stringify(body)} ` : ""}${indicator} ${error ? error : ""}${code ? ` ${code}` : ""}`);
     }
 }
 
