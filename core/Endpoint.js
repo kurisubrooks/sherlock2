@@ -9,6 +9,7 @@ class Endpoint {
         this.name = data.name;
         this.description = data.description;
         this.disabled = data.disabled || false;
+        this.method = data.method || "all";
         this.route = data.route;
         this.token = data.token || false;
         this.admin = data.admin || false;

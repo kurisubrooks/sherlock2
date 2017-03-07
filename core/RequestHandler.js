@@ -1,8 +1,10 @@
 const path = require("path");
 const express = require("express");
 const bodyparser = require("body-parser");
+const session = require("express-session");
 
 const config = require("../config.json");
+const keychain = require("../keychain.json");
 const Logger = require("./Util/Logger");
 const Database = require("./Database");
 const EndpointManager = require("./EndpointManager");
@@ -14,7 +16,9 @@ class RequestHandler {
         this.server = app;
         this.server.use(bodyparser.json());
         this.server.use(bodyparser.urlencoded({ extended: true }));
+        this.server.use(session({ secret: keychain.session }));
         this.server.set("view engine", "ejs");
+        this.server.set("views", path.join(__dirname, "..", "endpoints"));
         this.server.use(this.express.static("public"));
         this.server.use("/static", this.express.static(path.join(__dirname, "..", "static")));
         this.server.use(this.router);
@@ -27,7 +31,7 @@ class RequestHandler {
     handleRoutes() {
         // Endpoints
         for (const item of this.routes.values()) {
-            this.router.all(item.route, this.handle.bind(this));
+            this.router[item.method.toLowerCase()](item.route, this.handle.bind(this));
         }
 
         // 404
@@ -63,6 +67,7 @@ class RequestHandler {
         }
 
         this.log(true, ip, url, data, user);
+        res.set("X-Powered-By", "Sherlock");
         res.set("Access-Control-Allow-Origin", "*");
         return route.run(req, res, data);
     }
