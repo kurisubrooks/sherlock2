@@ -150,6 +150,7 @@ code {
     cursor: pointer;
 }
 
+.container .sidebar li.active,
 .container .sidebar li:hover:not(.brand) {
     background: #DDD;
 }
@@ -188,4 +189,34 @@ code {
     background: #FAFAFA;
     box-shadow: 0px 4px 13px -2px rgba(0, 0, 0, 0.25);
     overflow-y: auto;
+}
+
+.container .content .main input[type=text],
+.container .content .main input[type=password] {
+    display: block;
+    -webkit-appearance: none;
+    width: 100%;
+    max-width: 400px;
+    font: inherit;
+    font-size: 16px;
+    padding: 0.5em 0.8em;
+    margin: 10px 0;
+    border-radius: 0.2em;
+    border: 2px solid #CCC;
+    color: #222;
+}
+
+.container .content .main input[type=button],
+.container .content .main input[type=submit],
+.container .content .main .button,
+.container .content .main button {
+    -webkit-appearance: none;
+    background: #FFF;
+    font: inherit;
+    font-size: 16px;
+    padding: 0.5em 0.8em;
+    margin: 10px 0;
+    border-radius: 0.2em;
+    border: 2px solid #CCC;
+    color: #222;
 }
