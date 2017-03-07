@@ -25,15 +25,15 @@ class Translate extends Endpoint {
             return res.status(400).send({ ok: false, error: "Unknown 'to' Language" });
         }
 
-        if (data.from) {
+        if (data.from && data.from !== "") {
             if (!this.validate(data.from)) {
                 return res.status(400).send({ ok: false, error: "Unknown 'from' Language" });
             }
         }
 
         let response;
-        const to_lang = data.to;
-        const from_lang = data.from && data.from !== "" ? data.from : "auto";
+        const to_lang = this.validate(data.to).code;
+        const from_lang = data.from ? this.validate(data.from).code : "auto";
         const query = this.slicer(data.query);
 
         try {
@@ -64,31 +64,33 @@ class Translate extends Endpoint {
         });
     }
 
-    // TODO: Allow lang to/from can be lang name, local name or lang code
     validate(query) {
         if (!query) return null;
-        let found = false;
-        let match = {};
 
-        for (const item of langs) {
-            if (query.toLowerCase() !== item.code) continue;
-            found = true;
-            match = item;
+        for (const obj of langs) {
+            const input = query.toLowerCase();
+            const item = Object.values(obj).map(val => val.toLowerCase());
+            if (!item.includes(input)) continue;
+            return obj;
         }
 
-        return found ? match : null;
+        return null;
     }
 
     slicer(query) {
+        const values = {
+            "。": ". ",
+            "、": ", ",
+            "？": "? ",
+            "！": "! ",
+            "「": "\"",
+            "」": "\" ",
+            "\u3000": " "
+        };
+
         return query
             .replace(/\r?\n|\r/g, " ")
-            .replace(/。/g, ". ")
-            .replace(/、/g, ", ")
-            .replace(/？/g, "? ")
-            .replace(/！/g, "! ")
-            .replace(/「/g, "\"")
-            .replace(/」/g, "\" ")
-            .replace(/　/g, " "); // eslint-disable-line no-irregular-whitespace
+            .replace(new RegExp(Object.keys(values).join("|"), "ig"), match => values[match]);
     }
 }
 
