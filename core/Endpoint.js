@@ -1,6 +1,6 @@
 const config = require("../config.json");
 const Logger = require("./Util/Logger");
-const { error, toUpper } = require("./Util/Util");
+const { toUpper } = require("./Util/Util");
 
 class Endpoint {
     constructor(data = {}) {
@@ -32,8 +32,8 @@ class Endpoint {
         return Logger[style](toUpper(this.name), message, stacktrace);
     }
 
-    error(message, channel) {
-        return error(this.name, message, channel);
+    error(message) {
+        return Logger.error(toUpper(this.name), message);
     }
 }
 
