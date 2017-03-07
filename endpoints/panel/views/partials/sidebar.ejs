@@ -1,13 +1,13 @@
 <li>Database</li>
 <ul>
-    <li <% if (active === "new_user") { %>class="active"<% } %>>New User</li>
-    <li <% if (active === "new_app") { %>class="active"<% } %>>New Application</li>
-    <li <% if (active === "del_user") { %>class="active"<% } %>>Delete User</li>
+    <a href="/panel/new_user"><li <% if (active === "new_user") { %>class="active"<% } %>>New User</li></a>
+    <a href="/panel/new_app"><li <% if (active === "new_app") { %>class="active"<% } %>>New Application</li></a>
+    <a href="/panel/list_users"><li <% if (active === "list_users") { %>class="active"<% } %>>List Users</li></a>
+    <a href="/panel/del_user"><li <% if (active === "del_user") { %>class="active"<% } %>>Delete User</li></a>
 </ul>
 
 <li>Server</li>
 <ul>
-    <li <% if (active === "stats") { %>class="active"<% } %>>Stats</li>
-    <li <% if (active === "logs") { %>class="active"<% } %>>Logs</li>
-    <li <% if (active === "system") { %>class="active"<% } %>>System</li>
+    <a href="/panel/logs"><li <% if (active === "logs") { %>class="active"<% } %>>Logs</li></a>
+    <a href="/panel/"><li <% if (active === "system") { %>class="active"<% } %>>System</li></a>
 </ul>

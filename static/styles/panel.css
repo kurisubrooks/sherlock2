@@ -120,6 +120,11 @@ code {
     cursor: default;
 }
 
+.container .sidebar a {
+    color: inherit;
+    text-decoration: none;
+}
+
 .container .sidebar ul,
 .container .sidebar li {
     margin: 0;
@@ -134,15 +139,16 @@ code {
 
 .container .sidebar ul > li {
     font-weight: 500;
+    cursor: default;
+}
+
+.container .sidebar ul > li:hover {
+    background: #EEE !important;
 }
 
 .container .sidebar ul ul li {
     padding-left: 60px;
     font-weight: 400;
-}
-
-.container .sidebar ul ul li:last-child {
-    margin-bottom: 20px;
 }
 
 .container .sidebar li {
