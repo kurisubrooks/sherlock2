@@ -1,17 +1,21 @@
 const Endpoint = require("../../core/Endpoint");
-const path = require("path");
 
 class Panel extends Endpoint {
     constructor() {
         super({
             name: "Panel",
             description: "Admin Panel",
-            route: "/panel"
+            route: "/panel",
+            method: "GET"
         });
     }
 
     async run(req, res) {
-        return res.sendFile(path.join(__dirname, "pages", "main.html"));
+        return res.render("panel/views/layout", {
+            title: "Panel",
+            active: "system",
+            content: "main"
+        });
     }
 }
 
