@@ -1,19 +1,19 @@
 const Endpoint = require("../../core/Endpoint");
-const path = require("path");
 
-class PanelLogin extends Endpoint {
+class PanelLogout extends Endpoint {
     constructor() {
         super({
             name: "Panel",
             description: "Admin Panel",
-            route: "/panel/login",
+            route: "/panel/logout",
             method: "GET"
         });
     }
 
     async run(req, res) {
-        return res.render("panel/views/login");
+        delete req.session.token;
+        return res.redirect("/panel/login");
     }
 }
 
-module.exports = PanelLogin;
+module.exports = PanelLogout;
