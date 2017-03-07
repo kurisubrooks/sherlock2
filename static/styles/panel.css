@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500|Roboto+Condensed|Roboto+Mono");
 
 *,
 *::before,
@@ -16,6 +16,21 @@ html, body {
 
 input:focus {
     outline: none;
+}
+
+pre, code {
+    margin: 0;
+}
+
+code {
+    display: block;
+    font-family: "SF Mono", "Roboto Mono", Courier, monospace;
+    font-size: 0.9em;
+    padding: 18px 18px 24px !important;
+    background: #333;
+    color: #FFF;
+    max-height: 600px;
+    overflow-y: auto;
 }
 
 .login {
@@ -90,9 +105,58 @@ input:focus {
     width: 260px;
     background: #EEE;
     box-shadow: 0px 4px 13px -2px rgba(0, 0, 0, 0.25);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.container .sidebar .brand {
+    position: relative;
+    z-index: 200;
+    height: 56px;
+    padding: 16px 24px;
+    background: #FFF;
+    border-bottom: 2px solid #DDD;
+    user-select: text;
+    cursor: default;
+}
+
+.container .sidebar ul,
+.container .sidebar li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    user-select: none;
+}
+
+.container .sidebar > ul {
+    width: 260px;
+}
+
+.container .sidebar ul > li {
+    font-weight: 500;
+}
+
+.container .sidebar ul ul li {
+    padding-left: 60px;
+    font-weight: 400;
+}
+
+.container .sidebar ul ul li:last-child {
+    margin-bottom: 20px;
+}
+
+.container .sidebar li {
+    padding: 14px 30px;
+    cursor: pointer;
+}
+
+.container .sidebar li:hover:not(.brand) {
+    background: #DDD;
 }
 
 .container .content {
+    position: relative;
+    z-index: 100;
     display: inline-flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -108,14 +172,20 @@ input:focus {
     display: block;
     height: 56px;
     width: calc(100% - 260px);
+    padding: 16px 24px;
     background: #FFF;
     border-bottom: 2px solid #EEE;
+}
+
+.container .content .nav span {
+    font-weight: 500;
 }
 
 .container .content .main {
     display: block;
     flex-grow: 1;
-    padding-top: 56px;
+    padding: 76px 24px 22px;
     background: #FAFAFA;
     box-shadow: 0px 4px 13px -2px rgba(0, 0, 0, 0.25);
+    overflow-y: auto;
 }
