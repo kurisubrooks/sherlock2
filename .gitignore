@@ -4,3 +4,4 @@ temp.*
 secure
 *.sqlite
 .vscode
+public/*.txt
