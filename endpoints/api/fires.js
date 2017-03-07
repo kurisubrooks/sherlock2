@@ -6,6 +6,7 @@ class GeoRFS extends Endpoint {
             name: "GeoRFS",
             description: "Check for fires in/near Greater Western Sydney",
             route: "/api/fires",
+            method: "all",
             token: false,
             retriever: {
                 enable: true,
