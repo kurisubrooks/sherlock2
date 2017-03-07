@@ -1,24 +1,24 @@
 const Endpoint = require("../../core/Endpoint");
 
-class Admin extends Endpoint {
+class Status extends Endpoint {
     constructor() {
         super({
-            name: "admin",
-            description: "administrative thing",
-            route: "/api/admin",
+            name: "Status",
+            description: "Returns the Status of Sherlock",
+            route: "/api/status",
+            method: "all",
             token: true,
             admin: true
         });
     }
 
-    async run(req, res, data) {
+    async run(req, res) {
         return res.send({
             ok: true,
             node: process.version.replace("v", ""),
-            memory: `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB`,
-            data
+            memory: `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB`
         });
     }
 }
 
-module.exports = Admin;
+module.exports = Status;
