@@ -1,5 +1,38 @@
 const Endpoint = require("../../core/Endpoint");
 
+const alertLevels = [
+    "Not Applicable",
+    "Advice",
+    "Watch and Act",
+    "Emergency Warning"
+];
+
+const alertType = [ // eslint-disable-line no-unused-vars
+    "Out of control",
+    "Being controlled",
+    "Under control"
+];
+
+const fireType = [ // eslint-disable-line no-unused-vars
+    "Bush Fire",
+    "Grass Fire",
+    "Hazard Reduction",
+    "Structure Fire",
+    "Burn off"
+];
+
+const removeEvents = [
+    "MVA/Transport",
+    "Assist Other Agency",
+    "Search/Rescue",
+    "Flood/Storm/Tree Down",
+    "Vehicle/Equipment Fire",
+    "Fire Alarm",
+    "Medical",
+    "HAZMAT",
+    "Other"
+];
+
 class GeoRFS extends Endpoint {
     constructor() {
         super({
