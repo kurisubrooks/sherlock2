@@ -180,10 +180,6 @@ class GeoRFS extends Endpoint {
             }
         };
     }
-
-    test(data) {
-        return data;
-    }
 }
 
 module.exports = GeoRFS;
