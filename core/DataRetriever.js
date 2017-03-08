@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const request = require("request-promise");
 
-const { toUpper } = require("./Util/Util");
 const Logger = require("./Util/Logger");
 
 class DataRetriever {
