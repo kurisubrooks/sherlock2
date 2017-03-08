@@ -81,7 +81,10 @@ class GeoRFS extends Endpoint {
                         : geometry.geometries[1].geometries[0]);
 
                     // Match
-                    if (result !== undefined) results.push(this.format(feature));
+                    if (result !== undefined) {
+                        const formatted = this.format(feature);
+                        if (formatted) results.push(formatted); // eslint-disable-line max-depth
+                    }
                 }
             } catch(error) {
                 res.send(500).send({ ok: false, error: "Internal Server Error" });
