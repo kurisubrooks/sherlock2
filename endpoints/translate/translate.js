@@ -12,6 +12,7 @@ class Translate extends Endpoint {
         });
     }
 
+    // TODO: Query Blacklist
     async run(req, res, data) {
         if (!data.query) {
             return res.status(400).send({ ok: false, error: "Missing 'query' field" });
