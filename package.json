@@ -9,6 +9,7 @@
   },
   "description": "",
   "dependencies": {
+    "@turf/turf": "^3.12.2",
     "bcrypt": "^1.0.2",
     "bluebird": "^3.4.7",
     "body-parser": "^1.17.0",
@@ -21,6 +22,7 @@
     "request-promise": "^4.1.1",
     "sequelize": "^3.30.2",
     "sqlite3": "^3.1.8",
+    "to-markdown": "^3.0.3",
     "yargs": "^7.0.1"
   },
   "engines": {

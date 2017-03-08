@@ -6,3 +6,4 @@ secure
 .vscode
 public/*.txt
 keychain.json
+storage
