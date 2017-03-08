@@ -1,23 +1,23 @@
 const Endpoint = require("../../core/Endpoint");
 
-class PanelNewUser extends Endpoint {
+class PanelLogs extends Endpoint {
     constructor() {
         super({
             name: "Panel",
             description: "Admin Panel",
-            route: "/panel/new_user",
+            route: "/panel/logs",
             method: "GET"
         });
     }
 
     async run(req, res) {
         return res.render("panel/views/layout", {
-            title: "New User",
-            active: "new_user",
-            content: "partials/new_user.ejs",
+            title: "Logs",
+            active: "logs",
+            content: "logs.ejs",
             data: { }
         });
     }
 }
 
-module.exports = PanelNewUser;
+module.exports = PanelLogs;

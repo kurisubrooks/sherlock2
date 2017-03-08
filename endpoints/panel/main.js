@@ -11,12 +11,7 @@ class Panel extends Endpoint {
     }
 
     async run(req, res) {
-        return res.render("panel/views/layout", {
-            title: "Panel",
-            active: "system",
-            content: "main",
-            data: { }
-        });
+        return !req.session.token ? res.redirect("/panel/login") : res.redirect("/panel/system");
     }
 }
 
