@@ -55,7 +55,7 @@ class GeoRFS extends Endpoint {
     }
 
     run(req, res, data) {
-        const store = fs.readFileSync(path.join(__dirname, "..", "..", "storage", "georfs.json"));
+        const store = fs.readFileSync(path.join(__dirname, "..", "..", "storage", `${this.name}.json`));
         const incidents = JSON.parse(store).data;
         const radius = 0.025;
         const results = [];
