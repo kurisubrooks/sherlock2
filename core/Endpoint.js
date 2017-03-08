@@ -13,6 +13,7 @@ class Endpoint {
         this.route = data.route;
         this.token = data.token || false;
         this.admin = data.admin || false;
+        this.retriever = data.retriever;
 
         if (!this.name) throw new Error("Endpoint Name is required");
         if (!this.description) throw new Error("Endpoint Description is required");
