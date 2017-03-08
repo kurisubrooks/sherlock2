@@ -26,6 +26,14 @@ class Database {
             : { ok: false, error: "Unable to Authenticate Token", input: token };
     }
 
+    static async checkAdmin(token) {
+        if (!token) return { ok: false, error: "Missing Token" };
+        const user = (await Database.Models.User.findOne({ where: { token } })).admin;
+        return user
+            ? { ok: true, username: user.username, token }
+            : { ok: false, error: "User is not an Administrator" };
+    }
+
     static async checkLogin(username, password) {
         if (!username) return { ok: false, error: "Missing Username" };
         if (!password) return { ok: false, error: "Missing Password" };
