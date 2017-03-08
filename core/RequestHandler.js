@@ -31,7 +31,7 @@ class RequestHandler {
     handleRoutes() {
         // Endpoints
         for (const item of this.routes.values()) {
-            this.router[item.method.toLowerCase()](item.route, this.handle.bind(this));
+            this.router.all(item.route, this.handle.bind(this));
         }
 
         // 404
@@ -45,39 +45,45 @@ class RequestHandler {
         const ip = req.ip.replace("::ffff:", "");
         const url = req.url.split("?")[0];
         const token = req.headers.authorization;
-        const data = req.method === "GET" ? req.query : req.body;
+        const method = req.method;
+        const data = method === "GET" ? req.query : req.body;
         const route = this.routes.get(req.route.path);
         const user = token ? await Database.checkToken(token) : { ok: false };
 
         if (!route) {
             res.status(404).send({ ok: false, error: "Missing/Unknown Endpoint" });
-            return this.log(false, ip, url, data, user, "MISSING_ENDPOINT", 404);
+            return this.log(false, ip, url, data, user, method, "MISSING_ENDPOINT", 404);
+        }
+
+        if (route.method !== "all" && route.method !== method) {
+            res.status(405).send({ ok: false, error: "Method Not Allowed" });
+            return this.log(false, ip, url, data, user, method, "BAD_METHOD", 405);
         }
 
         if (route.token) {
             if (!token) {
                 res.status(401).send({ ok: false, error: "Authentication Required" });
-                return this.log(false, ip, url, data, user, "NO_TOKEN", 401);
+                return this.log(false, ip, url, data, user, method, "NO_TOKEN", 401);
             }
 
             if (!user.ok) {
                 res.status(401).send({ ok: false, error: user.error });
-                return this.log(false, ip, url, data, user, "BAD_TOKEN", 401);
+                return this.log(false, ip, url, data, user, method, "BAD_TOKEN", 401);
             }
         }
 
-        this.log(true, ip, url, data, user);
+        this.log(true, ip, url, data, user, method);
         res.set("X-Powered-By", "Sherlock");
         res.set("Access-Control-Allow-Origin", "*");
         return route.run(req, res, data);
     }
 
-    log(ok, ip, url, data, auth, error, code) {
+    log(ok, ip, url, data, auth, method, error, code) {
         const style = ok ? "success" : "error";
         const indicator = ok ? "✓" : "✘";
         const user = auth && auth.ok ? auth.username : ip;
         const body = Object.keys(data).length > 0 ? data : null;
-        return Logger[style]("Router", `${user} ${url} ${body ? `${JSON.stringify(body)} ` : ""}${indicator} ${error ? error : ""}${code ? ` ${code}` : ""}`);
+        return Logger[style]("Router", `${method} ${user} ${url} ${body ? `${JSON.stringify(body)} ` : ""}${indicator} ${error ? error : ""}${code ? ` ${code}` : ""}`);
     }
 }
 
