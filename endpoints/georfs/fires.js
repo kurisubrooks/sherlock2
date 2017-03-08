@@ -87,7 +87,7 @@ class GeoRFS extends Endpoint {
                     }
                 }
             } catch(error) {
-                res.send(500).send({ ok: false, error: "Internal Server Error" });
+                res.status(500).send({ ok: false, error: "Internal Server Error" });
                 return this.error(error);
             }
         }

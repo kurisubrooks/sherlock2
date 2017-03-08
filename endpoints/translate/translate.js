@@ -51,7 +51,7 @@ class Translate extends Endpoint {
 
             response = JSON.parse(resp.replace(/,+/g, ","));
         } catch(error) {
-            res.send(500).send({ ok: false, error: "Internal Server Error" });
+            res.status(500).send({ ok: false, error: "Internal Server Error" });
             return this.error(error);
         }
 
