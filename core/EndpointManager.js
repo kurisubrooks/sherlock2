@@ -1,9 +1,10 @@
 const fs = require("fs");
 const path = require("path");
 
-const Util = require("./Util/Util");
+const { toUpper } = require("./Util/Util");
 const Logger = require("./Util/Logger");
 const Collection = require("./Util/Collection");
+const DataRetriever = require("./DataRetriever");
 
 class EndpointManager {
     constructor(app) {
@@ -27,8 +28,9 @@ class EndpointManager {
 
                 if (instance.disabled) continue;
                 if (this.routes.has(instance.route)) throw new Error("Endpoints cannot have the same route");
+                if (instance.retriever) new DataRetriever(instance).start();
 
-                Logger.info("Loaded", Util.toUpper(instance.route));
+                Logger.info("Loaded", toUpper(instance.route));
                 this.routes.set(instance.route, instance);
             }
         }
