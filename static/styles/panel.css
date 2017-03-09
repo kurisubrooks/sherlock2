@@ -18,6 +18,11 @@ input:focus {
     outline: none;
 }
 
+a {
+    color: #4B99DE;
+    text-decoration: none;
+}
+
 pre, code {
     margin: 0;
 }
@@ -121,7 +126,7 @@ code {
     position: relative;
     z-index: 200;
     height: 56px;
-    padding: 16px 24px;
+    padding: 16px 30px;
     background: #FFF;
     border-bottom: 2px solid #DDD;
     user-select: text;
@@ -130,7 +135,6 @@ code {
 
 .container .sidebar a {
     color: inherit;
-    text-decoration: none;
 }
 
 .container .sidebar ul,
@@ -150,10 +154,6 @@ code {
     cursor: default;
 }
 
-.container .sidebar ul > li:hover {
-    background: #EEE !important;
-}
-
 .container .sidebar ul ul li {
     padding-left: 60px;
     font-weight: 400;
@@ -164,8 +164,8 @@ code {
     cursor: pointer;
 }
 
-.container .sidebar li.active,
-.container .sidebar li:hover:not(.brand) {
+.container .sidebar ul ul li.active,
+.container .sidebar ul ul li:hover {
     background: #DDD;
 }
 
@@ -194,6 +194,12 @@ code {
 
 .container .content .nav span {
     font-weight: 500;
+}
+
+.container .content .nav span.logout {
+    float: right;
+    font-weight: 400;
+    color: #4B99DE;
 }
 
 .container .content .main {
