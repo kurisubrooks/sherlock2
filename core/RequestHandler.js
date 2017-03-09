@@ -16,7 +16,7 @@ class RequestHandler {
         this.server = app;
         this.server.use(bodyparser.json());
         this.server.use(bodyparser.urlencoded({ extended: true }));
-        this.server.use(session({ secret: keychain.session }));
+        this.server.use(session({ resave: 1, saveUninitialized: 0, secret: keychain.session, maxAge: 168 * 60 * 60 * 1000 }));
         this.server.set("view engine", "ejs");
         this.server.set("views", path.join(__dirname, "..", "endpoints"));
         this.server.use(this.express.static("public"));
@@ -49,30 +49,31 @@ class RequestHandler {
         const data = method === "GET" ? req.query : req.body;
         const route = this.routes.get(req.route.path);
         const user = token ? await Database.checkToken(token) : { ok: false };
+        const masked = route.mask ? {} : data;
 
         if (!route) {
             res.status(404).send({ ok: false, error: "Missing/Unknown Endpoint" });
-            return this.log(false, ip, url, data, user, method, "MISSING_ENDPOINT", 404);
+            return this.log(false, ip, url, masked, user, method, "MISSING_ENDPOINT", 404);
         }
 
         if (route.method !== "all" && route.method !== method) {
             res.status(405).send({ ok: false, error: "Method Not Allowed" });
-            return this.log(false, ip, url, data, user, method, "BAD_METHOD", 405);
+            return this.log(false, ip, url, masked, user, method, "BAD_METHOD", 405);
         }
 
         if (route.token) {
             if (!token) {
                 res.status(401).send({ ok: false, error: "Authentication Required" });
-                return this.log(false, ip, url, data, user, method, "NO_TOKEN", 401);
+                return this.log(false, ip, url, masked, user, method, "NO_TOKEN", 401);
             }
 
             if (!user.ok) {
                 res.status(401).send({ ok: false, error: user.error });
-                return this.log(false, ip, url, data, user, method, "BAD_TOKEN", 401);
+                return this.log(false, ip, url, masked, user, method, "BAD_TOKEN", 401);
             }
         }
 
-        this.log(true, ip, url, data, user, method);
+        this.log(true, ip, url, masked, user, method);
         res.set("X-Powered-By", "Sherlock");
         res.set("Access-Control-Allow-Origin", "*");
         return route.run(req, res, data);
