@@ -37,22 +37,27 @@ class Database {
     static async checkLogin(username, password) {
         if (!username) return { ok: false, error: "Missing Username" };
         if (!password) return { ok: false, error: "Missing Password" };
-        const user = await Database.Models.User.findOne({ where: { username: username.toLowerCase() } });
+        username = username.toLowerCase();
+        const user = await Database.Models.User.findOne({ where: { username } });
         if (!user) return { ok: false, error: "Incorrect Credentials" };
-        return bcrypt.compareSync(password, user.password)
+        const auth = await bcrypt.compare(password, user.password);
+        if (auth && !user.admin) return { ok: false, error: "Administrators Only" };
+        return auth
             ? { ok: true, token: user.token, admin: user.admin }
             : { ok: false, error: "Incorrect Credentials" };
     }
 
     static async newUser(data) {
         if (!data) return { ok: false, error: "Missing Data" };
+        if (!data.type) return { ok: false, error: "Missing Type" };
         if (!data.username) return { ok: false, error: "Missing Username" };
         const check = await Database.Models.User.findOne({ where: { username: data.username } });
         if (check) return { ok: false, error: "Username already exists" };
         const token = Database.generateToken();
-        const hash = bcrypt.hashSync(data.password, 10);
+        const hash = data.type === 1 ? bcrypt.hashSync(data.password, 10) : null;
 
         await Database.Models.User.create({
+            type: data.type,
             token: token,
             username: data.username,
             password: hash,
@@ -60,7 +65,7 @@ class Database {
             permissions: JSON.stringify({}),
             data: JSON.stringify({}),
             disabled: false,
-            admin: false
+            admin: data.admin || false
         });
 
         return { ok: true, username: data.username, token };

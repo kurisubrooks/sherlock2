@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const Database = require("../Database");
 
 const Users = Database.db.define("users", {
+    type: Sequelize.INTEGER,
     disabled: Sequelize.BOOLEAN,
     admin: Sequelize.BOOLEAN,
 
