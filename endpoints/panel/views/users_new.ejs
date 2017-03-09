@@ -1,7 +1,41 @@
-<span class="title">Username</span>
-<input type="text" autocomplete="off">
-<br>
-<span class="title">Password</span>
-<input type="password" autocomplete="off">
-<br>
-<input type="submit">
+<script>
+    $(() => {
+        /*$("#form").on("submit", event => {
+            event.preventDefault();
+            const user = $("#username").val();
+
+            $.post("/api/users/new", { type: 0, username: user }, data => {
+                if (data.ok) {
+                    window.location.replace("/panel/system");
+                } else {
+                    $(".error").show();
+                    $("#errmsg").text(data.error);
+                    return false;
+                }
+            });
+
+            return false;
+        });*/
+    });
+</script>
+<form id="form">
+    <span class="title">Username</span>
+    <input type="text" autocomplete="off" id="username" required autofocus>
+    <br>
+    <span class="title">Password</span>
+    <input type="password" autocomplete="off" id="password">
+    <br>
+    <span class="title">Type</span>
+    <select name="type" form="form">
+        <option value="normal">Normal</option>
+        <option value="admin">Admin</option>
+    </select>
+    <br>
+    <input type="submit">
+</form>
+<br><br>
+<code>
+Type:<br>
+Username:<br>
+Token:
+</code>

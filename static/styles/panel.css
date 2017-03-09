@@ -14,10 +14,6 @@ html, body {
     height: 100%;
 }
 
-input:focus {
-    outline: none;
-}
-
 a {
     color: #4B99DE;
     text-decoration: none;
@@ -31,11 +27,22 @@ code {
     display: block;
     font-family: "SF Mono", "Roboto Mono", Courier, monospace;
     font-size: 0.9em;
-    padding: 18px 18px 24px !important;
+    padding: 18px 24px;
     background: #333;
     color: #FFF;
     max-height: 600px;
+    line-height: 1.5em;
     overflow-y: auto;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+}
+
+select {
+    cursor: pointer;
 }
 
 .login {
@@ -211,10 +218,17 @@ code {
     overflow-y: auto;
 }
 
+.container .content .main code {
+    border: 2px solid #2F2F2F;
+    border-radius: 0.2em;
+}
+
 .container .content .main input[type=text],
-.container .content .main input[type=password] {
+.container .content .main input[type=password],
+.container .content .main select {
     display: block;
     -webkit-appearance: none;
+    background: #FFF;
     width: 100%;
     max-width: 400px;
     font: inherit;
@@ -226,17 +240,33 @@ code {
     color: #222;
 }
 
+.container .content .main input[type=text]:hover,
+.container .content .main input[type=text]:focus,
+.container .content .main input[type=password]:hover,
+.container .content .main input[type=password]:focus,
+.container .content .main select:hover,
+.container .content .main select:focus {
+    border-color: #AAA;
+}
+
 .container .content .main input[type=button],
 .container .content .main input[type=submit],
-.container .content .main .button,
 .container .content .main button {
     -webkit-appearance: none;
-    background: #FFF;
+    background: transparent;
+    cursor: pointer;
     font: inherit;
     font-size: 16px;
-    padding: 0.5em 0.8em;
+    padding: 0.5em 1.1em;
     margin: 10px 0;
     border-radius: 0.2em;
-    border: 2px solid #CCC;
-    color: #222;
+    border: 2px solid #3FBF3F;
+    color: #3FBF3F;
+}
+
+.container .content .main input[type=button]:hover,
+.container .content .main input[type=submit]:hover,
+.container .content .main button:hover {
+    background: #5AC95A;
+    color: #FFF;
 }
