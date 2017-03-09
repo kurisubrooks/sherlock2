@@ -11,6 +11,7 @@ class PanelNewUser extends Endpoint {
     }
 
     async run(req, res) {
+        if (!req.session || !req.session.token) return res.redirect("/panel/login?error=4");
         return res.render("panel/views/layout", {
             title: "New User",
             active: "users_new",
