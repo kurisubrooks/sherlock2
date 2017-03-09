@@ -46,7 +46,15 @@ code {
 .login .title {
     margin: 0 0 20px;
     font-size: 24px;
-    padding-bottom: 20px;
+}
+
+.login .error {
+    padding: 20px;
+    margin-bottom: 20px;
+    background: rgba(255, 0, 0, 0.1);
+    border: 2px solid rgba(255, 0, 0, 0.1);
+    border-radius: 0.2em;
+    text-align: center;
 }
 
 .login input[type=text],
@@ -67,7 +75,7 @@ code {
 .login input[type=submit] {
     display: inline-block;
     padding: 0.75em 2em;
-    margin-top: 20px;
+    margin-top: 10px;
     border-radius: 20px;
     float: right;
     cursor: pointer;
