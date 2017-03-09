@@ -37,11 +37,11 @@ class Database {
     static async checkLogin(username, password) {
         if (!username) return { ok: false, error: "Missing Username" };
         if (!password) return { ok: false, error: "Missing Password" };
-        const user = await Database.Models.User.findOne({ where: { username } });
-        if (!user) return { ok: false, error: "User does not exist" };
-        return bcrypt.compareSync(password, user.hash)
-            ? { ok: true, token: user.token }
-            : { ok: false, error: "Incorrect Password" };
+        const user = await Database.Models.User.findOne({ where: { username: username.toLowerCase() } });
+        if (!user) return { ok: false, error: "Incorrect Credentials" };
+        return bcrypt.compareSync(password, user.password)
+            ? { ok: true, token: user.token, admin: user.admin }
+            : { ok: false, error: "Incorrect Credentials" };
     }
 
     static async newUser(data) {
