@@ -11,7 +11,7 @@ class PanelListUsers extends Endpoint {
     }
 
     async run(req, res) {
-        if (!req.session || !req.session.token) return res.redirect("/panel/login?error=4");
+        if (!req.session || !req.session.token) return res.redirect("/panel/login");
         return res.render("panel/views/layout", {
             title: "List Users",
             active: "users_list",

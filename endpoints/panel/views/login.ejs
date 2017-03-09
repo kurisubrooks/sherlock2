@@ -4,10 +4,27 @@
     <meta charset="utf-8">
     <title>Panel</title>
     <link href="/static/styles/panel.css" rel="stylesheet">
+    <style>.error { display: none; }</style>
     <script src="/static/scripts/jquery/3.1.1.js"></script>
     <script>
         $(() => {
-            console.log("ok");
+            $("#form").on("submit", event => {
+                event.preventDefault();
+                const user = $("#username").val();
+                const pass = $("#password").val();
+
+                $.post("/api/login", { username: user, password: pass }, data => {
+                    if (data.ok) {
+                        window.location.replace("/panel/system");
+                    } else {
+                        $(".error").show();
+                        $("#errmsg").text(data.error);
+                        return false;
+                    }
+                });
+
+                return false;
+            });
         });
     </script>
 </head>
@@ -19,16 +36,14 @@
                 <span>Login</span>
             </div>
 
-            <% if (error) { %>
             <div class="error">
-                <span><%- error %></span>
+                <span id="errmsg"></span>
             </div>
-            <% } %>
 
             <div class="inputs">
-                <form action="/api/login" method="post">
-                    <input type="text" placeholder="Username" name="username" required autocomplete="off">
-                    <input type="password" placeholder="Password" name="password" required autocomplete="off">
+                <form target="" id="form">
+                    <input id="username" type="text" placeholder="Username" name="username" required autocomplete="off">
+                    <input id="password" type="password" placeholder="Password" name="password" required autocomplete="off">
                     <input type="submit">
                 </form>
             </div>

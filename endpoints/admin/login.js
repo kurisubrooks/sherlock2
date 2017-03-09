@@ -14,8 +14,8 @@ class LoginHandler extends Endpoint {
     }
 
     async run(req, res, data) {
-        if (!data.username) return res.redirect(`/panel/login?error=3`);
-        if (!data.password) return res.redirect(`/panel/login?error=3`);
+        if (!data.username) return res.send({ ok: false, error: "Missing Required Fields" });
+        if (!data.password) return res.send({ ok: false, error: "Missing Required Fields" });
 
         const login = await Database.checkLogin(data.username, data.password);
 
@@ -23,11 +23,11 @@ class LoginHandler extends Endpoint {
             req.session.token = login.token;
             req.session.admin = login.admin;
             this.log(`${data.username} logged in successfully`, "debug");
-            return res.redirect("/panel/system");
+            return res.send({ ok: true });
         }
 
         this.log(`Rejected login attempt for ${data.username}`, "debug");
-        return res.redirect(`/panel/login?error=1`);
+        return res.send({ ok: false, error: "Invalid Credentials" });
     }
 }
 

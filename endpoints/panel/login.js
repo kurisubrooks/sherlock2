@@ -10,17 +10,9 @@ class PanelLogin extends Endpoint {
         });
     }
 
-    async run(req, res, data) {
-        const errors = {
-            "1": "Incorrect Credentials",
-            "2": "Internal Server Error",
-            "3": "Missing Data",
-            "4": "You need to login first!"
-        };
-
-        const error = errors[data.error] || null;
-
-        return res.render("panel/views/login", { error });
+    async run(req, res) {
+        if (req.session.token) return res.redirect("/panel/system");
+        return res.render("panel/views/login");
     }
 }
 
