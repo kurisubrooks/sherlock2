@@ -13,7 +13,7 @@ class LogoutHandler extends Endpoint {
 
     async run(req, res) {
         req.session.destroy();
-        return res.redirect("/panel");
+        return res.send({ ok: true });
     }
 }
 
