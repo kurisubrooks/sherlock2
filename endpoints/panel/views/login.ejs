@@ -4,6 +4,12 @@
     <meta charset="utf-8">
     <title>Panel</title>
     <link href="/static/styles/panel.css" rel="stylesheet">
+    <script src="/static/scripts/jquery/3.1.1.js"></script>
+    <script>
+        $(() => {
+            console.log("ok");
+        });
+    </script>
 </head>
 <body>
 
@@ -15,17 +21,7 @@
 
             <% if (error) { %>
             <div class="error">
-                <% if (error === "1") { %>
-                    <span>Incorrect Credentials</span>
-                <% } else if (error === "2") { %>
-                    <span>Internal Server Error</span>
-                <% } else if (error === "3") { %>
-                    <span>Missing Data</span>
-                <% } else if (error === "4") { %>
-                    <span>You need to login first!</span>
-                <% } else { %>
-                    <span>Unknown Error</span>
-                <% } %>
+                <span><%- error %></span>
             </div>
             <% } %>
 
