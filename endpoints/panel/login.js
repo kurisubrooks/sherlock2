@@ -1,5 +1,4 @@
 const Endpoint = require("../../core/Endpoint");
-const path = require("path");
 
 class PanelLogin extends Endpoint {
     constructor() {
@@ -11,8 +10,8 @@ class PanelLogin extends Endpoint {
         });
     }
 
-    async run(req, res) {
-        return res.render("panel/views/login");
+    async run(req, res, data) {
+        return res.render("panel/views/login", { error: data.error });
     }
 }
 

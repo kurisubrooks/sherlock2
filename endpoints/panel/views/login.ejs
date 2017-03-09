@@ -13,10 +13,26 @@
                 <span>Login</span>
             </div>
 
+            <% if (error) { %>
+            <div class="error">
+                <% if (error === "1") { %>
+                    <span>Incorrect Credentials</span>
+                <% } else if (error === "2") { %>
+                    <span>Internal Server Error</span>
+                <% } else if (error === "3") { %>
+                    <span>Missing Data</span>
+                <% } else { %>
+                    <span>Unknown Error</span>
+                <% } %>
+            </div>
+            <% } %>
+
             <div class="inputs">
-                <input type="text" placeholder="Username">
-                <input type="password" placeholder="Password">
-                <input type="submit">
+                <form action="/api/login" method="post">
+                    <input type="text" placeholder="Username" name="username" required autocomplete="off">
+                    <input type="password" placeholder="Password" name="password" required autocomplete="off">
+                    <input type="submit">
+                </form>
             </div>
         </div>
     </div>
