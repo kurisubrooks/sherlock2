@@ -1,8 +1,26 @@
 <script>
     $(() => {
-        /*$("#form").on("submit", event => {
+        $("select").on("change", (event) => {
+            const type = event.target.value;
+
+            if (type === "admin") {
+                $("#password").prop("disabled", false);
+                $("#password").prop("required", true);
+            } else {
+                $("#password").prop("disabled", true);
+                $("#password").prop("required", false);
+            }
+        });
+
+        $("#form").on("submit", event => {
             event.preventDefault();
             const user = $("#username").val();
+            const pass = $("#password").val() || null;
+            const type = $("#type").val();
+
+            if (!user) return alert("Please provide a username");
+
+            return console.log(user, pass, type);
 
             $.post("/api/users/new", { type: 0, username: user }, data => {
                 if (data.ok) {
@@ -15,23 +33,23 @@
             });
 
             return false;
-        });*/
+        });
     });
 </script>
 <form id="form">
     <span class="title">Username</span>
-    <input type="text" autocomplete="off" id="username" required autofocus>
+    <input type="text" name="username" autocomplete="off" id="username" required autofocus>
     <br>
     <span class="title">Password</span>
-    <input type="password" autocomplete="off" id="password">
+    <input type="password" name="password" autocomplete="off" id="password" disabled>
     <br>
     <span class="title">Type</span>
-    <select name="type" form="form">
+    <select name="type" id="type">
         <option value="normal">Normal</option>
         <option value="admin">Admin</option>
     </select>
     <br>
-    <input type="submit">
+    <input type="submit" value="Submit">
 </form>
 <br><br>
 <code>

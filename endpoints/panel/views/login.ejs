@@ -15,7 +15,7 @@
 
                 if (!username || !password) {
                     $(".error").show();
-                    return $("#errmsg").text("Please complete all fields");
+                    return $("#errmsg").text("Baka! You have to fill in the boxes. uwu");
                 }
 
                 $.post("/api/login", { username, password }, data => {
@@ -50,7 +50,7 @@
                     <input id="username" type="text" placeholder="Username" name="username" required autocomplete="off">
                     <input id="password" type="password" placeholder="Password" name="password" required autocomplete="off">
                     <div class="buttons">
-                        <a href="/panel/register" class="button">Register</a>
+                        <a href="/panel/register"><button type="button">Register</button></a>
                         <input type="submit" value="Submit">
                     </div>
                 </form>

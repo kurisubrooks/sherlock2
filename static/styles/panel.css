@@ -36,6 +36,7 @@ code {
 }
 
 input:focus,
+button:focus,
 select:focus,
 textarea:focus {
     outline: none;
@@ -80,12 +81,8 @@ select {
     border-color: rgba(100, 100, 180, 0.1);
 }
 
-.login .buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
 .login input[type=text],
+.login input[type=email],
 .login input[type=password] {
     display: block;
     -webkit-appearance: none;
@@ -102,9 +99,10 @@ select {
     color: rgb(175, 175, 190);
 }
 
+.login button,
 .login .button,
 .login input[type=submit] {
-    display: inline-block;
+    width: calc(50% - 2px);
     padding: 0.75em 2em;
     margin: 10px 0 0;
     border-radius: 2em;
@@ -128,12 +126,16 @@ select {
 
 .login input[type=text]:hover,
 .login input[type=text]:focus,
+.login input[type=email]:hover,
+.login input[type=email]:focus,
 .login input[type=password]:hover,
 .login input[type=password]:focus,
 .login input[type=submit]:hover,
 .login input[type=submit]:focus,
+.login button:hover,
+.login button:focus,
 .login .button:hover,
-.login button:focus {
+.login .button:focus {
     border-color: rgb(77, 81, 105);
     background: rgba(255, 255, 255, 0.03);
     color: rgb(175, 175, 190);

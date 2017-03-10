@@ -10,18 +10,37 @@
         $(() => {
             $("#form").on("submit", event => {
                 event.preventDefault();
+                const email = $("#email").val()
                 const username = $("#username").val();
                 const password = $("#password").val();
+                const password2 = $("#password2").val()
                 const auth = $("#authkey").val();
 
-                if (!username || !password || !auth) {
+                if (!email || !username || !password || !password2 || !auth) {
                     $(".error").show();
-                    return $("#errmsg").text("Please complete all fields");
+                    return $("#errmsg").text("Baka! You have to fill in the boxes. uwu");
                 }
 
-                $.post("/api/register", { username, password, auth }, data => {
+                if (password !== password2) {
+                    $(".error").show();
+                    return $("#errmsg").text("Password Mismatch");
+                }
+
+                /*if (!(/(.+)@(.+){2,}\.(.+){2,}/.test(email))) {
+                    $(".error").show();
+                    return $("#errmsg").text("Please enter a valid email");
+                }*/
+
+                if (!(/^[a-zA-Z0-9]+$/).test(username)) {
+                    $(".error").show();
+                    return $("#errmsg").text("Usernames can only contain letters and numbers");
+                }
+
+                $.post("/api/register", { email, username, password, auth }, data => {
+                    console.log(data);
+
                     if (data.ok) {
-                        window.location.replace("/panel/login");
+                        $("#infomsg").text(`Username: ${data.username}\nToken: ${data.token}`);
                     } else {
                         $(".error").show();
                         $("#errmsg").text(data.error);
@@ -43,7 +62,7 @@
             </div>
 
             <div class="info">
-                <span>Please get a Registration Key from the webmaster before continuing.</span>
+                <span id="infomsg">Please consult Kuri-senpai for a Registration Key before continuing.</span>
             </div>
 
             <div class="error">
@@ -52,13 +71,13 @@
 
             <div class="inputs">
                 <form target="" id="form">
-                    <input id="email" type="text" placeholder="Email" required autocomplete="off">
-                    <input id="nickname" type="text" placeholder="Display Name" required autocomplete="off">
+                    <input id="username" type="text" placeholder="Name" required autocomplete="off">
+                    <input id="email" type="email" placeholder="Email" required autocomplete="off">
                     <input id="password" type="password" placeholder="Password" required autocomplete="off">
                     <input id="password2" type="password" placeholder="Confirm Password" required autocomplete="off">
                     <input id="authkey" type="text" placeholder="Registration Key" required autocomplete="off">
                     <div class="buttons">
-                        <a href="/panel/login" class="button">Back</a>
+                        <a href="/panel/login"><button type="button">Back</button></a>
                         <input type="submit" value="Submit">
                     </div>
                 </form>
