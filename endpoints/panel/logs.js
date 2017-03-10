@@ -6,7 +6,10 @@ class PanelLogs extends Endpoint {
             name: "Panel",
             description: "Admin Panel",
             route: "/panel/logs",
-            method: "GET"
+            method: "GET",
+            token: false,
+            // admin: true,
+            mask: false
         });
     }
 
@@ -14,9 +17,11 @@ class PanelLogs extends Endpoint {
         if (!req.session || !req.session.token) return res.redirect("/panel/login");
         return res.render("panel/views/layout", {
             title: "Logs",
-            active: "logs",
             content: "logs.ejs",
-            data: { }
+            data: {
+                admin: req.session.admin,
+                active: "logs"
+            }
         });
     }
 }

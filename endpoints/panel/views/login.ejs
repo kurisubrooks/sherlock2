@@ -20,7 +20,7 @@
 
                 $.post("/api/login", { username, password }, data => {
                     if (data.ok) {
-                        window.location.replace("/panel/system");
+                        window.location.replace("/panel");
                     } else {
                         $(".error").show();
                         $("#errmsg").text(data.error);

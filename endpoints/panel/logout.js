@@ -6,7 +6,10 @@ class PanelLogout extends Endpoint {
             name: "Panel",
             description: "Admin Panel",
             route: "/panel/logout",
-            method: "GET"
+            method: "GET",
+            token: false,
+            admin: false,
+            mask: false
         });
     }
 

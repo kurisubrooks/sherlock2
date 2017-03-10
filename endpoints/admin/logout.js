@@ -7,7 +7,9 @@ class LogoutHandler extends Endpoint {
             description: "Handles User Logouts",
             route: "/api/logout",
             method: "POST",
-            token: false
+            token: false,
+            admin: false,
+            mask: false
         });
     }
 

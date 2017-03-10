@@ -6,12 +6,15 @@ class PanelLogin extends Endpoint {
             name: "Panel",
             description: "Admin Panel",
             route: "/panel/login",
-            method: "GET"
+            method: "GET",
+            token: false,
+            admin: false,
+            mask: false
         });
     }
 
     async run(req, res) {
-        if (req.session.token) return res.redirect("/panel/system");
+        if (req.session.token) return res.redirect("/panel");
         return res.render("panel/views/login");
     }
 }

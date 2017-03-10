@@ -6,12 +6,23 @@ class Panel extends Endpoint {
             name: "Panel",
             description: "Admin Panel",
             route: "/panel",
-            method: "GET"
+            method: "GET",
+            token: false,
+            admin: false,
+            mask: false
         });
     }
 
     async run(req, res) {
-        return !req.session.token ? res.redirect("/panel/login") : res.redirect("/panel/system");
+        if (!req.session.token) return res.redirect("/panel/login");
+        return res.render("panel/views/layout", {
+            title: "Home",
+            content: "home.ejs",
+            data: {
+                active: null,
+                admin: req.session.admin
+            }
+        });
     }
 }
 

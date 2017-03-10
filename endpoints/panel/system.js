@@ -6,7 +6,10 @@ class PanelSystem extends Endpoint {
             name: "Panel",
             description: "Admin Panel",
             route: "/panel/system",
-            method: "GET"
+            method: "GET",
+            token: false,
+            // admin: true,
+            mask: false
         });
     }
 
@@ -14,11 +17,12 @@ class PanelSystem extends Endpoint {
         if (!req.session || !req.session.token) return res.redirect("/panel/login");
         return res.render("panel/views/layout", {
             title: "System",
-            active: "system",
             content: "system.ejs",
             data: {
                 node: process.version.replace("v", ""),
-                memory: `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB`
+                memory: `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB`,
+                admin: req.session.admin,
+                active: "system"
             }
         });
     }
