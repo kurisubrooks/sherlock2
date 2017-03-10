@@ -40,7 +40,9 @@
                     console.log(data);
 
                     if (data.ok) {
-                        $("#infomsg").text(`Username: ${data.username}\nToken: ${data.token}`);
+                        $("#result").removeClass("info");
+                        $("#result").addClass("success");
+                        $("#infomsg").html(`Username: ${data.username}<br>Token: ${data.token}`);
                     } else {
                         $(".error").show();
                         $("#errmsg").text(data.error);
@@ -61,7 +63,7 @@
                 <span>Register</span>
             </div>
 
-            <div class="info">
+            <div class="info" id="result">
                 <span id="infomsg">Please consult Kuri-senpai for a Registration Key before continuing.</span>
             </div>
 
