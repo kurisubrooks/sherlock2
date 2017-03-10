@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Panel - Login</title>
+    <title>Panel - Register</title>
     <link href="/static/styles/panel.css" rel="stylesheet">
     <style>.error { display: none; }</style>
     <script src="/static/scripts/jquery/3.1.1.js"></script>
@@ -12,15 +12,16 @@
                 event.preventDefault();
                 const username = $("#username").val();
                 const password = $("#password").val();
+                const auth = $("#authkey").val();
 
-                if (!username || !password) {
+                if (!username || !password || !auth) {
                     $(".error").show();
                     return $("#errmsg").text("Please complete all fields");
                 }
 
-                $.post("/api/login", { username, password }, data => {
+                $.post("/api/register", { username, password, auth }, data => {
                     if (data.ok) {
-                        window.location.replace("/panel/system");
+                        window.location.replace("/panel/login");
                     } else {
                         $(".error").show();
                         $("#errmsg").text(data.error);
@@ -37,8 +38,12 @@
 
     <div class="login">
         <div class="box">
-            <div class="brand">
-                <span>Sherlock</span>
+            <div class="title">
+                <span>Register</span>
+            </div>
+
+            <div class="info">
+                <span>Please get a Registration Key from the webmaster before continuing.</span>
             </div>
 
             <div class="error">
@@ -47,10 +52,13 @@
 
             <div class="inputs">
                 <form target="" id="form">
-                    <input id="username" type="text" placeholder="Username" name="username" required autocomplete="off">
-                    <input id="password" type="password" placeholder="Password" name="password" required autocomplete="off">
+                    <input id="email" type="text" placeholder="Email" required autocomplete="off">
+                    <input id="nickname" type="text" placeholder="Display Name" required autocomplete="off">
+                    <input id="password" type="password" placeholder="Password" required autocomplete="off">
+                    <input id="password2" type="password" placeholder="Confirm Password" required autocomplete="off">
+                    <input id="authkey" type="text" placeholder="Registration Key" required autocomplete="off">
                     <div class="buttons">
-                        <a href="/panel/register" class="button">Register</a>
+                        <a href="/panel/login" class="button">Back</a>
                         <input type="submit" value="Submit">
                     </div>
                 </form>
