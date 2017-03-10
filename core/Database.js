@@ -77,16 +77,13 @@ class Database {
         if (!data.username) return { ok: false, error: "Missing Username" };
         if (!data.password) return { ok: false, error: "Missing Password" };
 
-        console.log("Data Exists");
-
         // Check auth key
-        if (!Database.validateRegKey(data.auth)) return { ok: false, error: "Invalid Auth Key" };
+        if (!Database.validateRegKey(data.auth).ok) return { ok: false, error: "Invalid Auth Key" };
 
         console.log("Auth Key is OK");
 
         // Check if user already exists
         const check1 = await Database.Models.User.findOne({ where: { username: data.username } });
-        console.log(check1);
         if (check1) return { ok: false, error: "Username already exists" };
 
         console.log("User doesn't already exist, OK");
@@ -104,7 +101,6 @@ class Database {
         // Check if token already exists
         const token = Database.generateToken();
         const check2 = await Database.Models.User.findOne({ where: { token } });
-        console.log(check2);
         if (check2) return { ok: false, error: "Internal Server Error" };
 
         console.log("Generated token is OK");
