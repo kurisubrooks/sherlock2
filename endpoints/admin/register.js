@@ -14,29 +14,29 @@ class RegistrationHandler extends Endpoint {
     }
 
     async run(req, res, data) {
-        if (!data.email) return { ok: false, error: "Missing Email" };
-        if (!data.username) return { ok: false, error: "Missing Username" };
-        if (!data.password) return { ok: false, error: "Missing Password" };
-        if (!data.auth) return { ok: false, error: "Auth Key Required" };
+        if (!data.email) return res.send({ ok: false, error: "Missing Email" });
+        if (!data.username) return res.send({ ok: false, error: "Missing Username" });
+        if (!data.password) return res.send({ ok: false, error: "Missing Password" });
+        if (!data.auth) return res.send({ ok: false, error: "Auth Key Required" });
 
         // Validate Registration Key
-        if (!Database.validateRegKey(data.auth)) return { ok: false, error: "Invalid Auth Key" };
+        if (!Database.validateRegKey(data.auth)) return res.send({ ok: false, error: "Invalid Auth Key" });
 
         // Handle User Generation
-        const user = await Database.newUser({
+        const user = Database.newUser({
             auth: data.auth,
             email: data.email,
             username: data.username,
             password: data.password
         });
 
-        console.log(user);
+        const response = await user;
 
-        if (!user.ok) return { ok: false, error: user.error };
+        if (!response.ok) return res.send(response);
 
-        this.log(`User Created: ${user.username}`, "debug");
+        this.log(`User Created: ${response.username}`, "debug");
 
-        return user;
+        return res.send(response);
     }
 }
 
