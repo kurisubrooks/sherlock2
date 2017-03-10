@@ -1,13 +1,23 @@
-<li>Database</li>
+<li>Docs</li>
 <ul>
-    <a href="/panel/users/new"><li <% if (active === "users_new") { %>class="active"<% } %>>New User</li></a>
-    <!--<a href="/panel/new_app"><li <% if (active === "new_app") { %>class="active"<% } %>>New Application</li></a>-->
-    <a href="/panel/users/all"><li <% if (active === "users_list") { %>class="active"<% } %>>List Users</li></a>
-    <a href="/panel/users/delete"><li <% if (active === "users_del") { %>class="active"<% } %>>Delete User</li></a>
+    <a href="/panel/docs/translate"><li <% if (active === "docs_translate") { %>class="active"<% } %>>Translate</li></a>
+    <a href="/panel/docs/weather"><li <% if (active === "docs_weather") { %>class="active"<% } %>>Weather</li></a>
+    <a href="/panel/docs/radar"><li <% if (active === "docs_radar") { %>class="active"<% } %>>Radar</li></a>
 </ul>
+
+<!--<li>User</li>
+<ul>
+    <a href="/panel/users/chgpswd"><li <% if (active === "users_chgpswd") { %>class="active"<% } %>>Change Password</li></a>
+</ul>-->
+
+<% if (true) { %>
+<li class="buffer"></li>
 
 <li>Server</li>
 <ul>
-    <a href="/panel/logs"><li <% if (active === "logs") { %>class="active"<% } %>>Logs</li></a>
-    <a href="/panel/system"><li <% if (active === "system") { %>class="active"<% } %>>System</li></a>
+    <a href="/panel/logs"><li <% if (active === "logs") { %>class="active"<% } %>>Server Logs</li></a>
+    <a href="/panel/system"><li <% if (active === "system") { %>class="active"<% } %>>System Status</li></a>
+    <a href="/panel/users/manage"><li <% if (active === "users_manage") { %>class="active"<% } %>>Manage Users</li></a>
+    <a href="/panel/generator"><li <% if (active === "regkey") { %>class="active"<% } %>>Generate RegKey</li></a>
 </ul>
+<% } %>
