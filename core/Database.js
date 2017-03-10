@@ -62,7 +62,7 @@ class Database {
         const auth = await bcrypt.compare(password, user.password);
 
         // Dafauq is this for?
-        if (auth && !user.admin) return { ok: false, error: "Administrators Only" };
+        // if (auth && !user.admin) return { ok: false, error: "Administrators Only" };
 
         // Return Results
         return auth
