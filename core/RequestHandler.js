@@ -61,6 +61,11 @@ class RequestHandler {
             return this.log(false, ip, url, masked, user, method, "BAD_METHOD", 405);
         }
 
+        if (route.admin && req.session && !req.session.admin) {
+            res.status(403).send({ ok: false, error: "Forbidden" });
+            return this.log(false, ip, url, masked, user, method, "NO_ADMIN", 403);
+        }
+
         if (route.token) {
             if (!token) {
                 res.status(401).send({ ok: false, error: "Authentication Required" });
