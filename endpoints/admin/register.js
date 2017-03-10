@@ -9,6 +9,7 @@ class RegistrationHandler extends Endpoint {
             route: "/api/register",
             method: "POST",
             token: false,
+            admin: false,
             mask: true
         });
     }
@@ -23,20 +24,16 @@ class RegistrationHandler extends Endpoint {
         if (!Database.validateRegKey(data.auth)) return res.send({ ok: false, error: "Invalid Auth Key" });
 
         // Handle User Generation
-        const user = Database.newUser({
+        return Database.newUser({
             auth: data.auth,
             email: data.email,
             username: data.username,
             password: data.password
+        }).then(data => {
+            if (!data.ok) return res.send(data);
+            this.log(`User Created: ${data.username}`, "debug");
+            return res.send(data);
         });
-
-        const response = await user;
-
-        if (!response.ok) return res.send(response);
-
-        this.log(`User Created: ${response.username}`, "debug");
-
-        return res.send(response);
     }
 }
 

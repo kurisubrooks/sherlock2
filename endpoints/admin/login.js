@@ -9,6 +9,7 @@ class LoginHandler extends Endpoint {
             route: "/api/login",
             method: "POST",
             token: false,
+            admin: false,
             mask: true
         });
     }
@@ -17,17 +18,17 @@ class LoginHandler extends Endpoint {
         if (!data.username) return res.send({ ok: false, error: "Missing Required Fields" });
         if (!data.password) return res.send({ ok: false, error: "Missing Required Fields" });
 
-        const login = await Database.checkLogin(data.username, data.password);
+        return Database.checkLogin(data.username, data.password).then(login => {
+            if (login.ok) {
+                req.session.token = login.token;
+                req.session.admin = login.admin;
+                this.log(`${data.username} logged in successfully`, "debug");
+                return res.send({ ok: true });
+            }
 
-        if (login.ok) {
-            req.session.token = login.token;
-            req.session.admin = login.admin;
-            this.log(`${data.username} logged in successfully`, "debug");
-            return res.send({ ok: true });
-        }
-
-        this.log(`Rejected login attempt for ${data.username}`, "debug");
-        return res.send({ ok: false, error: "Invalid Credentials" });
+            this.log(`Rejected login attempt for ${data.username}`, "debug");
+            return res.send({ ok: false, error: "Invalid Credentials" });
+        });
     }
 }
 
