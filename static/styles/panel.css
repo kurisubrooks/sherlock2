@@ -67,7 +67,8 @@ select {
 }
 
 .login .error,
-.login .info {
+.login .info,
+.login .success {
     padding: 20px;
     margin-bottom: 20px;
     background: rgba(255, 0, 0, 0.1);
@@ -79,6 +80,11 @@ select {
 .login .info {
     background: rgba(100, 100, 180, 0.1);
     border-color: rgba(100, 100, 180, 0.1);
+}
+
+.login .success {
+    background: rgba(50, 255, 50, 0.1);
+    border-color: rgba(50, 255, 50, 0.1);
 }
 
 .login input[type=text],
