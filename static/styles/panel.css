@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,500|Roboto+Condensed|Roboto+Mono");
-
 *,
 *::before,
 *::after {
@@ -313,8 +311,8 @@ select {
 .container .content .main button:disabled {
     cursor: no-drop;
     background: transparent;
-    border-color: #AAA;
-    color: #AAA;
+    border-color: #EEE;
+    color: #EEE;
 }
 
 .container .content .main input[type=button]:hover,
@@ -334,13 +332,20 @@ select {
 .container .content .main button:disabled:hover,
 .container .content .main button:disabled:focus {
     background: transparent;
-    color: #AAA;
+    border-color: #EEE;
+    color: #EEE;
 }
 
 .container .content .main table {
     width: 100%;
     border: none;
     border-collapse: collapse;
+    cursor: default;
+}
+
+.container .content .main table a {
+    color: inherit;
+    cursor: pointer;
 }
 
 .container .content .main table tr td {
@@ -350,6 +355,10 @@ select {
 .container .content .main table thead {
     font-weight: 500;
     border-bottom: 2px solid #DDD;
+}
+
+.container .content .main table tbody tr:nth-child(odd) {
+    background: #FFF;
 }
 
 .container .content .main table tbody tr:hover {
