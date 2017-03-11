@@ -279,6 +279,7 @@ select {
 .container .content .main input:disabled {
     background: #FAFAFA;
     border-color: #EEE;
+    cursor: no-drop;
 }
 
 .container .content .main input[type=text]:hover:not(:disabled),
@@ -307,6 +308,15 @@ select {
     color: #3FBF3F;
 }
 
+.container .content .main input[type=button]:disabled,
+.container .content .main input[type=submit]:disabled,
+.container .content .main button:disabled {
+    cursor: no-drop;
+    background: transparent;
+    border-color: #AAA;
+    color: #AAA;
+}
+
 .container .content .main input[type=button]:hover,
 .container .content .main input[type=button]:focus,
 .container .content .main input[type=submit]:hover,
@@ -315,4 +325,37 @@ select {
 .container .content .main button:focus {
     background: #5AC95A;
     color: #FFF;
+}
+
+.container .content .main input[type=button]:disabled:hover,
+.container .content .main input[type=button]:disabled:focus,
+.container .content .main input[type=submit]:disabled:hover,
+.container .content .main input[type=submit]:disabled:focus,
+.container .content .main button:disabled:hover,
+.container .content .main button:disabled:focus {
+    background: transparent;
+    color: #AAA;
+}
+
+.container .content .main table {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+}
+
+.container .content .main table tr td {
+    padding: 1em;
+}
+
+.container .content .main table thead {
+    font-weight: 500;
+    border-bottom: 2px solid #DDD;
+}
+
+.container .content .main table tbody tr:hover {
+    background: #EEE;
+}
+
+.container .content .main table tr td:last-child {
+    text-align: center;
 }
