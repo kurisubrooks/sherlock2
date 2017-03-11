@@ -8,7 +8,7 @@ class PanelGenerator extends Endpoint {
             route: "/panel/generator",
             method: "GET",
             token: false,
-            // admin: true,
+            admin: true,
             mask: false
         });
     }

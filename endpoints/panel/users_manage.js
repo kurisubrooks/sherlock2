@@ -8,7 +8,7 @@ class PanelManageUsers extends Endpoint {
             route: "/panel/users/manage",
             method: "GET",
             token: false,
-            // admin: true,
+            admin: true,
             mask: false
         });
     }

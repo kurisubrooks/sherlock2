@@ -8,8 +8,8 @@ class RegKeyGenerator extends Endpoint {
             description: "Handles RegKey Generation",
             route: "/api/regkey",
             method: "POST",
-            token: false
-            // admin: true
+            token: false,
+            admin: true
         });
     }
 

@@ -8,7 +8,7 @@ class PanelLogs extends Endpoint {
             route: "/panel/logs",
             method: "GET",
             token: false,
-            // admin: true,
+            admin: true,
             mask: false
         });
     }

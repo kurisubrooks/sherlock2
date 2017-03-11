@@ -8,7 +8,7 @@ class PanelSystem extends Endpoint {
             route: "/panel/system",
             method: "GET",
             token: false,
-            // admin: true,
+            admin: true,
             mask: false
         });
     }

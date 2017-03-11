@@ -8,7 +8,7 @@ class PanelEditUser extends Endpoint {
             route: "/panel/users/edit",
             method: "GET",
             token: false,
-            // admin: true,
+            admin: true,
             mask: false
         });
     }
