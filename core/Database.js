@@ -49,6 +49,18 @@ class Database {
             : { ok: false, error: "User is not an Administrator" };
     }
 
+    static async changeAdmin(username, admin) {
+        if (!username) return { ok: false, error: "Missing Username" };
+        if (!admin) return { ok: false, error: "Missing Admin" };
+        const user = await Database.Models.User.findOne({ where: { username } });
+        const perm = Boolean(admin);
+        if (!user) return { ok: false, error: "Invalid Username" };
+        const req = await user.update({ admin: perm });
+        return req
+            ? { ok: true }
+            : { ok: false };
+    }
+
     static async checkLogin(username, password) {
         if (!username) return { ok: false, error: "Missing Username" };
         if (!password) return { ok: false, error: "Missing Password" };
