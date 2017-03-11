@@ -10,21 +10,14 @@
         </tr>
     </thead>
     <tbody>
+        <% for (let i = 0; i < users.length; i++) { %>
         <tr>
-            <td>true</td>
-            <td>false</td>
-            <td>kurisu</td>
-            <td>kurisubrooks@gmail.com</td>
-            <td>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</td>
-            <td>√</td>
+            <td><%= users[i].admin %></td>
+            <td><%= users[i].disabled %></td>
+            <td><%= users[i].username %></td>
+            <td><%= users[i].email %></td>
+            <td><%= users[i].token %></td><td><a href="/panel/users/edit?username=<%= users[i].username %>"><i class="material-icons">edit</i></a></td>
         </tr>
-        <tr>
-            <td>false</td>
-            <td>false</td>
-            <td>vzwgrey</td>
-            <td>vzwgrey@email.org</td>
-            <td>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</td>
-            <td>√</td>
-        </tr>
+        <% } %>
     </tbody>
 </table>

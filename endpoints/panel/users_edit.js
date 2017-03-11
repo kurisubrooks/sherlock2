@@ -1,4 +1,5 @@
 const Endpoint = require("../../core/Endpoint");
+const Database = require("../../core/Database");
 
 class PanelEditUser extends Endpoint {
     constructor() {
@@ -13,14 +14,30 @@ class PanelEditUser extends Endpoint {
         });
     }
 
-    async run(req, res) {
+    async run(req, res, data) {
         if (!req.session || !req.session.token) return res.redirect("/panel/login");
+
+        const user = await Database.Models.User.findOne({ where: { username: data.username } });
+
+        let info;
+        if (user) {
+            info = {
+                admin: user.admin,
+                disabled: user.disabled,
+                email: user.email,
+                username: user.username,
+                token: user.token
+            };
+        }
+
         return res.render("panel/views/layout", {
             title: "Edit User",
             content: "users_edit.ejs",
             data: {
                 admin: req.session.admin,
-                active: "users_edit"
+                active: "users_edit",
+                users: user ? true : null,
+                user: info
             }
         });
     }

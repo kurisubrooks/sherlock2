@@ -1,4 +1,5 @@
 const Endpoint = require("../../core/Endpoint");
+const Database = require("../../core/Database");
 
 class PanelManageUsers extends Endpoint {
     constructor() {
@@ -15,9 +16,13 @@ class PanelManageUsers extends Endpoint {
 
     async run(req, res) {
         if (!req.session || !req.session.token) return res.redirect("/panel/login");
+
+        const users = await Database.Models.User.findAll();
+
         return res.render("panel/views/layout", {
             title: "Manage Users",
             content: "users_manage.ejs",
+            users,
             data: {
                 admin: req.session.admin,
                 active: "users_manage"

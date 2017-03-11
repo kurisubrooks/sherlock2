@@ -1,59 +1,16 @@
-<script>
-    $(() => {
-        $("select").on("change", (event) => {
-            const type = event.target.value;
-
-            if (type === "admin") {
-                $("#password").prop("disabled", false);
-                $("#password").prop("required", true);
-            } else {
-                $("#password").prop("disabled", true);
-                $("#password").prop("required", false);
-            }
-        });
-
-        $("#form").on("submit", event => {
-            event.preventDefault();
-            const user = $("#username").val();
-            const pass = $("#password").val() || null;
-            const type = $("#type").val();
-
-            if (!user) return alert("Please provide a username");
-
-            return console.log(user, pass, type);
-
-            $.post("/api/users/new", { type: 0, username: user }, data => {
-                if (data.ok) {
-                    window.location.replace("/panel/system");
-                } else {
-                    $(".error").show();
-                    $("#errmsg").text(data.error);
-                    return false;
-                }
-            });
-
-            return false;
-        });
-    });
-</script>
 <form id="form">
-    <span class="title">Username</span>
-    <input type="text" name="username" autocomplete="off" id="username" required autofocus>
-    <br>
-    <span class="title">Password</span>
-    <input type="password" name="password" autocomplete="off" id="password" disabled>
-    <br>
-    <span class="title">Type</span>
-    <select name="type" id="type">
-        <option value="normal">Normal</option>
-        <option value="admin">Admin</option>
-    </select>
-    <br>
-    <input type="submit" value="Submit">
+    <% if (users) { %>
+        <span class="title">Username</span>
+        <input id="username" type="text" value="<%- user.username %>" autocomplete="off" required>
+        <br>
+        <span class="title">Email</span>
+        <input id="email" type="text" value="<%- user.email %>" autocomplete="off" required>
+        <br>
+        <span class="title">Token</span>
+        <input id="token" type="text" value="<%- user.token %>" autocomplete="off" disabled>
+        <br>
+        <input type="submit" value="Submit" disabled>
+    <% } else { %>
+        <span>User does not exist</span>
+    <% } %>
 </form>
-<br><br>
-<code>
-Type:<br>
-Username:<br>
-Token:
-</code>
