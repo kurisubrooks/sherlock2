@@ -34,6 +34,9 @@ class RequestHandler {
             this.router.all(item.route, this.handle.bind(this));
         }
 
+        // Root
+        this.router.all("/", (req, res) => res.redirect("/panel"));
+
         // 404
         this.router.all("*", this.handle.bind(this));
     }
