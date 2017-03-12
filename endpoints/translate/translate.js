@@ -8,7 +8,9 @@ class Translate extends Endpoint {
             name: "Translate",
             description: "Translates Text to/from a language",
             route: "/api/translate",
-            token: true
+            token: true,
+            admin: false,
+            mask: false
         });
     }
 
@@ -32,36 +34,33 @@ class Translate extends Endpoint {
             }
         }
 
-        let response;
         const to_lang = this.validate(data.to).code;
         const from_lang = data.from ? this.validate(data.from).code : "auto";
         const query = this.slicer(data.query);
 
-        try {
-            const resp = await request({
-                headers: { "User-Agent": "Mozilla/5.0" },
-                uri: "http://translate.googleapis.com/translate_a/single",
-                qs: {
-                    client: "gtx",
-                    dt: "t",
-                    sl: from_lang,
-                    tl: to_lang,
-                    q: query // eslint-disable-line id-length
-                }
-            });
-
-            response = JSON.parse(resp.replace(/,+/g, ","));
-        } catch(error) {
+        const response = await request({
+            headers: { "User-Agent": "Mozilla/5.0" },
+            uri: "http://translate.googleapis.com/translate_a/single",
+            qs: {
+                client: "gtx",
+                dt: "t",
+                sl: from_lang,
+                tl: to_lang,
+                q: query // eslint-disable-line id-length
+            }
+        }).catch(err => {
             res.status(500).send({ ok: false, error: "Internal Server Error" });
-            return this.error(error);
-        }
+            return this.error(err);
+        });
+
+        const output = JSON.parse(response.replace(/,+/g, ","));
 
         return res.send({
             ok: true,
             to: this.validate(data.to || "en"),
-            from: this.validate(response[1]),
+            from: this.validate(output[1]),
             query: data.query,
-            result: response[0][0][0]
+            result: output[0][0][0]
         });
     }
 
