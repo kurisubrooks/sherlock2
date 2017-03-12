@@ -3,12 +3,15 @@
 const args = require("yargs").argv;
 const Database = require("../Database");
 
+if (!args.key) return console.error("Missing --key");
 if (!args.username) return console.error("Missing --username");
 if (!args.password) return console.error("Missing --password");
+if (!args.email) return console.error("Missing --email");
 
 const generate = async () => {
     const user = await Database.newUser({
-        type: 1,
+        auth: String(args.key),
+        email: String(args.email),
         username: String(args.username),
         password: String(args.password),
         admin: true
