@@ -45,6 +45,8 @@ class GeoRFS extends Endpoint {
             route: "/api/fires",
             method: "all",
             token: false,
+            admin: false,
+            mask: false,
             retriever: {
                 enable: true,
                 interval: 1,

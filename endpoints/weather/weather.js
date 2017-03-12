@@ -12,6 +12,8 @@ class Weather extends Endpoint {
             route: "/api/weather",
             method: "all",
             token: false,
+            admin: false,
+            mask: false,
             retriever: {
                 enable: true,
                 interval: 5,
