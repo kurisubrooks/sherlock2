@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const valid = require("validator");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const path = require("path");
@@ -25,12 +26,6 @@ class Database {
         const key = crypto.randomBytes(Math.ceil(12 / 2)).toString("hex");
         Database.Models.RegKeys.create({ key });
         return { ok: true, key };
-    }
-
-    static async validateRegKey(key) {
-        return await Database.Models.RegKeys.findOne({ where: { key } })
-            ? { ok: true }
-            : { ok: false, error: "Invalid Registration Key" };
     }
 
     static async checkToken(token) {
@@ -66,15 +61,11 @@ class Database {
         if (!password) return { ok: false, error: "Missing Password" };
 
         // Check if username exists
-        username = username.toLowerCase();
         const user = await Database.Models.User.findOne({ where: { username } });
         if (!user) return { ok: false, error: "Incorrect Credentials" };
 
         // Compare passwords
         const auth = await bcrypt.compare(password, user.password);
-
-        // Dafauq is this for?
-        // if (auth && !user.admin) return { ok: false, error: "Administrators Only" };
 
         // Return Results
         return auth
@@ -90,40 +81,48 @@ class Database {
         if (!data.password) return { ok: false, error: "Missing Password" };
 
         // Check auth key
-        if (!Database.validateRegKey(data.auth).ok) return { ok: false, error: "Invalid Auth Key" };
+        const keyCheck = await Database.Models.RegKeys.findOne({ where: { key: data.auth } });
+        if (!keyCheck) return { ok: false, error: "Invalid Auth Key" };
 
-        console.log("Auth Key is OK");
+        console.log("OK: Auth Key");
 
         // Check if user already exists
-        const check1 = await Database.Models.User.findOne({ where: { username: data.username } });
-        if (check1) return { ok: false, error: "Username already exists" };
+        const nameCheck = await Database.Models.User.findOne({ where: { username: data.username } });
+        if (nameCheck) return { ok: false, error: "Username already exists" };
 
-        console.log("User doesn't already exist, OK");
+        console.log("OK: Username isn't taken");
 
         // Check if email is valid
-        if (!/(.+)@(.+){2,}\.(.+){2,}/.test(data.email)) return { ok: false, error: "Invalid Email" };
+        if (!valid.isEmail(data.email)) return { ok: false, error: "Invalid Email" };
 
-        console.log("Email is VALID");
+        console.log("OK: Email is VALID");
 
         // Check if username is valid
         if (!/^[a-zA-Z0-9]+$/.test(data.username)) return { ok: false, error: "Invalid Username" };
 
-        console.log("Username is VALID");
+        console.log("OK: Username is VALID");
 
         // Check if token already exists
         const token = Database.generateToken();
-        const check2 = await Database.Models.User.findOne({ where: { token } });
-        if (check2) return { ok: false, error: "Internal Server Error" };
+        const tokenCheck = await Database.Models.User.findOne({ where: { token } });
+        if (tokenCheck) return { ok: false, error: "Internal Server Error" };
 
-        console.log("Generated token is OK");
+        console.log("OK: Generated token isn't taken");
 
         // Hash password
         const hash = bcrypt.hashSync(data.password, 10);
 
-        console.log("Hashed Password");
+        console.log("OK: Password Hashed");
+
+        // Delete Key from DB
+        const keyRemove = await Database.Models.RegKeys.findOne({ where: { key: data.auth } });
+        if (!keyRemove) return { ok: false, error: "Internal Server Error" };
+        await keyRemove.destroy();
+
+        console.log("OK: Auth Key Deleted");
 
         // Add user to db
-        await Database.Models.User.create({
+        const user = await Database.Models.User.create({
             admin: data.admin || false,
             token: token,
             email: data.email,
@@ -133,13 +132,10 @@ class Database {
             disabled: false
         });
 
-        console.log("Created user");
+        if (!user) return { ok: false, error: "Internal Server Error" };
 
-        (await Database.Models.RegKeys.findOne({ where: { key: data.auth } })).destroy();
+        console.log("OK: User Created");
 
-        console.log("Deleted Auth Key");
-
-        // Return Data
         return { ok: true, username: data.username, token };
     }
 
