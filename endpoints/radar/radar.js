@@ -28,7 +28,6 @@ class Radar extends Endpoint {
         super({
             name: "Radar",
             description: "Generates Radar Image for Sydney",
-            disabled: true,
             route: "/api/radar",
             method: "all",
             token: false,
@@ -104,7 +103,7 @@ class Radar extends Endpoint {
                         return request.get({
                             headers: { "User-Agent": "Mozilla/5.0" },
                             uri: item.image,
-                            encoding: "binary"
+                            encoding: null
                         }, (error, response, body) => {
                             if (error) if (error) return this.handleError(error, res);
 
@@ -141,7 +140,7 @@ class Radar extends Endpoint {
                 return request.get({
                     headers: { "User-Agent": "Mozilla/5.0" },
                     uri: response.frames[Number(frames) - 1].image,
-                    encoding: "binary"
+                    encoding: null
                 }, (error, response, body) => {
                     if (error) return this.handleError(error, res);
 
