@@ -26,7 +26,7 @@ npm install
 ### Setup
 Rename or duplicate `keychain.json.example` in the root directory to `keychain.json` and complete the JSON file by providing your API Keys for the various services listed in the file.
 
-**Note:** `session` in `keychain.json` is not an API Key, and instead is the secure key for encrypting client↔server sessions. You can easily generate a key for this by opening the node REPL in your terminal by running `node`, then copy pasting the following code:
+**Note:** `session` in `keychain.json` is not an API Key, and instead is a secure key that is used for checking the validity of client↔server sessions. You can easily generate a key for this by opening the node REPL in your terminal by running `node`, then copy pasting the following code:
 
 ```js
 crypto.randomBytes(Math.ceil(80 / 2)).toString("ascii")
