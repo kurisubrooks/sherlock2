@@ -28,6 +28,13 @@ class Database {
         return { ok: true, key };
     }
 
+    static validateRegKey(key) {
+        return Database.Models.RegKeys.findOne({ where: { key } }).then(data => {
+            if (!data) return { ok: false, error: "Invalid Auth Key" };
+            return { ok: true };
+        });
+    }
+
     static async checkToken(token) {
         if (!token) return { ok: false, error: "Missing Token" };
         const user = await Database.Models.User.findOne({ where: { token } });

@@ -21,7 +21,7 @@ class RegistrationHandler extends Endpoint {
         if (!data.auth) return res.send({ ok: false, error: "Auth Key Required" });
 
         // Validate Registration Key
-        if (!Database.validateRegKey(data.auth)) return res.send({ ok: false, error: "Invalid Auth Key" });
+        if (!await Database.validateRegKey(data.auth)) return res.send({ ok: false, error: "Invalid Auth Key" });
 
         // Handle User Generation
         return Database.newUser({
