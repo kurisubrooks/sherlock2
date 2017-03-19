@@ -42,7 +42,7 @@ class GeoRFS extends Endpoint {
         super({
             name: "GeoRFS",
             description: "Check for fires in/near Greater Western Sydney",
-            route: "/api/fires",
+            route: "/api/fire",
             method: "all",
             token: false,
             admin: false,
