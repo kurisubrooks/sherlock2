@@ -1,6 +1,6 @@
 const Endpoint = require("../../core/Endpoint");
-const moment = require("moment");
 const keys = require("../../keychain.json");
+const moment = require("moment");
 const path = require("path");
 const fs = require("fs");
 
