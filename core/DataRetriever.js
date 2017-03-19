@@ -20,17 +20,13 @@ class DataRetriever {
     }
 
     async handle(options) {
-        let response;
-
-        try {
-            response = await request({
-                headers: { "User-Agent": "Mozilla/5.0" },
-                uri: options.url,
-                json: options.format === "json"
-            });
-        } catch(error) {
+        const response = await request({
+            headers: { "User-Agent": "Mozilla/5.0" },
+            uri: options.url,
+            json: options.format === "json"
+        }).catch(error => {
             return this.error(error);
-        }
+        });
 
         return fs.writeFileSync(path.join(__dirname, "..", "storage", `${this.instance.name}.json`), JSON.stringify({ ok: true, data: response }));
     }
