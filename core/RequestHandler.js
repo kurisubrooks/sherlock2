@@ -3,7 +3,6 @@ const express = require("express");
 const bodyparser = require("body-parser");
 const session = require("express-session");
 
-const config = require("../config.json");
 const keychain = require("../keychain.json");
 const Logger = require("./Util/Logger");
 const Database = require("./Database");
@@ -42,17 +41,18 @@ class RequestHandler {
     }
 
     async handle(req, res) {
-        if (!req.secure && !config.debug) return res.redirect(`https://${req.hostname}${req.url}`);
-        if (req.secure) res.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
-
-        const ip = req.ip.replace("::ffff:", "");
+        const ip = req.headers["x-real-ip"];
         const url = req.url.split("?")[0];
         const token = req.headers.authorization;
         const method = req.method;
         const data = method === "GET" ? req.query : req.body;
         const route = this.routes.get(req.route.path);
-        const user = token ? await Database.checkToken(token) : req.session && req.session.token ? await Database.checkToken(req.session.token) : { ok: false };
         const masked = route && route.mask ? {} : data;
+        const user = token
+            ? await Database.checkToken(token)
+            : req.session && req.session.token
+                ? await Database.checkToken(req.session.token)
+                : { ok: false };
 
         if (!route) {
             res.status(404).send({ ok: false, error: "Missing/Unknown Endpoint" });
