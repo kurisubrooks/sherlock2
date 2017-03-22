@@ -6,7 +6,7 @@
             <td>Username</td>
             <td>Email</td>
             <td>Token</td>
-            <td>Edit</td>
+            <td style="text-align:center;">Edit</td>
         </tr>
     </thead>
     <tbody>
@@ -16,7 +16,8 @@
             <td><%= users[i].disabled %></td>
             <td><%= users[i].username %></td>
             <td><%= users[i].email %></td>
-            <td><%= users[i].token %></td><td><a href="/panel/users/edit?username=<%= users[i].username %>"><i class="material-icons">edit</i></a></td>
+            <td><%= users[i].token %></td>
+            <td style="text-align:center;"><a href="/panel/users/edit?username=<%= users[i].username %>"><i class="material-icons">edit</i></a></td>
         </tr>
         <% } %>
     </tbody>

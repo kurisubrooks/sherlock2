@@ -21,6 +21,11 @@ a {
     text-decoration: none;
 }
 
+hr {
+    border: none;
+    border-bottom: 1px solid #EEE;
+}
+
 small {
     color: #555;
 }
@@ -29,18 +34,17 @@ pre, code {
     margin: 0;
     font-family: "SF Mono", "Roboto Mono", Courier, monospace;
     font-size: 0.9em;
-    color: #FFF;
-    background: #333;
+    color: #333;
+    background: #FFF;
     line-height: 1.5em;
 }
 
 pre {
     display: block;
+    font-weight: 500;
     padding: 18px 24px;
-    border: 2px solid #2F2F2F;
-    border-radius: 0.2em;
+    border: 1px solid #EEE;
     margin-bottom: 10px;
-    max-width: 900px;
     overflow-y: auto;
 }
 
@@ -55,6 +59,12 @@ code {
     padding: 1px 4px;
     border: 2px solid #2F2F2F;
     border-radius: 0.2em;
+}
+
+blockquote {
+    border-left: 3px solid #DDD;
+    margin-left: 0;
+    padding: 4px 20px;
 }
 
 input:focus,
@@ -385,6 +395,8 @@ select {
     background: #EEE;
 }
 
+/*
 .container .content .main table tr td:last-child {
     text-align: center;
 }
+*/
