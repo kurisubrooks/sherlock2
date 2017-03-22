@@ -1,18 +1,57 @@
 <link href="/static/styles/highlightjs/theme.css" rel="stylesheet">
-<!--<p>Google Translate API Wrapper</p>
-<p><a href="https://github.com/kurisubrooks/sherlock2/blob/master/endpoints/translate/languages.json">Supported Languages</a></p>-->
+
+<style>
+    table { min-width: 500px; width: auto !important; border: 1px solid #EEE !important; }
+</style>
+
+<blockquote>This endpoint provides a Google Translate API Wrapper.</blockquote>
+
+<br>
 
 <h3>Endpoint</h3>
-<pre><code>POST /api/translate</pre></code>
+<pre><code>/api/translate</pre></code>
+
+<br>
+
+<h3>Details</h3>
+<table>
+    <tr>
+        <td>Request Types</td>
+        <td>GET/POST</td>
+    </tr>
+    <tr>
+        <td>Admin Only?</td>
+        <td>no</td>
+    </tr>
+    <tr>
+        <td>Token Required?</td>
+        <td>yes</td>
+    </tr>
+    <tr>
+        <td>Rate Limiting?</td>
+        <td>yes</td>
+    </tr>
+</table>
+
+<br>
 
 <h3>Params</h3>
-<pre><code class="hljs javascript">{
-    "to": "Japanese",
-    "from": "English", // optional
-    "query": "Hello, World!"
-}</pre></code>
+<table>
+    <tr>
+        <td>to</td>
+        <td>String, Language Resolvable</td>
+    </tr>
+    <tr>
+        <td>from</td>
+        <td>String, Language Resolvable, optional</td>
+    </tr>
+    <tr>
+        <td>query</td>
+        <td>String, Input Translation Query</td>
+    </tr>
+</table>
 
-<br><br>
+<br><hr>
 
 <h3>Example <small>(using request-promise)</small></h3>
 <pre><code class="hljs javascript">await request({
@@ -26,35 +65,10 @@
     }
 });</pre></code>
 
-<h3>Response</h3>
-<pre><code class="hljs javascript">{
-    "ok": true,
-    "to": {
-        "name": "Japanese",
-        "local": "日本語",
-        "code": "ja"
-    },
-    "from": {
-        "name": "English",
-        "local": "English",
-        "code": "en"
-    },
-    "query": "Hello, World!",
-    "result": "こんにちは、世界！"
-}</code></pre>
-<!--
+<br>
 
-<h3>Endpoint</h3>
-<pre><code><a href="https://api.kurisubrooks.com/api/translate">https://api.kurisubrooks.com/api/translate</a></code></pre>
-<h3>Params</h3>
-<p><strong><code>to</code></strong>: the language code to translate the query to<br>
-<strong><code>from</code></strong>: the language code to translate from <em>(optional)</em><br>
-<strong><code>query</code></strong>: the text to translate to/from</p>
-<h3>Example Request</h3>
-<h5>Request Types: GET / POST</h5>
-<pre><code>https://api.kurisubrooks.com/api/translate?to=ja&amp;query=Hello,%20World!
-</code></pre>
-<pre><code class="language-json">{
+<h3>Response <small>(example)</small></h3>
+<pre><code class="hljs json">{
     "ok": true,
     "to": {
         "name": "Japanese",
@@ -69,40 +83,256 @@
     "query": "Hello, World!",
     "result": "こんにちは、世界！"
 }</code></pre>
+
+<br><hr>
+
+<h3>Supported Languages</h3>
+<blockquote>Any of the below values can be used as a valid to/from language. (Case Insensitive)</blockquote>
+<pre><code class="hljs json">[
+    {
+        "name": "Afrikaans",
+        "local": "Afrikaans",
+        "code": "af"
+    },
+    {
+        "name": "Arabic",
+        "local": "العربية",
+        "code": "ar"
+    },
+    {
+        "name": "Bengali",
+        "local": "বাংলা",
+        "code": "bn"
+    },
+    {
+        "name": "Bulgarian",
+        "local": "български език",
+        "code": "bg"
+    },
+    {
+        "name": "Chinese",
+        "local": "中文",
+        "code": "zh"
+    },
+    {
+        "name": "Chinese (Simplified)",
+        "local": "简体中文",
+        "code": "zh-cn"
+    },
+    {
+        "name": "Chinese (Traditional)",
+        "local": "繁體中文",
+        "code": "zh-tw"
+    },
+    {
+        "name": "Czech",
+        "local": "čeština",
+        "code": "cs"
+    },
+    {
+        "name": "Danish",
+        "local": "dansk",
+        "code": "da"
+    },
+    {
+        "name": "Dutch",
+        "local": "Nederlands",
+        "code": "nl"
+    },
+    {
+        "name": "English",
+        "local": "English",
+        "code": "en"
+    },
+    {
+        "name": "Filipino",
+        "local": "Tagalog",
+        "code": "tl"
+    },
+    {
+        "name": "Finnish",
+        "local": "suomi",
+        "code": "fi"
+    },
+    {
+        "name": "French",
+        "local": "français",
+        "code": "fr"
+    },
+    {
+        "name": "German",
+        "local": "Deutsch",
+        "code": "de"
+    },
+    {
+        "name": "Greek",
+        "local": "ελληνικά",
+        "code": "el"
+    },
+    {
+        "name": "Hindi",
+        "local": "हिन्दी",
+        "code": "hi"
+    },
+    {
+        "name": "Hungarian",
+        "local": "magyar",
+        "code": "hu"
+    },
+    {
+        "name": "Indonesian",
+        "local": "Bahasa Indonesia",
+        "code": "id"
+    },
+    {
+        "name": "Irish",
+        "local": "Gaeilge",
+        "code": "ga"
+    },
+    {
+        "name": "Italian",
+        "local": "italiano",
+        "code": "it"
+    },
+    {
+        "name": "Japanese",
+        "local": "日本語",
+        "code": "ja"
+    },
+    {
+        "name": "Korean",
+        "local": "한국어",
+        "code": "ko"
+    },
+    {
+        "name": "Latin",
+        "local": "latine",
+        "code": "la"
+    },
+    {
+        "name": "Malay",
+        "local": "bahasa Melayu",
+        "code": "ms"
+    },
+    {
+        "name": "Norwegian",
+        "local": "Norsk",
+        "code": "no"
+    },
+    {
+        "name": "Polish",
+        "local": "język polski",
+        "code": "pl"
+    },
+    {
+        "name": "Portuguese",
+        "local": "português",
+        "code": "pt"
+    },
+    {
+        "name": "Punjabi",
+        "local": "ਪੰਜਾਬੀ",
+        "code": "pa"
+    },
+    {
+        "name": "Russian",
+        "local": "русский язык",
+        "code": "ru"
+    },
+    {
+        "name": "Slovak",
+        "local": "slovenčina",
+        "code": "sk"
+    },
+    {
+        "name": "Spanish",
+        "local": "español",
+        "code": "es"
+    },
+    {
+        "name": "Swedish",
+        "local": "Svenska",
+        "code": "sv"
+    },
+    {
+        "name": "Thai",
+        "local": "ไทย",
+        "code": "th"
+    },
+    {
+        "name": "Turkish",
+        "local": "Türkçe",
+        "code": "tr"
+    },
+    {
+        "name": "Ukranian",
+        "local": "українська мова",
+        "code": "uk"
+    },
+    {
+        "name": "Vietnamese",
+        "local": "Tiếng Việt",
+        "code": "vi"
+    },
+    {
+        "name": "Welsh",
+        "local": "Cymraeg",
+        "code": "cy"
+    }
+]</code></pre>
+
+<br><hr>
+
 <h3>Errors</h3>
-<h5>Missing Fields</h5>
-<blockquote>
-<p>Returns if a required arg in the URL is missing</p>
-</blockquote>
-<pre><code class="language-json">{
-    "<span class="hljs-attribute">ok</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
-    "<span class="hljs-attribute">error</span>": <span class="hljs-value"><span class="hljs-string">"missing fields"</span>
-</span>}
-</code></pre>
-<h5><a id="Unknown_Language_49"></a>Unknown Language</h5>
-<blockquote>
-<p>Returns if an unknown/unsupported language code was found in the to/from field</p>
-</blockquote>
-<pre><code class="language-json">{
-    "<span class="hljs-attribute">ok</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
-    "<span class="hljs-attribute">error</span>": <span class="hljs-value"><span class="hljs-string">"unknown language in 'to' field"</span>
-</span>}
-</code></pre>
-<pre><code class="language-json">{
-    "<span class="hljs-attribute">ok</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
-    "<span class="hljs-attribute">error</span>": <span class="hljs-value"><span class="hljs-string">"unknown language in 'from' field"</span>
-</span>}
-</code></pre>
-<h5><a id="Internal_Server_Error_65"></a>Internal Server Error</h5>
-<blockquote>
-<p>Returns if an internal error has occurred in the server process</p>
-</blockquote>
-<pre><code class="language-json">{
-    "<span class="hljs-attribute">ok</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
-    "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-number">500</span></span>,
-    "<span class="hljs-attribute">error</span>": <span class="hljs-value"><span class="hljs-string">"Internal Server Error"</span>
-</span>}
-</code></pre>
--->
+<pre><code class="hljs json">Response Code: 400
+
+{
+    ok: false,
+    error: "Missing 'query' field"
+}</pre></code>
+<blockquote>Request was missing the "query" field from the body/params</blockquote>
+
+<br>
+
+<pre><code class="hljs json">Response Code: 400
+
+{
+    ok: false,
+    error: "Missing 'to' lang field"
+}</pre></code>
+<blockquote>Request was missing the "to" field from the body/params</blockquote>
+
+<br>
+
+<pre><code class="hljs json">Response Code: 400
+
+{
+    ok: false,
+    error: "Unknown 'to' Language"
+}</pre></code>
+<blockquote>The provided value in the "to" field is not a resolvable language</blockquote>
+
+<br>
+
+<pre><code class="hljs json">Response Code: 400
+
+{
+    ok: false,
+    error: "Unknown 'from' Language"
+}</pre></code>
+<blockquote>The provided value in the "from" field is not a resolvable language</blockquote>
+
+<br>
+
+<pre><code class="hljs json">Response Code: 500
+
+{
+    ok: false,
+    error: "Internal Server Error"
+}</pre></code>
+<blockquote>Something went wrong backend, this may occur due to a malformed request</blockquote>
+
+
+
 <script src="/static/scripts/highlightjs/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
