@@ -41,7 +41,7 @@ class RequestHandler {
     }
 
     async handle(req, res) {
-        const ip = req.headers["x-real-ip"];
+        const ip = req.headers["x-real-ip"] || req.ip.replace("::ffff:", "");
         const url = req.url.split("?")[0];
         const token = req.headers.authorization;
         const method = req.method;
