@@ -8,7 +8,7 @@ class RadarDocs extends Endpoint {
             route: "/panel/docs/radar",
             method: "GET",
             token: false,
-            admin: true,
+            admin: false,
             mask: false
         });
     }

@@ -8,7 +8,7 @@ class WeatherDocs extends Endpoint {
             route: "/panel/docs/weather",
             method: "GET",
             token: false,
-            admin: true,
+            admin: false,
             mask: false
         });
     }

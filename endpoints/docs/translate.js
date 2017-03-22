@@ -8,7 +8,7 @@ class TranslateDocs extends Endpoint {
             route: "/panel/docs/translate",
             method: "GET",
             token: false,
-            admin: true,
+            admin: false,
             mask: false
         });
     }
