@@ -36,14 +36,15 @@ pre, code {
     font-size: 0.9em;
     color: #333;
     background: #FFF;
+    border: 1px solid #EEE;
     line-height: 1.5em;
 }
 
 pre {
     display: block;
     font-weight: 500;
+    max-height: 600px;
     padding: 18px 24px;
-    border: 1px solid #EEE;
     margin-bottom: 10px;
     overflow-y: auto;
 }
@@ -55,10 +56,7 @@ pre code {
 }
 
 code {
-    max-height: 600px;
     padding: 1px 4px;
-    border: 2px solid #2F2F2F;
-    border-radius: 0.2em;
 }
 
 blockquote {
