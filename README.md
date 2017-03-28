@@ -13,7 +13,6 @@ brew install pkg-config cairo pango libpng jpeg giflib
 **Ubuntu**
 ```bash
 sudo apt install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
-sudo setcap 'cap_net_bind_service=+ep' `which node`
 ```
 
 ### Installation
