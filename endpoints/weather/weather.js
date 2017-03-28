@@ -138,7 +138,7 @@ class Weather extends Endpoint {
             "hazy": "haze_fog_dust_smoke",
             "mostlycloudy": day ? "mostly_cloudy_day" : "mostly_cloudy_night",
             "mostlysunny": "mostly_sunny",
-            "partlycloudy": day ? "partly_cloudy" : "partly_cloudy_night",
+            "partlycloudy": day ? "partly_cloudy_day" : "partly_cloudy_night",
             "partlysunny": "partly_sunny",
             "rain": "showers_rain",
             "sleat": "wintry_mix_rain_snow",
