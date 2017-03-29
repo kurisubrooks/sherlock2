@@ -42,9 +42,6 @@ class UnitConverter extends Endpoint {
                 const number = Number(amount);
                 const unit = item;
 
-                fromUnit = from;
-                toUnit = to;
-
                 if (isNaN(number)) {
                     return res.status(400).send({ ok: false, error: "Query doesn't resolve to a valid number" });
                 }
