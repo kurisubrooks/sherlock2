@@ -16,8 +16,7 @@ class UnitConverter extends Endpoint {
 
     async run(req, res, data) {
         const store = [];
-        let fromFound = false, toFound = false,
-            fromUnit, toUnit;
+        let fromFound = false, toFound = false;
 
         if (!data.query) {
             return res.status(400).send({ ok: false, error: "Missing 'query' field" });
@@ -93,10 +92,10 @@ class UnitConverter extends Endpoint {
         }
 
         if (!fromFound || !toFound) {
-            return res.status(400).send({ ok: false, error: `${fromUnit || toUnit} isn't a valid/supported unit` });
+            return res.status(400).send({ ok: false, error: `Invalid/Unsupported Unit/Combination` });
         }
 
-        return res.status(400).send({ ok: false, error: "Unable to parse query" });
+        return res.status(500).send({ ok: false, error: "Unable to parse query" });
     }
 }
 
