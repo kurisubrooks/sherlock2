@@ -3,7 +3,7 @@ module.exports = {
         SI: {
             name: "kelvin",
             unit: "K",
-            display: ["°K", "°K"],
+            display: ["K", "K"],
             match: [
                 "kelvin",
                 "k"
@@ -15,7 +15,7 @@ module.exports = {
             {
                 name: "celsius",
                 unit: "C",
-                display: ["°C", "°C"],
+                display: ["C", "C"],
                 match: [
                     "celsius", "centigrade",
                     "c"
@@ -26,7 +26,7 @@ module.exports = {
             {
                 name: "fahrenheit",
                 unit: "F",
-                display: ["°F", "°F"],
+                display: ["F", "F"],
                 match: [
                     "fahrenheit",
                     "f"
@@ -232,8 +232,8 @@ module.exports = {
                     "pounds", "pound",
                     "lb"
                 ],
-                toSI: unit => unit * 2.20462262185,
-                fromSI: unit => unit / 2.20462262185
+                toSI: unit => unit / 2.20462,
+                fromSI: unit => unit * 2.20462
             },
             {
                 name: "ounce",
@@ -243,8 +243,8 @@ module.exports = {
                     "ounces", "ounce",
                     "oz"
                 ],
-                toSI: unit => unit * 35.2739619,
-                fromSI: unit => unit / 35.2739619
+                toSI: unit => unit / 35.2739619,
+                fromSI: unit => unit * 35.2739619
             }
         ]
     },
