@@ -9,7 +9,7 @@ class PanelLogin extends Endpoint {
             method: "GET",
             token: false,
             admin: false,
-            mask: false
+            mask: true
         });
     }
 
