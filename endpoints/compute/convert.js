@@ -23,34 +23,43 @@ class UnitConverter extends Endpoint {
         }
 
         for (const item of Object.keys(units)) {
+            // Add Base Item to Items
             units[item].derived.push(units[item].SI);
 
+            // Loop & Check Item Match Queries
             for (const unit of units[item].derived) {
                 if (!unit.match || !Array.isArray(unit.match)) {
                     res.status(500).send({ ok: false, error: "Internal Server Error" });
                     return this.error(`Unit '${unit.name}' doesn't have a valid match array`);
                 }
 
+                // Add to array
                 store.push(...unit.match);
             }
 
+            // Regex Parser Format
             const match = new RegExp(/((?:\+|-)?\d*\.?\d+)\s?(.+) (?:to|as|in) (.+)/, "g");
             const exec = match.exec(data.query);
 
+            // If the query matches the regex pattern:
             if (exec) {
+                console.log(true);
                 const [input, amount, from, to] = exec;
                 const number = Number(amount);
                 const unit = item;
 
+                // If the input number is not a number, error
                 if (isNaN(number)) {
                     return res.status(400).send({ ok: false, error: "Query doesn't resolve to a valid number" });
                 }
 
-                if (!units[item].derived.find(unit => unit.match.includes(from))) continue;
-                fromFound = true;
+                // Check if units exist
+                const fromExists = units[item].derived.find(unit => unit.match.includes(from));
+                const toExists = units[item].derived.find(unit => unit.match.includes(to));
 
-                if (!units[item].derived.find(unit => unit.match.includes(to))) continue;
-                toFound = true;
+                if (fromExists) fromFound = true;
+                if (toExists) toFound = true;
+                if (!fromExists || !toExists) continue;
 
                 const objects = {
                     unit: units[item],
