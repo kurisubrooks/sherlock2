@@ -34,9 +34,13 @@ class Translate extends Endpoint {
             }
         }
 
+        // console.log("Data", data);
+
         const to_lang = this.validate(data.to).code;
         const from_lang = data.from ? this.validate(data.from).code : "auto";
         const query = this.slicer(data.query);
+
+        // console.log("Query", to_lang, from_lang, query);
 
         const response = await request({
             headers: { "User-Agent": "Mozilla/5.0" },
@@ -53,12 +57,18 @@ class Translate extends Endpoint {
             return this.error(err);
         });
 
+        // console.log("Request", response);
+
         const output = JSON.parse(response.replace(/,+/g, ","));
+
+        // console.log("Parsed", output);
+
+        // console.log("Response", this.validate(data.to || "en"), this.validate(output[2]), data.query, output[0][0][0]);
 
         return res.send({
             ok: true,
             to: this.validate(data.to || "en"),
-            from: this.validate(output[1]),
+            from: this.validate(output[2]),
             query: data.query,
             result: output[0][0][0]
         });
@@ -66,6 +76,8 @@ class Translate extends Endpoint {
 
     validate(query) {
         if (!query) return null;
+
+        // console.log("Validate Query", query);
 
         for (const obj of langs) {
             const input = query.toLowerCase();
@@ -87,6 +99,8 @@ class Translate extends Endpoint {
             "」": "\" ",
             "\u3000": " "
         };
+
+        // console.log("Slice Query", query);
 
         return query
             .replace(/\r?\n|\r/g, " ")
