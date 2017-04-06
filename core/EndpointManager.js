@@ -39,7 +39,7 @@ class EndpointManager {
         if (this.routes.has(instance.route)) throw new Error("Endpoints cannot have the same route");
         if (instance.retriever) new DataRetriever(instance).start();
 
-        Logger.info(`${re ? "Reloaded" : "Loaded"} Command`, toUpper(instance.route));
+        Logger.info(`${re ? "Reloaded" : "Loaded"} Endpoint`, toUpper(instance.route));
         return this.routes.set(instance.route, instance);
     }
 
