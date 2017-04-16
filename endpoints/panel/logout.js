@@ -9,12 +9,13 @@ class PanelLogout extends Endpoint {
             method: "GET",
             token: false,
             admin: false,
-            mask: false
+            mask: true
         });
     }
 
     async run(req, res) {
         delete req.session.token;
+        delete req.session.admin;
         return res.redirect("/panel/login");
     }
 }
