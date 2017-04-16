@@ -1,11 +1,12 @@
 const Endpoint = require("../../core/Endpoint");
+const Database = require("../../core/Database");
 
-class Panel extends Endpoint {
+class MyPanel extends Endpoint {
     constructor() {
         super({
             name: "Panel",
             description: "Admin Panel",
-            route: "/panel",
+            route: "/panel/me",
             method: "GET",
             token: false,
             admin: false,
@@ -15,15 +16,20 @@ class Panel extends Endpoint {
 
     async run(req, res) {
         if (!req.session.token) return res.redirect("/panel/login");
+
+        const user = await Database.Models.User.findOne({ where: { token: req.session.token } });
+
         return res.render("panel/views/layout", {
             title: "Home",
-            content: "home.ejs",
+            content: "me.ejs",
             data: {
-                active: null,
-                admin: req.session.admin
+                active: "me",
+                admin: req.session.admin,
+                token: req.session.token,
+                user
             }
         });
     }
 }
 
-module.exports = Panel;
+module.exports = MyPanel;
