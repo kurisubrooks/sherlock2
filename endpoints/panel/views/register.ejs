@@ -7,8 +7,8 @@
     <style>.error { display: none; }</style>
     <script src="/static/scripts/jquery/3.1.1.js"></script>
     <script>
-        $(() => {
-            $("#form").on("submit", event => {
+        $(function() {
+            $("#form").on("submit", function(event) {
                 event.preventDefault();
                 const email = $("#email").val()
                 const username = $("#username").val();
@@ -18,12 +18,14 @@
 
                 if (!email || !username || !password || !password2 || !auth) {
                     $(".error").show();
-                    return $("#errmsg").text("Baka! You have to fill in the boxes. uwu");
+                    $("#errmsg").text("Baka! You have to fill in the boxes. uwu");
+                    return;
                 }
 
                 if (password !== password2) {
                     $(".error").show();
-                    return $("#errmsg").text("Password Mismatch");
+                    $("#errmsg").text("Password Mismatch");
+                    return;
                 }
 
                 /*if (!(/(.+)@(.+){2,}\.(.+){2,}/.test(email))) {
@@ -33,10 +35,11 @@
 
                 if (!(/^[a-zA-Z0-9]+$/).test(username)) {
                     $(".error").show();
-                    return $("#errmsg").text("Usernames can only contain letters and numbers");
+                    $("#errmsg").text("Usernames can only contain letters and numbers");
+                    return;
                 }
 
-                $.post("/api/register", { email, username, password, auth }, data => {
+                $.post("/api/register", { email: email, username: username, password: password, auth: auth }, function(data) {
                     console.log(data);
 
                     if (data.ok) {
@@ -46,11 +49,11 @@
                     } else {
                         $(".error").show();
                         $("#errmsg").text(data.error);
-                        return false;
+                        return;
                     }
                 });
 
-                return false;
+                return;
             });
         });
     </script>

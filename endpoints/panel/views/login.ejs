@@ -7,28 +7,29 @@
     <style>.error { display: none; }</style>
     <script src="/static/scripts/jquery/3.1.1.js"></script>
     <script>
-        $(() => {
-            $("#form").on("submit", event => {
+        $(function() {
+            $("#form").on("submit", function(event) {
                 event.preventDefault();
-                const username = $("#username").val();
-                const password = $("#password").val();
+                var username = $("#username").val();
+                var password = $("#password").val();
 
                 if (!username || !password) {
                     $(".error").show();
-                    return $("#errmsg").text("Baka! You have to fill in the boxes. uwu");
+                    $("#errmsg").text("Baka! You have to fill in the boxes. uwu");
+                    return;
                 }
 
-                $.post("/api/login", { username, password }, data => {
+                $.post("/api/login", { username: username, password: password }, function(data) {
                     if (data.ok) {
-                        window.location.replace("/panel");
+                        window.location.replace("/panel/me");
                     } else {
                         $(".error").show();
                         $("#errmsg").text(data.error);
-                        return false;
+                        return;
                     }
                 });
 
-                return false;
+                return;
             });
         });
     </script>
