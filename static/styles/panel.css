@@ -7,9 +7,16 @@
 html, body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #35394A 0%, #1F222E 100%);
     font-family: "Roboto", Helvetica, Arial, sans-serif;
     height: 100%;
+}
+
+body {
+    background: linear-gradient(135deg, #35394A 0%, #1F222E 100%);
+}
+
+body.panel {
+    background: #EEE;
 }
 
 h3 {
@@ -123,7 +130,6 @@ select {
     display: block;
     -webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none;
     font: inherit;
     width: 100%;
     font-size: 14px;
@@ -146,8 +152,6 @@ select {
     text-transform: uppercase;
     -webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none;
-
     font-size: 14px;
     font-family: inherit;
     border: 2px solid rgb(57, 61, 85);
@@ -289,7 +293,6 @@ select {
     display: block;
     -webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none;
     background: #FFF;
     width: 100%;
     max-width: 400px;
@@ -322,7 +325,6 @@ select {
 .container .content .main button {
     -webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none;
     background: rgba(255, 255, 255, 0);
     cursor: pointer;
     font: inherit;
