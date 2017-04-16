@@ -15,7 +15,7 @@ class PanelManageUsers extends Endpoint {
     }
 
     async run(req, res) {
-        if (!req.session || !req.session.token) return res.redirect("/panel/login");
+        if (!req.session.token) return res.redirect("/panel/login");
 
         const users = await Database.Models.User.findAll();
 

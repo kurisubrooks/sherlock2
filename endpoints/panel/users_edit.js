@@ -15,7 +15,7 @@ class PanelEditUser extends Endpoint {
     }
 
     async run(req, res, data) {
-        if (!req.session || !req.session.token) return res.redirect("/panel/login");
+        if (!req.session.token) return res.redirect("/panel/login");
 
         const user = await Database.Models.User.findOne({ where: { username: data.username } });
 
