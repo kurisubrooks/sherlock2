@@ -1,3 +1,12 @@
+<li>User</li>
+<ul>
+    <a href="/panel/me"><li <% if (active === "me") { %>class="active"<% } %>>My Account</li></a>
+    <!--<a href="/panel/logout"><li>Logout</li></a>-->
+    <!--<a href="/panel/user/edit"><li <% if (active === "users_chgpswd") { %>class="active"<% } %>>Change Password</li></a>-->
+</ul>
+
+<li class="buffer"></li>
+
 <li>Docs</li>
 <ul>
     <a href="/panel/docs/translate"><li <% if (active === "docs_translate") { %>class="active"<% } %>>Translate</li></a>
@@ -5,20 +14,12 @@
     <a href="/panel/docs/radar"><li <% if (active === "docs_radar") { %>class="active"<% } %>>Radar</li></a>
 </ul>
 
-<!--<li>User</li>
-<ul>
-    <a href="/panel/users/chgpswd"><li <% if (active === "users_chgpswd") { %>class="active"<% } %>>Change Password</li></a>
-</ul>-->
-
 <% if (admin) { %>
-<li class="buffer"></li>
+    <li class="buffer"></li>
 
-<li>Server</li>
-<ul>
-    <a href="/panel/logs"><li <% if (active === "logs") { %>class="active"<% } %>>Server Logs</li></a>
-    <a href="/panel/system"><li <% if (active === "system") { %>class="active"<% } %>>System Status</li></a>
-    <a href="/panel/endpoints"><li <% if (active === "endpoints_manage") { %>class="active"<% } %>>Manage Endpoints</li></a>
-    <a href="/panel/users/manage"><li <% if (active === "users_manage") { %>class="active"<% } %>>Manage Users</li></a>
-    <a href="/panel/generator"><li <% if (active === "generator") { %>class="active"<% } %>>Generate RegKey</li></a>
-</ul>
+    <li>Server</li>
+    <ul>
+        <a href="/panel/system"><li <% if (active === "system") { %>class="active"<% } %>>Control Panel</li></a>
+        <a href="/panel/users/manage"><li <% if (active === "users_manage") { %>class="active"<% } %>>Manage Users</li></a>
+    </ul>
 <% } %>
