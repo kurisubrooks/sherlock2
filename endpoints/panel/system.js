@@ -14,7 +14,7 @@ class PanelSystem extends Endpoint {
     }
 
     async run(req, res) {
-        if (!req.session || !req.session.token) return res.redirect("/panel/login");
+        if (!req.session.token) return res.redirect("/panel/login");
         return res.render("panel/views/layout", {
             title: "System",
             content: "system.ejs",
