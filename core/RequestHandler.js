@@ -13,16 +13,20 @@ class RequestHandler {
         this.express = express;
         this.router = this.express.Router(); // eslint-disable-line new-cap
         this.server = app;
+
         this.server.use(bodyparser.json());
         this.server.use(bodyparser.urlencoded({ extended: true }));
         this.server.use(session({ resave: 1, saveUninitialized: 0, secret: keychain.session, maxAge: 168 * 60 * 60 * 1000 }));
+
         this.server.set("view engine", "ejs");
-        this.server.set("views", path.join(__dirname, "..", "endpoints"));
+        this.server.set("views", path.join(__dirname, ".."));
         this.server.use(this.express.static("public"));
-        this.server.use("/static", this.express.static(path.join(__dirname, "..", "static")));
         this.server.use(this.router);
+
         this.handler = new EndpointManager(this.server);
-        this.handler.loadModules("endpoints");
+        this.handler.loadModules("api/*/*.js");
+        this.handler.loadModules("panel/*.js");
+
         this.routes = this.handler.routes;
         this.handleRoutes();
     }

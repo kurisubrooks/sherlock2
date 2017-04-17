@@ -1,5 +1,5 @@
-const fs = require("fs");
 const path = require("path");
+const glob = require("glob");
 
 const { toUpper } = require("./Util/Util");
 const Logger = require("./Util/Logger");
@@ -12,21 +12,12 @@ class EndpointManager {
         this.routes = new Collection();
     }
 
-    loadModules(directory) {
-        const folders = fs.readdirSync(path.join(__dirname, "..", directory));
+    loadModules(pattern) {
+        const files = glob.sync(pattern);
 
-        for (const folder of folders) {
-            const location = path.join(__dirname, "..", directory, folder);
-            if (!fs.statSync(location).isDirectory()) continue;
-            const files = fs.readdirSync(location);
-
-            for (const file of files) {
-                if (path.extname(file) !== ".js") continue;
-
-                const location = path.join(__dirname, "..", directory, folder, file);
-
-                this.startModule(location);
-            }
+        for (const file of files) {
+            const location = path.join(__dirname, "..", file);
+            this.startModule(location);
         }
     }
 
