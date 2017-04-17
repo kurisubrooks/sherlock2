@@ -1,13 +1,12 @@
 {
   "name": "sherlock",
   "version": "2.0.0",
-  "main": "index.js",
   "author": "kurisubrooks",
-  "license": "ISC",
+  "description": "http server with modular data retrieval and functional api endpoints",
+  "main": "index.js",
   "scripts": {
-    "start": "sudo node index"
+    "start": "node index"
   },
-  "description": "",
   "dependencies": {
     "@turf/turf": "^3.12.2",
     "bcrypt": "^1.0.2",
