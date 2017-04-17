@@ -1,4 +1,4 @@
-const Endpoint = require("../../core/Endpoint");
+const Endpoint = require("../core/Endpoint");
 
 class RadarDocs extends Endpoint {
     constructor() {
@@ -17,7 +17,7 @@ class RadarDocs extends Endpoint {
         if (!req.session || !req.session.token) return res.redirect("/panel/login");
         return res.render("panel/views/layout", {
             title: "Radar",
-            content: "../../docs/views/radar.ejs",
+            content: "docs_radar.ejs",
             data: {
                 admin: req.session.admin,
                 active: "docs_radar"

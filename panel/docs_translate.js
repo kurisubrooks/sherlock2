@@ -1,11 +1,11 @@
-const Endpoint = require("../../core/Endpoint");
+const Endpoint = require("../core/Endpoint");
 
-class WeatherDocs extends Endpoint {
+class TranslateDocs extends Endpoint {
     constructor() {
         super({
             name: "Docs",
             description: "Documentation",
-            route: "/panel/docs/weather",
+            route: "/panel/docs/translate",
             method: "GET",
             token: false,
             admin: false,
@@ -16,14 +16,14 @@ class WeatherDocs extends Endpoint {
     async run(req, res) {
         if (!req.session || !req.session.token) return res.redirect("/panel/login");
         return res.render("panel/views/layout", {
-            title: "Weather",
-            content: "../../docs/views/weather.ejs",
+            title: "Translate",
+            content: "docs_translate.ejs",
             data: {
                 admin: req.session.admin,
-                active: "docs_weather"
+                active: "docs_translate"
             }
         });
     }
 }
 
-module.exports = WeatherDocs;
+module.exports = TranslateDocs;
