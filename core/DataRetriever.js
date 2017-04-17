@@ -24,15 +24,15 @@ class DataRetriever {
             headers: { "User-Agent": "Mozilla/5.0" },
             uri: options.url,
             json: options.format === "json"
-        }).catch(error => {
-            return this.error(error);
-        });
+        }).catch(error => this.error(error));
 
+        if (!response) return false;
         return fs.writeFileSync(path.join(__dirname, "..", "storage", `${this.instance.name}.json`), JSON.stringify({ ok: true, data: response }));
     }
 
     error(message) {
-        return Logger.error("Data Retriever", message, true);
+        Logger.error("Data Retriever", message, true);
+        return false;
     }
 }
 
