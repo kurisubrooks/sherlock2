@@ -1,11 +1,8 @@
-const config = require("../config.json");
 const Logger = require("./Util/Logger");
 const { toUpper } = require("./Util/Util");
 
 class Endpoint {
     constructor(data = {}) {
-        this.config = config;
-
         this.name = data.name;
         this.description = data.description;
         this.disabled = data.disabled || false;
