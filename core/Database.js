@@ -1,3 +1,6 @@
+const Logger = require("./Util/Logger");
+const Util = require("./Util/Util");
+
 const Sequelize = require("sequelize");
 const valid = require("validator");
 const crypto = require("crypto");
@@ -17,8 +20,8 @@ class Database {
 
     static get Models() {
         return {
-            User: require("./Database/User"),
-            RegKeys: require("./Database/RegistrationKeys")
+            User: require("./Structures/User"),
+            RegKeys: require("./Structures/RegistrationKeys")
         };
     }
 
@@ -28,11 +31,12 @@ class Database {
         return { ok: true, key };
     }
 
-    static validateRegKey(key) {
-        return Database.Models.RegKeys.findOne({ where: { key } }).then(data => {
-            if (!data) return { ok: false, error: "Invalid Auth Key" };
-            return { ok: true };
-        });
+    static async validateRegKey(key) {
+        if (!key) return { ok: false, error: "Missing Key" };
+        const found = await Database.Models.RegKeys.findOne({ where: { key } });
+        return found
+            ? { ok: true }
+            : { ok: false, error: "Invalid Auth Key" };
     }
 
     static async checkToken(token) {
@@ -54,10 +58,11 @@ class Database {
     static async changeAdmin(username, admin) {
         if (!username) return { ok: false, error: "Missing Username" };
         if (!admin) return { ok: false, error: "Missing Admin" };
+
         const user = await Database.Models.User.findOne({ where: { username } });
-        const perm = Boolean(admin);
         if (!user) return { ok: false, error: "Invalid Username" };
-        const req = await user.update({ admin: perm });
+
+        const req = await user.update({ admin: Boolean(admin) });
         return req
             ? { ok: true }
             : { ok: false };
@@ -66,7 +71,7 @@ class Database {
     static async checkLogin(username, password) {
         if (!username) return { ok: false, error: "Missing Username" };
         if (!password) return { ok: false, error: "Missing Password" };
-        if (password.length > 72) return { ok: false, error: "Password Too Long" };
+        if (Buffer.byteLength(password) > 72) return { ok: false, error: "Password Too Long" };
 
         // Check if username exists
         const user = await Database.Models.User.findOne({ where: { username } });
@@ -87,48 +92,41 @@ class Database {
         if (!data.email) return { ok: false, error: "Missing Email" };
         if (!data.username) return { ok: false, error: "Missing Username" };
         if (!data.password) return { ok: false, error: "Missing Password" };
-        if (data.password.length > 72) return { ok: false, error: "Password Too Long" };
+        if (Buffer.byteLength(data.password) > 72) return { ok: false, error: "Password Too Long" };
 
         // Check auth key
         const keyCheck = await Database.Models.RegKeys.findOne({ where: { key: data.auth } });
         if (!keyCheck) return { ok: false, error: "Invalid Auth Key" };
-
-        console.log("OK: Auth Key");
+        Logger.debug("New User", "OK: Auth Key is valid");
 
         // Check if user already exists
         const nameCheck = await Database.Models.User.findOne({ where: { username: data.username } });
         if (nameCheck) return { ok: false, error: "Username already exists" };
-
-        console.log("OK: Username isn't taken");
+        Logger.debug("New User", "OK: Username is available");
 
         // Check if email is valid
         if (!valid.isEmail(data.email)) return { ok: false, error: "Invalid Email" };
-
-        console.log("OK: Email is VALID");
+        Logger.debug("New User", "OK: Email is valid");
 
         // Check if username is valid
         if (!/^[a-zA-Z0-9]+$/.test(data.username)) return { ok: false, error: "Invalid Username" };
-
-        console.log("OK: Username is VALID");
+        Logger.debug("New User", "OK: Username is valid");
 
         // Check if token already exists
-        const token = Database.generateToken();
+        const token = Util.generateToken();
         const tokenCheck = await Database.Models.User.findOne({ where: { token } });
         if (tokenCheck) return { ok: false, error: "Internal Server Error" };
-
-        console.log("OK: Generated token isn't taken");
+        Logger.debug("New User", "OK: Generated token is available");
 
         // Hash password
         const hash = bcrypt.hashSync(data.password, 10);
-
-        console.log("OK: Password Hashed");
+        Logger.debug("New User", "OK: Password successfully hashed");
 
         // Delete Key from DB
         const keyRemove = await Database.Models.RegKeys.findOne({ where: { key: data.auth } });
         if (!keyRemove) return { ok: false, error: "Internal Server Error" };
         await keyRemove.destroy();
-
-        console.log("OK: Auth Key Deleted");
+        Logger.debug("New User", "OK: Auth Key deleted successfully");
 
         // Add user to db
         const user = await Database.Models.User.create({
@@ -142,8 +140,7 @@ class Database {
         });
 
         if (!user) return { ok: false, error: "Internal Server Error" };
-
-        console.log("OK: User Created");
+        Logger.debug("New User", "OK: User Added to Database");
 
         return { ok: true, username: data.username, token };
     }
@@ -160,10 +157,6 @@ class Database {
         // RIP OUT THEIR SPLEEN and serve it to them on a plate
         await user.destroy();
         return { ok: true, username: user.username };
-    }
-
-    static generateToken() {
-        return crypto.randomBytes(Math.ceil(32 / 2)).toString("hex");
     }
 }
 
