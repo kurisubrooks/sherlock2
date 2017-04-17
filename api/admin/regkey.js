@@ -15,7 +15,7 @@ class RegKeyGenerator extends Endpoint {
     }
 
     async run(req, res) {
-        if (!req.session || !req.session.token) return res.send({ ok: false, error: "Authentication Required" });
+        if (!req.session.token) return res.send({ ok: false, error: "Authentication Required" });
         if (!req.session.admin) return res.send({ ok: false, error: "Forbidden" });
 
         // Handle User Generation

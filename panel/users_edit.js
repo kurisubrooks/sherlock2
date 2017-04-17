@@ -1,5 +1,5 @@
-const Endpoint = require("../../core/Endpoint");
-const Database = require("../../core/Database");
+const Endpoint = require("../core/Endpoint");
+const Database = require("../core/Database");
 
 class PanelEditUser extends Endpoint {
     constructor() {

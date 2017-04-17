@@ -50,7 +50,7 @@ class CurrencyConverter extends Endpoint {
 
         fx.rates = exchange.rates;
 
-        const result = fx(amount).from(fromCurrency).to(toCurrency).toFixed(2); // eslint-disable-line newline-per-chained-call
+        const result = fx(amount).from(fromCurrency).to(toCurrency).toFixed(2);
 
         return res.send({
             ok: true,

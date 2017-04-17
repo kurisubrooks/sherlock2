@@ -1,4 +1,4 @@
-const Endpoint = require("../../core/Endpoint");
+const Endpoint = require("../core/Endpoint");
 
 class PanelRegister extends Endpoint {
     constructor() {

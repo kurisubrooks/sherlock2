@@ -1,11 +1,12 @@
-const Endpoint = require("../../core/Endpoint");
+const Endpoint = require("../core/Endpoint");
+const Database = require("../core/Database");
 
-class PanelSystem extends Endpoint {
+class PanelManageUsers extends Endpoint {
     constructor() {
         super({
             name: "Panel",
             description: "Admin Panel",
-            route: "/panel/system",
+            route: "/panel/users/manage",
             method: "GET",
             token: false,
             admin: true,
@@ -15,17 +16,19 @@ class PanelSystem extends Endpoint {
 
     async run(req, res) {
         if (!req.session.token) return res.redirect("/panel/login");
+
+        const users = await Database.Models.User.findAll();
+
         return res.render("panel/views/layout", {
-            title: "System",
-            content: "system.ejs",
+            title: "Manage Users",
+            content: "users_manage.ejs",
+            users,
             data: {
-                node: process.version.replace("v", ""),
-                memory: `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB`,
                 admin: req.session.admin,
-                active: "system"
+                active: "users_manage"
             }
         });
     }
 }
 
-module.exports = PanelSystem;
+module.exports = PanelManageUsers;
