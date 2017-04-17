@@ -1,12 +1,13 @@
 const fs = require("fs");
 const path = require("path");
 const request = require("request-promise");
-
 const Logger = require("./Util/Logger");
 
 class DataRetriever {
     constructor(instance) {
         this.instance = instance;
+        this.storage = path.join(__dirname, "..", "storage");
+        if (!fs.existsSync(this.storage)) fs.mkdirSync(this.storage);
     }
 
     start() {
@@ -27,7 +28,7 @@ class DataRetriever {
         }).catch(error => this.error(error));
 
         if (!response) return false;
-        return fs.writeFileSync(path.join(__dirname, "..", "storage", `${this.instance.name}.json`), JSON.stringify({ ok: true, data: response }));
+        return fs.writeFileSync(path.join(this.storage, `${this.instance.name}.json`), JSON.stringify({ ok: true, data: response }));
     }
 
     error(message) {
