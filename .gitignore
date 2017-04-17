@@ -1,9 +1,11 @@
 *.log
-node_modules
-temp.*
-secure
 *.sqlite
 .vscode
+
+node_modules
 public/*.txt
-keychain.json
+secure
 storage
+temp.*
+
+keychain.json
