@@ -17,7 +17,6 @@ class LoginHandler extends Endpoint {
     async run(req, res, data) {
         if (!data.username) return res.send({ ok: false, error: "Missing Required Fields" });
         if (!data.password) return res.send({ ok: false, error: "Missing Required Fields" });
-        if (Buffer.byteLength(data.password) > 72) return res.send({ ok: false, error: "Password Too Long" });
 
         return Database.checkLogin(data.username, data.password).then(login => {
             if (login.ok) {

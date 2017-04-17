@@ -18,7 +18,7 @@ class RegistrationHandler extends Endpoint {
         if (!data.email) return res.send({ ok: false, error: "Missing Email" });
         if (!data.username) return res.send({ ok: false, error: "Missing Username" });
         if (!data.password) return res.send({ ok: false, error: "Missing Password" });
-        if (Buffer.byteLength(data.password) > 72) return res.send({ ok: false, error: "Password Too Long" });
+        if (Buffer.byteLength(data.password) > 42) return res.send({ ok: false, error: "Password Too Long" });
         if (!data.auth) return res.send({ ok: false, error: "Auth Key Required" });
 
         // Validate Registration Key

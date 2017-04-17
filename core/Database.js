@@ -71,7 +71,6 @@ class Database {
     static async checkLogin(username, password) {
         if (!username) return { ok: false, error: "Missing Username" };
         if (!password) return { ok: false, error: "Missing Password" };
-        if (Buffer.byteLength(password) > 72) return { ok: false, error: "Password Too Long" };
 
         // Check if username exists
         const user = await Database.Models.User.findOne({ where: { username } });
@@ -92,7 +91,6 @@ class Database {
         if (!data.email) return { ok: false, error: "Missing Email" };
         if (!data.username) return { ok: false, error: "Missing Username" };
         if (!data.password) return { ok: false, error: "Missing Password" };
-        if (Buffer.byteLength(data.password) > 72) return { ok: false, error: "Password Too Long" };
 
         // Check auth key
         const keyCheck = await Database.Models.RegKeys.findOne({ where: { key: data.auth } });
