@@ -13,7 +13,7 @@
         "block-spacing": "error",
         "brace-style": [ "error", "1tbs", { "allowSingleLine": true } ],
         "callback-return": "error",
-        "camelcase": "warn",
+        "camelcase": 0,
         "comma-dangle": "error",
         "comma-spacing": "error",
         "comma-style": "error",
