@@ -49,7 +49,7 @@ class Weather extends Endpoint {
             },
             weather: {
                 icon: icon_code,
-                image: `https://api.kurisubrooks.com/static/weather/icons_v2/${this.icon(icon_code)}.png`,
+                image: `https://api.kurisubrooks.com/static/weather/icons_v2/${icon_code}.png`,
                 condition: weather.current_observation.weather,
                 temperature: Math.round(Number(weather.current_observation.temp_c)),
                 feels_like: Math.round(Number(weather.current_observation.feelslike_c)),
