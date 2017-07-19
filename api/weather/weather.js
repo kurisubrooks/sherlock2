@@ -70,14 +70,12 @@ class Weather extends Endpoint {
                 icon,
                 time: date.format(),
                 image: `https://api.kurisubrooks.com/static/weather/icons_v2/${icon}.png`,
-                condition: forecast.summary,
-                temperature: {
-                    high: forecast.temperatureMax,
-                    low: forecast.temperatureMin
-                },
+                condition: forecast.summary.replace(".", ""),
+                high: Math.round(forecast.temperatureMax),
+                low: Math.round(forecast.temperatureMin),
                 feels_like: {
-                    high: forecast.apparentTemperatureMax,
-                    low: forecast.apparentTemperatureMin
+                    high: Math.round(forecast.apparentTemperatureMax),
+                    low: Math.round(forecast.apparentTemperatureMin)
                 },
                 humidity: `${Math.round(forecast.humidity * 100)}%`,
                 pressure: `${Math.round(forecast.pressure)} mBar`,
