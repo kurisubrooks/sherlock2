@@ -16,7 +16,7 @@ body {
 }
 
 body.panel {
-    background: #EEE;
+    background: #35394A;
 }
 
 h3 {
@@ -30,20 +30,20 @@ a {
 
 hr {
     border: none;
-    border-bottom: 1px solid #EEE;
+    border-bottom: 2px solid #333;
 }
 
 small {
-    color: #555;
+    color: rgba(255, 255, 255, 0.4);
 }
 
 pre, code {
     margin: 0;
     font-family: "SF Mono", "Roboto Mono", Courier, monospace;
     font-size: 0.9em;
-    color: #333;
-    background: #FFF;
-    border: 1px solid #EEE;
+    color: #FFF;
+    background: #3C3E45;
+    border: 2px solid #333;
     line-height: 1.5em;
 }
 
@@ -85,22 +85,26 @@ select {
 
 .login {
     position: absolute;
+    transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 500px;
+    width: 540px;
     color: #AFB1BE;
     padding: 50px 80px;
 }
 
 .login .title {
-    margin: 0 0 20px;
+    margin-bottom: 20px;
     font-size: 24px;
 }
 
 .login .brand {
-    margin: 0 0 20px;
-    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login .buttons {
+    margin-top: 20px;
 }
 
 .login .error,
@@ -182,7 +186,8 @@ select {
 }
 
 .container {
-    background: #EEE;
+    background: #2A2C31;
+    color: #FFFFFF;
     display: flex;
     flex-direction: row;
     height: 100%;
@@ -192,7 +197,7 @@ select {
     display: inline-flex;
     height: 100%;
     width: 260px;
-    background: #EEE;
+    background: #2F3136;
     box-shadow: 0px 4px 13px -2px rgba(0, 0, 0, 0.25);
     overflow-x: hidden;
     overflow-y: auto;
@@ -203,8 +208,8 @@ select {
     z-index: 200;
     height: 56px;
     padding: 16px 30px;
-    background: #FFF;
-    border-bottom: 2px solid #DDD;
+    background: #2A2C31;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.02);
     user-select: text;
     cursor: default;
 }
@@ -242,7 +247,7 @@ select {
 
 .container .sidebar ul ul li.active,
 .container .sidebar ul ul li:hover {
-    background: #DDD;
+    background: #36383E;
 }
 
 .container .content {
@@ -264,8 +269,8 @@ select {
     height: 56px;
     width: calc(100% - 260px);
     padding: 16px 24px;
-    background: #FFF;
-    border-bottom: 2px solid #EEE;
+    background: #2A2C31;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.02);
 }
 
 .container .content .nav span {
@@ -274,15 +279,18 @@ select {
 
 .container .content .nav span.logout {
     float: right;
+}
+
+.container .content .nav span.logout a {
     font-weight: 400;
-    color: #4B99DE;
+    color: #FFFFFF;
 }
 
 .container .content .main {
     display: block;
     flex-grow: 1;
     padding: 76px 24px 22px;
-    background: #FAFAFA;
+    background: #36383E;
     box-shadow: 0px 4px 13px -2px rgba(0, 0, 0, 0.25);
     overflow-y: auto;
 }
@@ -293,21 +301,21 @@ select {
     display: block;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background: #FFF;
     width: 100%;
     max-width: 400px;
     font: inherit;
     font-size: 16px;
-    padding: 0.5em 0.8em;
     margin: 10px 0;
     border-radius: 0.2em;
-    border: 2px solid #CCC;
-    color: #222;
+    background: #3C3E45;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 0.7em 1em;
+    color: #FFF;
 }
 
 .container .content .main input:disabled {
-    background: #FAFAFA;
-    border-color: #EEE;
+    background: #3C3E45;
+    color: rgba(255, 255, 255, 0.5);
     cursor: no-drop;
 }
 
@@ -325,7 +333,7 @@ select {
 .container .content .main button {
     -webkit-appearance: none;
     -moz-appearance: none;
-    background: rgba(255, 255, 255, 0);
+    background: transparent;
     cursor: pointer;
     font: inherit;
     font-size: 16px;
@@ -341,8 +349,8 @@ select {
 .container .content .main button:disabled {
     cursor: no-drop;
     background: transparent;
-    border-color: #EEE;
-    color: #EEE;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.1);
 }
 
 .container .content .main input[type=button]:hover,
@@ -351,7 +359,7 @@ select {
 .container .content .main input[type=submit]:focus,
 .container .content .main button:hover,
 .container .content .main button:focus {
-    background: #5AC95A;
+    background: #3FBF3F;
     color: #FFF;
 }
 
@@ -362,13 +370,14 @@ select {
 .container .content .main button:disabled:hover,
 .container .content .main button:disabled:focus {
     background: transparent;
-    border-color: #EEE;
-    color: #EEE;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.1);
 }
 
 .container .content .main table {
-    width: 100%;
-    border: none;
+    min-width: 500px;
+    width: auto;
+    border: 2px solid #333;
     border-collapse: collapse;
     cursor: default;
 }
@@ -384,15 +393,15 @@ select {
 
 .container .content .main table thead {
     font-weight: 500;
-    border-bottom: 2px solid #DDD;
+    border-bottom: 2px solid #333;
 }
 
 .container .content .main table tbody tr:nth-child(odd) {
-    background: #FFF;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .container .content .main table tbody tr:hover {
-    background: #EEE;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 /*
