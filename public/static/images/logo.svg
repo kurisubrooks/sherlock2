@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="a" x1="109.36" y1="418.93" x2="379.7" y2="148.59" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffd255"/>
+      <stop offset="1" stop-color="#ffb56f"/>
+    </linearGradient>
+  </defs>
+  <title>Sherlock Solid</title>
+  <path d="M179.77,421A165,165,0,0,1,14.86,261.64C11.72,168.07,87.94,90,181.56,91a164.77,164.77,0,0,1,135.22,73.1,84.09,84.09,0,0,0,69.7,37.59h1.1c60.31,0,109.65,49.34,109.65,109.65h0c0,60.31-49.34,109.65-109.65,109.65Z" fill="url(#a)"/>
+</svg>
