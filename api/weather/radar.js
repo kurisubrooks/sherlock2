@@ -20,6 +20,11 @@ const list = {
         id: "071",
         type: "radarz",
         tz: "Australia/Sydney"
+    },
+    canberra: {
+        id: "040",
+        type: "radarz",
+        tz: "Australia/Sydney"
     }
 };
 
