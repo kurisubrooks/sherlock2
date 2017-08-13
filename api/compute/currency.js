@@ -14,9 +14,9 @@ class CurrencyConverter extends Endpoint {
             admin: false,
             mask: false,
             retriever: {
-                enable: true,
-                interval: 30,
+                name: "currency",
                 format: "json",
+                interval: 30,
                 url: `https://api.fixer.io/latest`
             }
         });
@@ -36,7 +36,7 @@ class CurrencyConverter extends Endpoint {
             return res.status(500).send({ ok: false, error: "Unable to parse query" });
         }
 
-        const store = fs.readFileSync(path.join(__dirname, "..", "..", "storage", `${this.name}.json`));
+        const store = fs.readFileSync(path.join(__dirname, "..", "..", "storage", `${this.retriever.name}.json`));
         const exchange = JSON.parse(store).data;
 
         const toCurrency = to.toUpperCase();
