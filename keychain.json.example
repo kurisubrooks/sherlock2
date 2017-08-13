@@ -1,4 +1,7 @@
 {
     "session": "",
-    "darksky": ""
+    "wunderground": {
+        "penrith": " ",
+        "lithgow": " "
+    }
 }
