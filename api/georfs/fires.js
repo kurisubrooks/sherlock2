@@ -37,6 +37,17 @@ const removeEvents = [
     "Other"
 ];
 
+const locations = {
+    "penrith": {
+        "filter": require("./filters/penrith.json"),
+        "mark": ["-33.749", "150.712"]
+    },
+    "all": {
+        "filter": require("./filters/all.json"),
+        "mark": ["-33.87", "151.20"]
+    }
+};
+
 class GeoRFS extends Endpoint {
     constructor() {
         super({
@@ -48,25 +59,30 @@ class GeoRFS extends Endpoint {
             admin: false,
             mask: false,
             retriever: {
-                enable: true,
-                interval: 1,
+                name: "rfs",
                 format: "json",
+                interval: 1,
                 url: "http://www.rfs.nsw.gov.au/feeds/majorIncidents.json"
             }
         });
     }
 
     run(req, res, data) {
-        const store = fs.readFileSync(path.join(__dirname, "..", "..", "storage", `${this.name}.json`));
+        const store = fs.readFileSync(path.join(__dirname, "..", "..", "storage", `${this.retriever.name}.json`));
         const incidents = JSON.parse(store).data;
         const radius = 0.025;
         const results = [];
-        let filter;
+        let filters;
 
-        if (!data.filter) filter = require("./filters/penrith.json");
-        if (data.filter === "debug") filter = require("./filters/debug.json");
+        if (!data.filter || data.filter === "penrith") {
+            filters = locations.penrith;
+        } else if (data.filter === "all" || data.filter === "debug") {
+            filters = locations.all;
+        } else {
+            filters = locations.all;
+        }
 
-        for (const feature of filter.features) {
+        for (const feature of filters.filter.features) {
             try {
                 const geometry = feature.geometry;
                 const filter = geometry.type === "Point"
@@ -97,7 +113,7 @@ class GeoRFS extends Endpoint {
         // Sort results by HIGH→LOW warning levels
         // then sort by Distance from Home
         results.sort((a, b) => {
-            const location = ["-33.746", "150.7123"];
+            const location = filters.mark;
 
             // if a's level is higher than b's, prepend
             if (a.level > b.level) {
@@ -173,7 +189,7 @@ class GeoRFS extends Endpoint {
             size: Number(formatted.SIZE.replace(" ha", "")),
             updated: {
                 unix: Date.parse(formatted.UPDATED),
-                timestamp: Date.parse(formatted.UPDATED)
+                timestamp: new Date(Date.parse(formatted.UPDATED))
             },
             geojson: {
                 type: feature.type,
