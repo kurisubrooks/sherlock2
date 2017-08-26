@@ -42,15 +42,13 @@ class DataRetriever {
     }
 
     async handle(options) {
-        let response = await request({
+        const response = await request({
             headers: { "User-Agent": "Mozilla/5.0" },
             uri: options.url,
             json: options.format === "json"
         }).catch(error => this.error(error));
 
         if (!response) return false;
-
-        response = typeof response === "string" ? JSON.parse(response) : response;
 
         if (this.instance.verify) {
             const result = this.instance.verify(response);
