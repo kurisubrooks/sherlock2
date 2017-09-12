@@ -39,12 +39,16 @@ const removeEvents = [
 
 const locations = {
     "penrith": {
-        "filter": require("./filters/penrith.json"),
-        "mark": ["-33.749", "150.712"]
+        filter: require("./filters/penrith.json"),
+        center: ["-33.749", "150.712"]
+    },
+    "canberra": {
+        filter: require("./filters/canberra.json"),
+        center: ["-35.417", "149.072"]
     },
     "all": {
-        "filter": require("./filters/all.json"),
-        "mark": ["-33.87", "151.20"]
+        filter: require("./filters/all.json"),
+        center: ["-33.87", "151.20"]
     }
 };
 
@@ -72,12 +76,13 @@ class GeoRFS extends Endpoint {
         const incidents = JSON.parse(store).data;
         const radius = 0.025;
         const results = [];
+        let missing = 0;
         let filters;
 
         if (!data.filter || data.filter === "penrith") {
             filters = locations.penrith;
-        } else if (data.filter === "all" || data.filter === "debug") {
-            filters = locations.all;
+        } else if (data.filter === "canberra") {
+            filters = locations.canberra;
         } else {
             filters = locations.all;
         }
@@ -94,14 +99,19 @@ class GeoRFS extends Endpoint {
                     const geometry = feature.geometry;
 
                     // Filter Results for Overlapping Regions
-                    const result = turf.intersect(filter, geometry.type === "Point"
-                        ? turf.circle(geometry, radius)
-                        : geometry.geometries[1].geometries[0]);
+                    try {
+                        const result = turf.intersect(filter, geometry.type === "Point"
+                            ? turf.circle(geometry, radius)
+                            : geometry.geometries[1].geometries[0]);
 
-                    // Match
-                    if (result !== undefined) {
-                        const formatted = this.format(feature);
-                        if (formatted) results.push(formatted); // eslint-disable-line max-depth
+                        // Match
+                        if (result !== undefined) {
+                            const formatted = this.format(feature);
+                            if (formatted) results.push(formatted); // eslint-disable-line max-depth
+                        }
+                    } catch(error) {
+                        ++missing;
+                        continue;
                     }
                 }
             } catch(error) {
@@ -113,7 +123,7 @@ class GeoRFS extends Endpoint {
         // Sort results by HIGH→LOW warning levels
         // then sort by Distance from Home
         results.sort((a, b) => {
-            const location = filters.mark;
+            const center = filters.center;
 
             // if a's level is higher than b's, prepend
             if (a.level > b.level) {
@@ -122,27 +132,27 @@ class GeoRFS extends Endpoint {
 
             // if a's warning level matches b's
             if (a.level === b.level) {
-                const ag = a.geojson.geometry;
-                const bg = b.geojson.geometry;
+                const a_geo = a.geojson.geometry;
+                const b_geo = b.geojson.geometry;
 
-                const a_lat = ag.type === "Point"
-                    ? ag.coordinates[1]
-                    : ag.geometries[0].coordinates[1];
+                const a_lat = a_geo.type === "Point"
+                    ? a_geo.coordinates[1]
+                    : a_geo.geometries[0].coordinates[1];
 
-                const a_long = ag.type === "Point"
-                    ? ag.coordinates[0]
-                    : ag.geometries[0].coordinates[0];
+                const a_long = a_geo.type === "Point"
+                    ? a_geo.coordinates[0]
+                    : a_geo.geometries[0].coordinates[0];
 
-                const b_lat = bg.type === "Point"
-                    ? bg.coordinates[1]
-                    : bg.geometries[0].coordinates[1];
+                const b_lat = b_geo.type === "Point"
+                    ? b_geo.coordinates[1]
+                    : b_geo.geometries[0].coordinates[1];
 
-                const b_long = bg.type === "Point"
-                    ? bg.coordinates[0]
-                    : bg.geometries[0].coordinates[0];
+                const b_long = b_geo.type === "Point"
+                    ? b_geo.coordinates[0]
+                    : b_geo.geometries[0].coordinates[0];
 
-                const a_comp = [a_lat - location[0], a_long - location[1]];
-                const b_comp = [b_lat - location[0], b_long - location[1]];
+                const a_comp = [a_lat - center[0], a_long - center[1]];
+                const b_comp = [b_lat - center[0], b_long - center[1]];
 
                 // Sort by Distance
                 return Math.hypot(a_comp[0], a_comp[1]) - Math.hypot(b_comp[0], b_comp[1]);
@@ -157,6 +167,7 @@ class GeoRFS extends Endpoint {
             ok: true,
             total: incidents.features.length,
             search: results.length,
+            errored: missing,
             fires: results
         });
     }
