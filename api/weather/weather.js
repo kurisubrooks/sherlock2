@@ -26,6 +26,12 @@ class Weather extends Endpoint {
                     format: "json",
                     interval: 5,
                     url: `https://api.wunderground.com/api/${keys.wunderground.lithgow}/conditions/forecast10day/astronomy/q/AU/Bowenfels.json`
+                },
+                {
+                    name: "greenway",
+                    format: "json",
+                    interval: 5,
+                    url: `https://api.wunderground.com/api/${keys.wunderground.greenway}/conditions/forecast10day/astronomy/q/AU/Greenway.json`
                 }
             ]
         });
@@ -197,7 +203,12 @@ class Weather extends Endpoint {
         }
 
         // Ensure Data is Verifiable
-        if (current_observation.temp_c === 0 && (current_observation.icon === "" || current_observation.icon === "unknown")) {
+
+        if (current_observation.icon === "" || current_observation.icon === "unknown") {
+            return 0;
+        }
+
+        if (current_observation.condition === "") {
             return 0;
         }
 
