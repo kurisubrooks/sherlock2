@@ -3,13 +3,6 @@ const cheerio = require("cheerio");
 const path = require("path");
 const fs = require("fs");
 
-//   0 <-> 25  = 0
-//  25 <-> 50  = 1
-//  50 <-> 100 = 2
-// 100 <-> 150 = 3
-// 150 <-> 200 = 4
-// 200 <-> 999 = 5
-
 const titles = [
     "Very Good",
     "Good",
@@ -48,6 +41,13 @@ class AirQuality extends Endpoint {
     }
 
     getIndex(num) {
+        //   0  => 25  = 0
+        //  25 <=> 50  = 1
+        //  50 <=> 100 = 2
+        // 100 <=> 150 = 3
+        // 150 <=> 200 = 4
+        // 200 <=     = 5
+
         if (num >= 200) return 5;
         if (num >= 25) return Math.ceil(num / 50);
         return 0;

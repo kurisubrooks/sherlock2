@@ -92,7 +92,7 @@ class Weather extends Endpoint {
                     kph: `${current_observation.wind_kph} km/h`
                 },
                 precipitation: {
-                    hour: `${current_observation.precip_1hr_metric} mm`,
+                    hour: `${current_observation.precip_1hr_metric.trim()} mm`,
                     today: `${current_observation.precip_today_metric} mm`
                 }
             },
@@ -203,7 +203,6 @@ class Weather extends Endpoint {
         }
 
         // Ensure Data is Verifiable
-
         if (current_observation.icon === "" || current_observation.icon === "unknown") {
             return 0;
         }
