@@ -1,4 +1,6 @@
 const Endpoint = require("../../core/Endpoint");
+const { toUpper } = require("../../core/Util/Util");
+const Logger = require("../../core/Util/Logger");
 const request = require("request-promise");
 const langs = require("./languages.json");
 
@@ -14,33 +16,28 @@ class Translate extends Endpoint {
         });
     }
 
-    // TODO: Query Blacklist
     async run(req, res, data) {
         if (!data.query) {
-            return res.status(400).send({ ok: false, error: "Missing 'query' field" });
+            return this.error(res, { code: 400, message: "Missing 'query' field" });
         }
 
         if (!data.to) {
-            return res.status(400).send({ ok: false, error: "Missing 'to' lang field" });
+            return this.error(res, { code: 400, message: "Missing 'to' lang field" });
         }
 
         if (!this.validate(data.to)) {
-            return res.status(400).send({ ok: false, error: "Unknown 'to' Language" });
+            return this.error(res, { code: 400, message: "Unknown 'to' Language" });
         }
 
         if (data.from && data.from !== "") {
             if (!this.validate(data.from)) {
-                return res.status(400).send({ ok: false, error: "Unknown 'from' Language" });
+                return this.error(res, { code: 400, message: "Unknown 'from' Language" });
             }
         }
-
-        // console.log("Data", data);
 
         const to_lang = this.validate(data.to).code;
         const from_lang = data.from ? this.validate(data.from).code : "auto";
         const query = this.slicer(data.query);
-
-        // console.log("Query", to_lang, from_lang, query);
 
         const response = await request({
             headers: { "User-Agent": "Mozilla/5.0" },
@@ -53,31 +50,38 @@ class Translate extends Endpoint {
                 q: query // eslint-disable-line id-length
             }
         }).catch(err => {
-            res.status(500).send({ ok: false, error: "Internal Server Error" });
-            return this.error(err);
+            console.log("translate error", err); // eslint-disable-line no-console
+            return this.error(res, { code: 500, message: "Internal Server Error" });
         });
-
-        // console.log("Request", response);
 
         const output = JSON.parse(response.replace(/,+/g, ","));
 
-        // console.log("Parsed", output);
-
-        // console.log("Response", this.validate(data.to || "en"), this.validate(output[2]), data.query, output[0][0][0]);
-
-        return res.send({
+        const payload = {
             ok: true,
             to: this.validate(data.to || "en"),
             from: this.validate(output[2]),
             query: data.query,
             result: output[0][0][0]
-        });
+        };
+
+        if (res && !data.referral) {
+            res.send(payload);
+        }
+
+        return payload;
+    }
+
+    error(res, query) {
+        if (res) {
+            res.status(query.code).send({ ok: false, error: query.message });
+        }
+
+        Logger.error(toUpper(this.name), query.message);
+        return query.message;
     }
 
     validate(query) {
         if (!query) return null;
-
-        // console.log("Validate Query", query);
 
         for (const obj of langs) {
             const input = query.toLowerCase();
@@ -99,8 +103,6 @@ class Translate extends Endpoint {
             "」": "\" ",
             "\u3000": " "
         };
-
-        // console.log("Slice Query", query);
 
         return query
             .replace(/\r?\n|\r/g, " ")
