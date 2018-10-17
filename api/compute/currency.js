@@ -1,4 +1,5 @@
 const Endpoint = require("../../core/Endpoint");
+const keys = require("../../keychain.json");
 const fx = require("./assets/money");
 const fs = require("fs");
 const path = require("path");
@@ -16,8 +17,8 @@ class CurrencyConverter extends Endpoint {
             retriever: {
                 name: "currency",
                 format: "json",
-                interval: 30,
-                url: `https://api.fixer.io/latest`
+                interval: 4 * 60, // every 4 hours
+                url: `http://data.fixer.io/api/latest?access_key=${keys.fixer}`
             }
         });
     }
