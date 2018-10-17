@@ -1,7 +1,7 @@
 const Endpoint = require("../../core/Endpoint");
 const request = require("request-promise");
 const GIF = require("gifencoder");
-const Canvas = require("canvas");
+const { createCanvas, Image } = require("canvas");
 const path = require("path");
 const fs = require("fs");
 
@@ -80,13 +80,12 @@ class Radar extends Endpoint {
                 df: "EEE HH:mm z",
                 tz: place.tz
             }
-        }, async (err, _, response) => {
+        }, async(err, _, response) => {
             if (err) return this.handleError(err, res);
 
             const encoder = new GIF(640, 480);
-            const canvas = new Canvas(640, 480);
+            const canvas = createCanvas(640, 480);
             const ctx = canvas.getContext("2d");
-            const Image = Canvas.Image;
             const frame = new Image();
             const terrain = new Image();
             const locations = new Image();
