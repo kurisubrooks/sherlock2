@@ -8,7 +8,7 @@ if (!args.name) return console.error("Missing --name");
 if (!args.description) return console.error("Missing --description");
 if (!args.url) return console.error("Missing --url");
 
-const generate = async () => {
+const generate = async() => {
     const application = await Database.newApplication({
         token: args.token,
         name: args.name,

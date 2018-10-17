@@ -5,7 +5,7 @@ const Database = require("../Database");
 
 if (!args.username) return console.error("Missing --username");
 
-const generate = async () => {
+const generate = async() => {
     const user = await Database.changeAdmin(args.username, true);
 
     if (user.ok) return console.log("User Updated.");
