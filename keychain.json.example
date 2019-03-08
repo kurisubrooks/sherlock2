@@ -1,9 +1,5 @@
 {
-    "session": " ",
-    "fixer": " ",
-    "wunderground": {
-        "penrith": " ",
-        "lithgow": " ",
-        "greenway": " "
-    }
+    "session": " ",
+    "darksky": " ",
+    "fixer": " "
 }

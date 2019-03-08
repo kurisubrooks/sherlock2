@@ -18,20 +18,20 @@ class Weather extends Endpoint {
                 {
                     name: "penrith",
                     format: "json",
-                    interval: 5,
-                    url: `https://api.wunderground.com/api/${keys.wunderground.penrith}/conditions/forecast10day/astronomy/q/AU/Penrith.json`
+                    interval: 10,
+                    url: `https://api.darksky.net/forecast/${keys.darksky}/-33.7507,150.6939?units=si`
                 },
                 {
                     name: "bowenfels",
                     format: "json",
-                    interval: 5,
-                    url: `https://api.wunderground.com/api/${keys.wunderground.lithgow}/conditions/forecast10day/astronomy/q/AU/Bowenfels.json`
+                    interval: 10,
+                    url: `https://api.darksky.net/forecast/${keys.darksky}/-33.483,150.117?units=si`
                 },
                 {
-                    name: "greenway",
+                    name: "marayong",
                     format: "json",
-                    interval: 5,
-                    url: `https://api.wunderground.com/api/${keys.wunderground.greenway}/conditions/forecast10day/astronomy/q/AU/Greenway.json`
+                    interval: 10,
+                    url: `https://api.darksky.net/forecast/${keys.darksky}/-33.7461,150.9001?units=si`
                 }
             ]
         });
@@ -52,84 +52,70 @@ class Weather extends Endpoint {
                 return res.status(400).send({ ok: false, error: "Unknown Location" });
             }
         } else {
-            data.location = "penrith";
+            data.location = "marayong";
         }
 
         const store = fs.readFileSync(path.join(__dirname, "..", "..", "storage", `${data.location}.json`));
         const weather = JSON.parse(store).data;
 
-        const { current_observation, forecast, sun_phase } = weather;
+        const { currently, daily, timezone } = weather;
 
-        const icon = this.icon(current_observation.icon, moment.unix(current_observation.local_epoch).format("HHMM"), sun_phase);
+        const icon = this.icon(currently.icon, moment.unix(currently.time).format("HHMM"));
 
         const result = {
             ok: true,
-            updated: new Date(current_observation.observation_time_rfc822),
+            updated: moment.unix(currently.time).toDate(),
             location: {
-                display: `${current_observation.display_location.city}, ${current_observation.display_location.state} ${current_observation.display_location.state_name}`,
-                city: current_observation.display_location.city,
-                state: current_observation.display_location.state,
-                country: current_observation.display_location.state_name,
-
-                time_now: current_observation.local_time_rfc822,
-                timezone: current_observation.local_tz_long
+                timezone,
+                time_now: moment().tz(timezone).toDate()
             },
             weather: {
                 icon,
                 image: `https://api.kurisubrooks.com/static/weather/icons_v2/${icon}.png`,
-                condition: current_observation.weather,
-                temperature: Math.round(current_observation.temp_c),
-                feels_like: Math.round(current_observation.feelslike_c),
-                dewpoint: Number(current_observation.dewpoint_c),
-                humidity: current_observation.relative_humidity,
-                pressure: `${current_observation.pressure_mb} mBar`,
-                visibility: `${current_observation.visibility_km} km`,
+                condition: currently.summary,
+                temperature: Math.round(currently.temperature),
+                feels_like: Math.round(currently.apparentTemperature),
+                dewpoint: currently.dewPoint,
+                humidity: currently.humidity * 100,
+                pressure: `${currently.pressure} mBar`,
+                visibility: `${currently.visibility} km`,
                 wind: {
-                    chill: current_observation.windchill_c,
-                    direction: current_observation.wind_dir,
-                    degrees: Number(current_observation.wind_degrees),
-                    gust: `${current_observation.wind_gust_kph} km/h`,
-                    kph: `${current_observation.wind_kph} km/h`
-                },
-                precipitation: {
-                    hour: `${current_observation.precip_1hr_metric.trim()} mm`,
-                    today: `${current_observation.precip_today_metric} mm`
+                    direction: this.degreesToDirection(currently.windBearing),
+                    gust: `${currently.windGust} km/h`,
+                    kph: `${currently.windSpeed} km/h`
                 }
             },
             forecast: []
         };
 
-        for (const day of forecast.simpleforecast.forecastday) {
+        for (const day of daily.data) {
             result.forecast.push({
                 date: {
-                    time: day.date.epoch,
-                    timezone: day.date.tz_long,
+                    time: day.time,
+                    timezone,
 
-                    day: day.date.day,
-                    month: day.date.month,
-                    year: day.date.year,
-                    total: day.date.yday,
+                    day: Number(moment.unix(day.time).format("D")),
+                    month: Number(moment.unix(day.time).format("M")),
+                    year: Number(moment.unix(day.time).format("YYYY")),
+                    total: Number(moment.unix(day.time).format("DDD")),
                     display: {
-                        day: day.date.weekday,
-                        day_short: day.date.weekday_short,
-                        month: day.date.monthname,
-                        month_short: day.date.monthname_short
+                        day: moment.unix(day.time).format("dddd"),
+                        day_short: moment.unix(day.time).format("ddd"),
+                        month: moment.unix(day.time).format("MMMM"),
+                        month_short: moment.unix(day.time).format("MMM")
                     }
                 },
                 icon: this.icon(day.icon),
                 image: `https://api.kurisubrooks.com/static/weather/icons_v2/${this.icon(day.icon)}.png`,
-                condition: day.conditions,
-                high: Math.round(Number(day.high.celsius)),
-                low: Math.round(Number(day.low.celsius)),
-                humidity: `${day.avehumidity}%`,
-                rain_chance: `${day.pop}%`,
-                rainfall: `${day.qpf_allday.mm} mm`,
-                snowfall: `${day.snow_allday.cm} cm`,
+                condition: day.summary,
+                high: Math.round(day.temperatureHigh),
+                low: Math.round(day.temperatureLow),
+                humidity: day.humidity * 100,
+                rain_chance: day.precipProbability * 100,
                 wind: {
-                    max: `${day.maxwind.kph} km/h`,
-                    average: `${day.avewind.kph} km/h`,
-                    direction: day.avewind.dir,
-                    degrees: Number(day.avewind.degrees)
+                    direction: this.degreesToDirection(day.windBearing),
+                    gust: `${day.windGust} km/h`,
+                    kph: `${day.windSpeed} km/h`
                 }
             });
         }
@@ -141,42 +127,21 @@ class Weather extends Endpoint {
         return String(num).length === 1 ? `0${String(num)}` : String(num);
     }
 
-    icon(condition, now, phases) {
-        let sunrise, sunset, day;
-
-        if (now && phases) {
-            sunrise = `${this.pad(phases.sunrise.hour)}${this.pad(phases.sunrise.minute)}`;
-            sunset = `${this.pad(phases.sunset.hour)}${this.pad(phases.sunset.minute)}`;
-            day = now >= sunrise && now <= sunset;
-        } else {
-            day = true;
-        }
-
-        if (condition.indexOf("nt_") > -1) {
-            condition = condition.replace("nt_");
-            day = false;
-        }
-
+    icon(condition) {
         const icons = {
-            "chanceflurries": "snow",
-            "chancerain": "rain",
-            "chancesleat": "snow",
-            "chancesnow": "snow",
-            "chancetstorms": "storm",
-            "clear": day ? "day" : "night",
-            "cloudy": "cloudy",
-            "flurries": "snow",
-            "fog": "particles",
-            "hazy": "particles",
-            "mostlycloudy": day ? "day_mostlycloudy" : "night_mostlycloudy",
-            "mostlysunny": "day_mostlyclear",
-            "partlycloudy": day ? "day_partlycloudy" : "night_partlycloudy",
-            "partlysunny": "day_mostlycloudy",
+            "clear-day": "day",
+            "clear-night": "night",
             "rain": "rain",
-            "sleat": "snow",
             "snow": "snow",
-            "sunny": "day",
-            "tstorms": "storm",
+            "sleet": "snow",
+            "wind": "wind",
+            "fog": "particles",
+            "cloudy": "cloudy",
+            "partly-cloudy-day": "day_mostlycloudy",
+            "partly-cloudy-night": "night_mostlycloudy",
+            "hail": "snow",
+            "thunderstorm": "storm",
+            "tornado": "wind",
             "unknown": "unknown"
         };
 
@@ -185,32 +150,46 @@ class Weather extends Endpoint {
             : icons.unknown;
     }
 
-    // 0 = bad
-    // 1 = good
-    verify(data) {
-        const { response, current_observation, forecast, moon_phase, sun_phase } = data;
+    /* eslint-disable complexity,yoda */
+    degreesToDirection(bearing) {
+        bearing %= 360;
 
-        // Ensure Data Exists
-        if (!response || !current_observation || !forecast || !moon_phase || !sun_phase) {
-            return 0;
+        if (11.25 <= bearing && bearing < 33.75) {
+            return "NNE";
+        } else if (33.75 <= bearing && bearing < 56.25) {
+            return "NE";
+        } else if (56.25 <= bearing && bearing < 78.75) {
+            return "ENE";
+        } else if (78.75 <= bearing && bearing < 101.25) {
+            return "E";
+        } else if (101.25 <= bearing && bearing < 123.75) {
+            return "ESE";
+        } else if (123.75 <= bearing && bearing < 146.25) {
+            return "SE";
+        } else if (146.25 <= bearing && bearing < 168.75) {
+            return "SSE";
+        } else if (168.75 <= bearing && bearing < 191.25) {
+            return "S";
+        } else if (191.25 <= bearing && bearing < 213.75) {
+            return "SSW";
+        } else if (213.75 <= bearing && bearing < 236.25) {
+            return "SW";
+        } else if (236.25 <= bearing && bearing < 258.75) {
+            return "WSW";
+        } else if (258.75 <= bearing && bearing < 281.25) {
+            return "W";
+        } else if (281.25 <= bearing && bearing < 303.75) {
+            return "WNW";
+        } else if (303.75 <= bearing && bearing < 326.25) {
+            return "NW";
+        } else if (326.25 <= bearing && bearing < 348.75) {
+            return "NNW";
         }
 
-        // Ensure Source Responded with all data types
-        for (let index = 0; index < response.features.length; index++) {
-            if (response.features[index] === 0) {
-                return 0;
-            }
-        }
+        return "N";
+    }
 
-        // Ensure Data is Verifiable
-        if (current_observation.icon === "" || current_observation.icon === "unknown") {
-            return 0;
-        }
-
-        if (current_observation.condition === "") {
-            return 0;
-        }
-
+    verify() {
         return 1;
     }
 }
