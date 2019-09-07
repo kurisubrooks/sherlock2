@@ -127,8 +127,8 @@ module.exports = {
                     "miles", "mile",
                     "mi", "㍄"
                 ],
-                toSI: unit => unit / 1609.344,
-                fromSI: unit => unit * 1609.344
+                toSI: unit => unit * 1609.344,
+                fromSI: unit => unit / 1609.344
             },
             {
                 name: "lunar distance",
