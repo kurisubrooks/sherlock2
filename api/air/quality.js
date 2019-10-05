@@ -28,6 +28,7 @@ class AirQuality extends Endpoint {
             description: "Check the local air quality",
             route: "/api/air",
             method: "all",
+            disabled: true,
             token: false,
             admin: false,
             mask: false,
