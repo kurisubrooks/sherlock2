@@ -19,19 +19,19 @@ class Weather extends Endpoint {
                     name: "penrith",
                     format: "json",
                     interval: 10,
-                    url: `https://api.darksky.net/forecast/${keys.darksky}/-33.7507,150.6939?units=si`
+                    url: `https://api.darksky.net/forecast/${keys.darksky}/-33.750,150.694?units=si`
                 },
                 {
-                    name: "bowenfels",
+                    name: "blaxland",
                     format: "json",
                     interval: 10,
-                    url: `https://api.darksky.net/forecast/${keys.darksky}/-33.483,150.117?units=si`
+                    url: `https://api.darksky.net/forecast/${keys.darksky}/-33.744,150.610?units=si`
                 },
                 {
                     name: "marayong",
                     format: "json",
                     interval: 10,
-                    url: `https://api.darksky.net/forecast/${keys.darksky}/-33.7461,150.9001?units=si`
+                    url: `https://api.darksky.net/forecast/${keys.darksky}/-33.746,150.900?units=si`
                 }
             ]
         });
@@ -52,7 +52,7 @@ class Weather extends Endpoint {
                 return res.status(400).send({ ok: false, error: "Unknown Location" });
             }
         } else {
-            data.location = "marayong";
+            return res.status(400).send({ ok: false, error: "Location not specified" });
         }
 
         const store = fs.readFileSync(path.join(__dirname, "..", "..", "storage", `${data.location}.json`));
