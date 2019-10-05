@@ -2,6 +2,7 @@
   "name": "sherlock",
   "version": "3.0.0",
   "author": "kurisubrooks",
+  "license": "CC-BY-4.0",
   "description": "http server with modular data retrieval and functional api endpoints",
   "main": "index.js",
   "scripts": {
