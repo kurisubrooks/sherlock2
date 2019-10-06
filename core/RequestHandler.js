@@ -92,6 +92,7 @@ class RequestHandler {
   }
 
   log(ok, ip, url, data, auth, method, error, code) {
+    ip = ip === '::1' ? 'localhost' : ip;
     const style = ok ? 'success' : 'error';
     const indicator = ok ? '✓' : '✘';
     const user = auth && auth.ok ? auth.username : ip;
