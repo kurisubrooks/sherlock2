@@ -35,11 +35,18 @@ class EndpointManager {
   }
 
   restartModule(route) {
+    // Grab the module
     const existingModule = this.routes.get(route);
     if (!existingModule) return false;
     const location = existingModule.location;
+
+    // Remove from list
     this.routes.delete(route);
+
+    // Delete from cache
     delete require.cache[require.resolve(location)];
+
+    // Restart module
     this.startModule(location, true);
     return true;
   }

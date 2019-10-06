@@ -18,7 +18,7 @@ class Database {
     return database;
   }
 
-  static get Models() {
+  static get Tables() {
     return {
       User: require('./Structures/User'),
       RegKeys: require('./Structures/RegistrationKeys')
@@ -27,13 +27,14 @@ class Database {
 
   static newRegKey() {
     const key = crypto.randomBytes(Math.ceil(12 / 2)).toString('hex');
-    Database.Models.RegKeys.create({ key });
+    Database.Tables.RegKeys.create({ key });
     return { ok: true, key };
   }
 
   static async validateRegKey(key) {
     if (!key) return { ok: false, error: 'Missing Key' };
-    const found = await Database.Models.RegKeys.findOne({ where: { key } });
+    const found = await Database.Tables.RegKeys.findOne({ where: { key } });
+
     return found
       ? { ok: true }
       : { ok: false, error: 'Invalid Auth Key' };
@@ -41,7 +42,8 @@ class Database {
 
   static async checkToken(token) {
     if (!token) return { ok: false, error: 'Missing Token' };
-    const user = await Database.Models.User.findOne({ where: { token } });
+    const user = await Database.Tables.User.findOne({ where: { token } });
+
     return user
       ? { ok: true, username: user.username, token }
       : { ok: false, error: 'Unable to Authenticate Token', input: token };
@@ -49,7 +51,8 @@ class Database {
 
   static async checkAdmin(token) {
     if (!token) return { ok: false, error: 'Missing Token' };
-    const user = (await Database.Models.User.findOne({ where: { token } })).admin;
+    const user = (await Database.Tables.User.findOne({ where: { token } })).admin;
+
     return user
       ? { ok: true, username: user.username, token }
       : { ok: false, error: 'User is not an Administrator' };
@@ -59,10 +62,11 @@ class Database {
     if (!username) return { ok: false, error: 'Missing Username' };
     if (!admin) return { ok: false, error: 'Missing Admin' };
 
-    const user = await Database.Models.User.findOne({ where: { username } });
+    const user = await Database.Tables.User.findOne({ where: { username } });
     if (!user) return { ok: false, error: 'Invalid Username' };
 
     const req = await user.update({ admin: Boolean(admin) });
+
     return req
       ? { ok: true }
       : { ok: false };
@@ -73,7 +77,7 @@ class Database {
     if (!password) return { ok: false, error: 'Missing Password' };
 
     // Check if username exists
-    const user = await Database.Models.User.findOne({ where: { username } });
+    const user = await Database.Tables.User.findOne({ where: { username } });
     if (!user) return { ok: false, error: 'Incorrect Credentials' };
 
     // Compare passwords
@@ -93,12 +97,12 @@ class Database {
     if (!data.password) return { ok: false, error: 'Missing Password' };
 
     // Check auth key
-    const keyCheck = await Database.Models.RegKeys.findOne({ where: { key: data.auth } });
+    const keyCheck = await Database.Tables.RegKeys.findOne({ where: { key: data.auth } });
     if (!keyCheck) return { ok: false, error: 'Invalid Auth Key' };
     Logger.debug('New User', 'OK: Auth Key is valid');
 
     // Check if user already exists
-    const nameCheck = await Database.Models.User.findOne({ where: { username: data.username } });
+    const nameCheck = await Database.Tables.User.findOne({ where: { username: data.username } });
     if (nameCheck) return { ok: false, error: 'Username already exists' };
     Logger.debug('New User', 'OK: Username is available');
 
@@ -112,7 +116,7 @@ class Database {
 
     // Check if token already exists
     const token = Util.generateToken();
-    const tokenCheck = await Database.Models.User.findOne({ where: { token } });
+    const tokenCheck = await Database.Tables.User.findOne({ where: { token } });
     if (tokenCheck) return { ok: false, error: 'Internal Server Error' };
     Logger.debug('New User', 'OK: Generated token is available');
 
@@ -121,13 +125,13 @@ class Database {
     Logger.debug('New User', 'OK: Password successfully hashed');
 
     // Delete Key from DB
-    const keyRemove = await Database.Models.RegKeys.findOne({ where: { key: data.auth } });
+    const keyRemove = await Database.Tables.RegKeys.findOne({ where: { key: data.auth } });
     if (!keyRemove) return { ok: false, error: 'Internal Server Error' };
     await keyRemove.destroy();
     Logger.debug('New User', 'OK: Auth Key deleted successfully');
 
     // Add user to db
-    const user = await Database.Models.User.create({
+    const user = await Database.Tables.User.create({
       admin: data.admin || false,
       token: token,
       email: data.email,
@@ -147,7 +151,7 @@ class Database {
     if (!token) return { ok: false, error: 'Missing Token' };
 
     // Get user from db
-    const user = await Database.Models.User.findOne({ where: { token } });
+    const user = await Database.Tables.User.findOne({ where: { token } });
 
     // Error if token doesn't belong to a user
     if (!user) return { ok: false, error: 'User does not exist' };
