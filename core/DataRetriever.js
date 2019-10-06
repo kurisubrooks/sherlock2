@@ -54,7 +54,7 @@ class DataRetriever {
       const result = this.instance.verify(response);
 
       if (result === 0) {
-        Logger.error('Data Retriever', `Data returned from ${this.instance.name} failed quality checking.`);
+        Logger.error('Data Retriever', `Data returned from ${this.instance.name} failed quality assurance.`);
         return false;
       }
     }
@@ -67,7 +67,7 @@ class DataRetriever {
   }
 
   error(message) {
-    Logger.error('Data Retriever', message, true);
+    Logger.error('Data Retriever', JSON.stringify(message), true);
     return false;
   }
 }
