@@ -17,7 +17,7 @@ class PanelEditUser extends Endpoint {
   async run(req, res, data) {
     if (!req.session.token) return res.redirect('/panel/login');
 
-    const user = await Database.Models.User.findOne({ where: { username: data.username } });
+    const user = await Database.Tables.User.findOne({ where: { username: data.username } });
 
     let info;
     if (user) {
@@ -35,7 +35,7 @@ class PanelEditUser extends Endpoint {
       content: 'users_edit.ejs',
       data: {
         admin: req.session.admin,
-        active: 'users_edit',
+        active: 'users_manage',
         users: user ? true : null,
         user: info
       }

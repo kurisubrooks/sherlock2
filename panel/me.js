@@ -17,7 +17,7 @@ class MyPanel extends Endpoint {
   async run(req, res) {
     if (!req.session.token) return res.redirect('/panel/login');
 
-    const user = await Database.Models.User.findOne({ where: { token: req.session.token } });
+    const user = await Database.Tables.User.findOne({ where: { token: req.session.token } });
 
     return res.render('panel/views/layout', {
       title: 'Home',
