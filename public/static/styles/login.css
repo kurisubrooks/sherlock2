@@ -76,6 +76,11 @@ body {
   border-radius: 50px;
   background: linear-gradient(180deg, #FFD155 0%, #FFB948 100%);
   border-color: rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+}
+
+input[type="submit"]:focus {
+  outline: none;
 }
 
 .container .form input::placeholder {
