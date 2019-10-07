@@ -1,39 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Panel - <%= title %></title>
-    <link href="/static/styles/panel.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500|Roboto+Condensed|Roboto+Mono" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="/static/scripts/jquery/3.1.1.js"></script>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ffb56f">
-    <meta name="theme-color" content="#ffffff">
+  <meta charset="utf-8">
+  <title>Sherlock - <%= title %></title>
+  <link href="/static/styles/panel.css" rel="stylesheet">
+  <link href="https://use.typekit.net/fjt0pow.css" rel="stylesheet">
+  <link href="https://rsms.me/inter/inter.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="/static/scripts/jquery/3.1.1.js"></script>
 </head>
-<body class="panel">
+<body>
 
-    <div class="container">
-        <div class="sidebar">
-            <ul>
-                <li class="brand">Sherlock</li>
-                <%- include("partials/sidebar", data) %>
-            </ul>
-        </div>
-
-        <div class="content">
-            <div class="nav">
-                <span><%= title %></span>
-                <span class="logout"><a href="/panel/logout">Logout</a></span>
-            </div>
-            <div class="main">
-                <%- include(content, data) %>
-            </div>
-        </div>
+  <div class="container">
+    <div class="header">
+      <div class="brand">
+        <img src="/static/images/logo-white.svg" height="22px">
+      </div>
+      <div class="navigation"><%= title %></div>
     </div>
+
+    <div class="sidebar">
+      <ul>
+        <%- include("partials/sidebar", data) %>
+      </ul>
+    </div>
+
+    <div class="content">
+      <div class="main">
+        <%- include(content, data) %>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

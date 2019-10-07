@@ -7,43 +7,251 @@
 html, body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-family: "Inter", sans-serif;
   height: 100%;
 }
 
 body {
-  background: linear-gradient(135deg, #35394A 0%, #1F222E 100%);
+  background: #1D1D1D;
 }
 
-body.panel {
-  background: #35394A;
+.container {
+  background: #2A2C31;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.container .header {
+  display: flex;
+  position: absolute;
+  top: 0; right: 0;
+  align-items: center;
+  z-index: 10;
+  width: 100%;
+  height: 54px;
+  background: #37383C;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+  padding-left: 30px;
+  user-select: text;
+  cursor: default;
+}
+
+.container .header .brand {
+  padding-top: 3px;
+  width: 260px;
+}
+
+.container .header .navigation {
+  margin-left: -5px;
+}
+
+.container .sidebar {
+  display: inline-flex;
+  height: 100%;
+  width: 260px;
+  padding-top: 62px;
+  background: linear-gradient(180deg, #2E3135 0%, #1D1D1D 100%);
+  box-shadow: 0px 4px 13px -2px rgba(0, 0, 0, 0.25);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.container .sidebar a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container .sidebar a#logout {
+  color: #FD6868;
+}
+
+.container .sidebar ul,
+.container .sidebar li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  user-select: none;
+}
+
+.container .sidebar > ul {
+  width: 260px;
+}
+
+.container .sidebar ul > li {
+  font-size: 16px;
+  font-weight: 600;
+  cursor: default;
+}
+
+.container .sidebar ul ul li {
+  font-size: 14px;
+  font-weight: 400;
+  padding-left: 60px;
+}
+
+.container .sidebar li {
+  padding: 14px 30px;
+  cursor: pointer;
+}
+
+.container .sidebar ul ul li.active,
+.container .sidebar ul ul li:hover {
+  background: #36383E;
+}
+
+.container .content {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100%;
+  width: calc(100% - 260px);
+  padding-top: 52px;
+}
+
+.container .content .main {
+  display: block;
+  flex-grow: 1;
+  padding: 22px 24px;
+  background: #2D2F33;
+  box-shadow: 0px 4px 13px -2px rgba(0, 0, 0, 0.25);
+  border-left: 1px solid #37383C;
+  overflow-y: auto;
+}
+
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  display: block;
+  width: 400px;
+  margin: 10px 0;
+  padding: 0.7em 1em;
+
+  font: inherit;
+  font-size: 14px !important;
+  background: #28292D;
+  border: 2px solid #1F2025;
+  color: #FFFFFF;
+}
+
+input:disabled {
+  background: #28292D;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: no-drop;
+}
+
+input:hover:not(:disabled),
+input:focus:not(:disabled) {
+  border-color: #18171B;
+}
+
+input[type=submit],
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+
+  background: #28292E;
+  cursor: pointer;
+  font: inherit;
+  font-size: 15px !important;
+  padding: 0.5em 1.1em;
+  margin: 10px 0;
+  border: 2px solid #1F2025;
+  color: #FFFFFF;
+}
+
+input[type=submit]:hover,
+input[type=submit]:focus,
+button:hover,
+button:focus {
+  background: #1F2025;
+  border-color: #18171B;
+}
+
+input[type=submit]:disabled,
+button:disabled {
+  cursor: no-drop;
+  background: transparent;
+  border-color: #3C3E43;
+  color: #3C3E43;
+}
+
+input[type=submit]:disabled:hover,
+input[type=submit]:disabled:focus,
+button:disabled:hover,
+button:disabled:focus {
+  background: transparent;
+  border-color: #3C3E43;
+  color: #3C3E43;
+}
+
+table {
+  min-width: 500px;
+  width: auto;
+  border: 2px solid #1F2025;
+  border-collapse: collapse;
+  cursor: default;
+}
+
+table a {
+  color: inherit;
+  cursor: pointer;
+}
+
+table tr td {
+  padding: 1em;
+}
+
+table thead {
+  font-weight: 500;
+  background: #1F2025;
+}
+
+table tbody tr:nth-child(odd) {
+  background: #28292E;
+}
+
+table tbody tr:nth-child(even) {
+  background: #1F2025;
 }
 
 h3 {
   font-weight: 400;
 }
 
-a {
-  color: #4B99DE;
-  text-decoration: none;
-}
-
 hr {
   border: none;
-  border-bottom: 2px solid #333;
+  border-bottom: 1.5px solid #3C3E43;
 }
 
 small {
-  color: rgba(255, 255, 255, 0.4);
+  color: #ABB2BF;
+}
+
+blockquote {
+  border-left: 3px solid #3C3E43;
+  margin-left: 0;
+  padding: 4px 20px;
+  line-height: 1.5em;
 }
 
 pre, code {
   margin: 0;
   font-family: "SF Mono", "Roboto Mono", Courier, monospace;
   font-size: 0.9em;
-  color: #FFF;
-  background: #3C3E45;
-  border: 2px solid #333;
+  color: #ABB2BF;
+  background: #28292E;
+  border: 2px solid #1F2025;
   line-height: 1.5em;
 }
 
@@ -65,347 +273,3 @@ pre code {
 code {
   padding: 1px 4px;
 }
-
-blockquote {
-  border-left: 3px solid #DDD;
-  margin-left: 0;
-  padding: 4px 20px;
-}
-
-input:focus,
-button:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-}
-
-select {
-  cursor: pointer;
-}
-
-.login {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  width: 540px;
-  color: #AFB1BE;
-  padding: 50px 80px;
-}
-
-.login .title {
-  margin-bottom: 20px;
-  font-size: 24px;
-}
-
-.login .brand {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.login .buttons {
-  margin-top: 20px;
-}
-
-.login .error,
-.login .info,
-.login .success {
-  padding: 20px;
-  margin-bottom: 20px;
-  background: rgba(255, 0, 0, 0.1);
-  border: 2px solid rgba(255, 0, 0, 0.1);
-  border-radius: 0.2em;
-  text-align: center;
-}
-
-.login .info {
-  background: rgba(100, 100, 180, 0.1);
-  border-color: rgba(100, 100, 180, 0.1);
-}
-
-.login .success {
-  background: rgba(50, 255, 50, 0.1);
-  border-color: rgba(50, 255, 50, 0.1);
-}
-
-.login input[type=text],
-.login input[type=email],
-.login input[type=password] {
-  display: block;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  font: inherit;
-  width: 100%;
-  font-size: 14px;
-  padding: 0.75em 1em;
-  margin-bottom: 10px;
-  border-radius: 0.2em;
-  border: 2px solid rgb(57, 61, 85);
-  background: rgba(255, 255, 255, 0.02);
-  color: rgb(175, 175, 190);
-}
-
-.login button,
-.login .button,
-.login input[type=submit] {
-  width: calc(50% - 2px);
-  padding: 0.75em 2em;
-  margin: 10px 0 0;
-  border-radius: 2em;
-  cursor: pointer;
-  text-transform: uppercase;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  font-size: 14px;
-  font-family: inherit;
-  border: 2px solid rgb(57, 61, 85);
-  background: rgba(255, 255, 255, 0);
-  color: rgb(175, 175, 190);
-}
-
-.login .button {
-  border-color: rgba(255, 255, 255, 0);
-  padding: 0.75em 2em;
-}
-
-.login input[type=text]:hover,
-.login input[type=text]:focus,
-.login input[type=email]:hover,
-.login input[type=email]:focus,
-.login input[type=password]:hover,
-.login input[type=password]:focus,
-.login input[type=submit]:hover,
-.login input[type=submit]:focus,
-.login button:hover,
-.login button:focus,
-.login .button:hover,
-.login .button:focus {
-  border-color: rgb(77, 81, 105);
-  background: rgba(255, 255, 255, 0.03);
-  color: rgb(175, 175, 190);
-}
-
-.container {
-  background: #2A2C31;
-  color: #FFFFFF;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-}
-
-.container .sidebar {
-  display: inline-flex;
-  height: 100%;
-  width: 260px;
-  background: #2F3136;
-  box-shadow: 0px 4px 13px -2px rgba(0, 0, 0, 0.25);
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-.container .sidebar .brand {
-  position: relative;
-  z-index: 200;
-  height: 56px;
-  padding: 16px 30px;
-  background: #2A2C31;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.02);
-  user-select: text;
-  cursor: default;
-}
-
-.container .sidebar a {
-  color: inherit;
-}
-
-.container .sidebar ul,
-.container .sidebar li {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  user-select: none;
-}
-
-.container .sidebar > ul {
-  width: 260px;
-}
-
-.container .sidebar ul > li {
-  font-weight: 500;
-  cursor: default;
-}
-
-.container .sidebar ul ul li {
-  padding-left: 60px;
-  font-weight: 400;
-}
-
-.container .sidebar li {
-  padding: 14px 30px;
-  cursor: pointer;
-}
-
-.container .sidebar ul ul li.active,
-.container .sidebar ul ul li:hover {
-  background: #36383E;
-}
-
-.container .content {
-  position: relative;
-  z-index: 100;
-  display: inline-flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  height: 100%;
-  width: calc(100% - 260px);
-}
-
-.container .content .nav {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 100;
-  display: block;
-  height: 56px;
-  width: calc(100% - 260px);
-  padding: 16px 24px;
-  background: #2A2C31;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.02);
-}
-
-.container .content .nav span {
-  font-weight: 500;
-}
-
-.container .content .nav span.logout {
-  float: right;
-}
-
-.container .content .nav span.logout a {
-  font-weight: 400;
-  color: #FFFFFF;
-}
-
-.container .content .main {
-  display: block;
-  flex-grow: 1;
-  padding: 76px 24px 22px;
-  background: #36383E;
-  box-shadow: 0px 4px 13px -2px rgba(0, 0, 0, 0.25);
-  overflow-y: auto;
-}
-
-.container .content .main input[type=text],
-.container .content .main input[type=password],
-.container .content .main select {
-  display: block;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  width: 100%;
-  max-width: 400px;
-  font: inherit;
-  font-size: 16px;
-  margin: 10px 0;
-  border-radius: 0.2em;
-  background: #3C3E45;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  padding: 0.7em 1em;
-  color: #FFF;
-}
-
-.container .content .main input:disabled {
-  background: #3C3E45;
-  color: rgba(255, 255, 255, 0.5);
-  cursor: no-drop;
-}
-
-.container .content .main input[type=text]:hover:not(:disabled),
-.container .content .main input[type=text]:focus:not(:disabled),
-.container .content .main input[type=password]:hover:not(:disabled),
-.container .content .main input[type=password]:focus:not(:disabled),
-.container .content .main select:hover:not(:disabled),
-.container .content .main select:focus:not(:disabled) {
-  border-color: #AAA;
-}
-
-.container .content .main input[type=button],
-.container .content .main input[type=submit],
-.container .content .main button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: transparent;
-  cursor: pointer;
-  font: inherit;
-  font-size: 16px;
-  padding: 0.5em 1.1em;
-  margin: 10px 0;
-  border-radius: 0.2em;
-  border: 2px solid #3FBF3F;
-  color: #3FBF3F;
-}
-
-.container .content .main input[type=button]:disabled,
-.container .content .main input[type=submit]:disabled,
-.container .content .main button:disabled {
-  cursor: no-drop;
-  background: transparent;
-  border-color: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.1);
-}
-
-.container .content .main input[type=button]:hover,
-.container .content .main input[type=button]:focus,
-.container .content .main input[type=submit]:hover,
-.container .content .main input[type=submit]:focus,
-.container .content .main button:hover,
-.container .content .main button:focus {
-  background: #3FBF3F;
-  color: #FFF;
-}
-
-.container .content .main input[type=button]:disabled:hover,
-.container .content .main input[type=button]:disabled:focus,
-.container .content .main input[type=submit]:disabled:hover,
-.container .content .main input[type=submit]:disabled:focus,
-.container .content .main button:disabled:hover,
-.container .content .main button:disabled:focus {
-  background: transparent;
-  border-color: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.1);
-}
-
-.container .content .main table {
-  min-width: 500px;
-  width: auto;
-  border: 2px solid #333;
-  border-collapse: collapse;
-  cursor: default;
-}
-
-.container .content .main table a {
-  color: inherit;
-  cursor: pointer;
-}
-
-.container .content .main table tr td {
-  padding: 1em;
-}
-
-.container .content .main table thead {
-  font-weight: 500;
-  border-bottom: 2px solid #333;
-}
-
-.container .content .main table tbody tr:nth-child(odd) {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.container .content .main table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/*
-.container .content .main table tr td:last-child {
-  text-align: center;
-}
-*/
