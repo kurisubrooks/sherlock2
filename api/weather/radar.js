@@ -108,7 +108,7 @@ class Radar extends Endpoint {
         for (const item of response.frames) {
           const id = ++count;
 
-          queue.push(new Promise(async resolve => {
+          queue.push(new Promise(resolve => {
             return request.get({
               headers: { 'User-Agent': 'Mozilla/5.0' },
               uri: item.image,
