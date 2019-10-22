@@ -1,24 +1,29 @@
 <table>
-    <thead>
-        <tr>
-            <td>Admin</td>
-            <td>Disabled</td>
-            <td>Username</td>
-            <td>Email</td>
-            <td>Token</td>
-            <td style="text-align:center;">Edit</td>
-        </tr>
-    </thead>
-    <tbody>
-        <% for (let i = 0; i < users.length; i++) { %>
-        <tr>
-            <td><%= users[i].admin %></td>
-            <td><%= users[i].disabled %></td>
-            <td><%= users[i].username %></td>
-            <td><%= users[i].email %></td>
-            <td><%= users[i].token %></td>
-            <td style="text-align:center;"><a href="/panel/users/edit?username=<%= users[i].username %>"><i class="material-icons">edit</i></a></td>
-        </tr>
-        <% } %>
-    </tbody>
+  <thead>
+    <tr>
+      <td>Username</td>
+      <td>Email</td>
+      <td>Token</td>
+      <td style="text-align:center;">Edit</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (let i = 0; i < users.length; i++) { %>
+      <tr>
+        <td>
+          <%= users[i].username %>
+          <% if (users[i].admin) { %>
+            <i class="material-icons small">verified_user</i>
+          <% } %>
+        </td>
+        <td><%= users[i].email %></td>
+        <td class="tabular"><%= users[i].token %></td>
+        <td style="text-align: center;">
+          <a href="/panel/users/edit?username=<%= users[i].username %>">
+            <i class="material-icons">edit</i>
+          </a>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
 </table>
