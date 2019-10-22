@@ -25,12 +25,14 @@ class Database {
     };
   }
 
+  // Create Registration Key
   static newRegKey() {
     const key = crypto.randomBytes(Math.ceil(12 / 2)).toString('hex');
     Database.Tables.RegKeys.create({ key });
     return { ok: true, key };
   }
 
+  // Verify Registration Key
   static async validateRegKey(key) {
     if (!key) return { ok: false, error: 'Missing Key' };
     const found = await Database.Tables.RegKeys.findOne({ where: { key } });
@@ -40,6 +42,7 @@ class Database {
       : { ok: false, error: 'Invalid Auth Key' };
   }
 
+  // Verify User Token
   static async checkToken(token) {
     if (!token) return { ok: false, error: 'Missing Token' };
     const user = await Database.Tables.User.findOne({ where: { token } });
@@ -49,6 +52,7 @@ class Database {
       : { ok: false, error: 'Unable to Authenticate Token', input: token };
   }
 
+  // Verify Permissions
   static async checkAdmin(token) {
     if (!token) return { ok: false, error: 'Missing Token' };
     const user = (await Database.Tables.User.findOne({ where: { token } })).admin;
@@ -58,6 +62,7 @@ class Database {
       : { ok: false, error: 'User is not an Administrator' };
   }
 
+  // Change Permissions
   static async changeAdmin(username, admin) {
     if (!username) return { ok: false, error: 'Missing Username' };
     if (!admin) return { ok: false, error: 'Missing Admin' };
@@ -72,6 +77,7 @@ class Database {
       : { ok: false };
   }
 
+  // Check Login Details
   static async checkLogin(username, password) {
     if (!username) return { ok: false, error: 'Missing Username' };
     if (!password) return { ok: false, error: 'Missing Password' };
@@ -89,6 +95,7 @@ class Database {
       : { ok: false, error: 'Incorrect Credentials' };
   }
 
+  // Create User (Registration)
   static async newUser(data) {
     if (!data) return { ok: false, error: 'Missing Data' };
     if (!data.auth) return { ok: false, error: 'Missing Auth Key' };
@@ -147,6 +154,7 @@ class Database {
     return { ok: true, username: data.username, token };
   }
 
+  // Delete User
   static async deleteUser(token) {
     if (!token) return { ok: false, error: 'Missing Token' };
 
