@@ -1,94 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Panel - Register</title>
-    <link href="/static/styles/panel.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Roboto:400,500|Roboto+Condensed|Roboto+Mono" rel="stylesheet">
-    <style>.error { display: none; }</style>
-    <script src="/static/scripts/jquery/3.1.1.js"></script>
-    <script>
-        $(function() {
-            $("#form").on("submit", function(event) {
-                event.preventDefault();
-                const email = $("#email").val()
-                const username = $("#username").val();
-                const password = $("#password").val();
-                const password2 = $("#password2").val()
-                const auth = $("#authkey").val();
-
-                if (!email || !username || !password || !password2 || !auth) {
-                    $(".error").show();
-                    $("#errmsg").text("Baka! You have to fill in the boxes. uwu");
-                    return;
-                }
-
-                if (password !== password2) {
-                    $(".error").show();
-                    $("#errmsg").text("Password Mismatch");
-                    return;
-                }
-
-                /*if (!(/(.+)@(.+){2,}\.(.+){2,}/.test(email))) {
-                    $(".error").show();
-                    return $("#errmsg").text("Please enter a valid email");
-                }*/
-
-                if (!(/^[a-zA-Z0-9]+$/).test(username)) {
-                    $(".error").show();
-                    $("#errmsg").text("Usernames can only contain letters and numbers");
-                    return;
-                }
-
-                $.post("/api/register", { email: email, username: username, password: password, auth: auth }, function(data) {
-                    console.log(data);
-
-                    if (data.ok) {
-                        $("#result").removeClass("info");
-                        $("#result").addClass("success");
-                        $("#infomsg").html(`Username: ${data.username}<br>Token: ${data.token}`);
-                    } else {
-                        $(".error").show();
-                        $("#errmsg").text(data.error);
-                        return;
-                    }
-                });
-
-                return;
-            });
-        });
-    </script>
+  <meta charset="utf-8">
+  <title>Sherlock - Register</title>
+  <link href="/static/styles/login.css" rel="stylesheet">
+  <link href="https://use.typekit.net/fjt0pow.css" rel="stylesheet">
+  <link href="https://rsms.me/inter/inter.css" rel="stylesheet">
+  <script src="/static/scripts/jquery/3.1.1.js"></script>
 </head>
 <body>
 
-    <div class="login">
-        <div class="box">
-            <div class="brand">
-                <img src="/static/images/logo2.svg" height="128px">
-            </div>
-
-            <div class="info" id="result">
-                <span id="infomsg">Please consult Kuri-senpai for a Registration Key before continuing.</span>
-            </div>
-
-            <div class="error">
-                <span id="errmsg"></span>
-            </div>
-
-            <div class="inputs">
-                <form target="" id="form">
-                    <input id="username" type="text" placeholder="Username" required autocomplete="off">
-                    <input id="email" type="email" placeholder="Email" required autocomplete="off">
-                    <input id="password" type="password" placeholder="Password" required autocomplete="off">
-                    <input id="password2" type="password" placeholder="Confirm Password" required autocomplete="off">
-                    <input id="authkey" type="text" placeholder="Registration Key" required autocomplete="off">
-                    <div class="buttons">
-                        <a href="/panel/login"><button type="button">Back</button></a>
-                        <input type="submit" value="Submit">
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="container">
+    <div class="header">
+      <img src="/static/images/logo.svg" height="72px">
+      <div class="title">Registration</div>
+      <div class="message">You'll need a registration key before continuing. Ask Kurisu for one!</div>
+      <div class="errors"></div>
     </div>
+    <div class="form">
+      <form target="" id="form">
+        <input id="username" type="text" placeholder="Username" required autocomplete="off">
+        <input id="email" type="email" placeholder="Email" required autocomplete="off">
+        <input id="password" type="password" placeholder="Password" required autocomplete="new-password">
+        <input id="password2" type="password" placeholder="Confirm Password" required autocomplete="new-password">
+        <input id="authkey" type="text" placeholder="Registration Key" required autocomplete="off">
+        <div class="submit">
+          <input type="submit" value="Register →">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    $("#form").on("submit", function(event) {
+      event.preventDefault();
+      var email = $("#email").val()
+      var username = $("#username").val();
+      var password = $("#password").val();
+      var password2 = $("#password2").val()
+      var auth = $("#authkey").val();
+      var payload = { email: email, username: username, password: password, auth: auth };
+
+      if (!email || !username || !password || !password2 || !auth) {
+        $(".errors").text('Please fill in all the fields').show();
+        return;
+      }
+
+      if (password !== password2) {
+        $(".errors").text('Password Mismatch').show();
+        return;
+      }
+
+      if (!(/^[a-zA-Z0-9]+$/).test(username)) {
+        $(".errors").text('Usernames can only contain letters and numbers').show();
+        return;
+      }
+
+      $.post("/api/register", payload, function(data) {
+        if (data.ok) {
+          window.location.replace("/panel/me");
+        } else {
+          $(".errors").text(data.error).show();
+          return;
+        }
+      });
+
+      return;
+    });
+  </script>
 
 </body>
 </html>

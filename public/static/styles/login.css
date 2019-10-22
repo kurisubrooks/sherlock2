@@ -29,7 +29,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
   margin-bottom: 20px;
+  width: 330px;
 }
 
 .container .header .title {
@@ -38,6 +40,17 @@ body {
   font-family: bio-sans, sans-serif;
   font-weight: 600;
   font-size: 42px;
+}
+
+.container .header .message {
+  line-height: 1.5em;
+  margin-bottom: 10px;
+}
+
+.container .header .errors {
+  display: none;
+  color: rgb(245, 91, 91);
+  font-weight: 500;
 }
 
 .container .form {
@@ -84,13 +97,14 @@ input[type="submit"]:focus {
 }
 
 .container .form input::placeholder {
-  color: #FFFFFF;
+  color: #999;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 25px #414245 inset !important;
-    -webkit-text-fill-color: #FFFFFF !important;
+  -webkit-text-fill-color: #000000 !important;
+  -webkit-box-shadow: 0 0 0 25px #faf16e inset !important;
+  border-color: #6d643c !important;
 }

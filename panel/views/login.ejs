@@ -14,8 +14,8 @@
     <div class="header">
       <img src="/static/images/logo.svg" height="72px">
       <div class="title">Sherlock</div>
+      <div class="errors"></div>
     </div>
-    <div class="errors"></div>
     <div class="form">
       <form target="" id="form">
         <input id="username" type="text" placeholder="Username" name="username" required>
@@ -35,8 +35,7 @@
       var payload = { username: username, password: password };
 
       if (!username || !password) {
-        $(".error").show();
-        $("#errmsg").text("Baka! You have to fill in the boxes. uwu");
+        $(".errors").text('Please fill in all the fields').show();
         return;
       }
 
@@ -44,8 +43,7 @@
         if (data.ok) {
           window.location.replace("/panel/me");
         } else {
-          $(".error").show();
-          $("#errmsg").text(data.error);
+          $(".errors").text(data.error).show();
           return;
         }
       });
