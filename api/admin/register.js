@@ -32,6 +32,10 @@ class RegistrationHandler extends Endpoint {
       password: data.password
     }).then(data => {
       if (!data.ok) return res.send(data);
+
+      req.session.token = data.token;
+      req.session.admin = data.admin;
+
       this.log(`User Created: ${data.username}`, 'debug');
       return res.send(data);
     });
