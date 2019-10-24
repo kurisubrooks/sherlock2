@@ -1,44 +1,44 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
 <div id="app">
-	<table>
-		<thead>
-			<tr>
-				<td>Username</td>
-				<td>Email</td>
-				<td>Token</td>
-				<td style="text-align:center;">Edit</td>
-			</tr>
-		</thead>
-		<tbody>
-			<template v-for="(user, index) in users" :key="index">
-				<tr>
-					<td>
-						{{ user.username }}
-						<i v-if="user.admin" class="material-icons small">verified_user</i>
-					</td>
-					<td>
-						{{ user.email }}
-					</td>
-					<td class="tabular">
-						{{ user.token }}
-					</td>
-					<td style="text-align: center;">
-						<a :href="'/panel/users/edit?username='+user.username">
-							<i class="material-icons">edit</i>
-						</a>
-					</td>
-				</tr>
-			</template>
-		</tbody>
-	</table>
+  <table>
+    <thead>
+      <tr>
+        <td>Username</td>
+        <td>Email</td>
+        <td>Token</td>
+        <td style="text-align:center;">Edit</td>
+      </tr>
+    </thead>
+    <tbody>
+      <template v-for="(user, index) in users" :key="index">
+        <tr>
+          <td>
+            {{ user.username }}
+            <i v-if="user.admin" class="material-icons small">verified_user</i>
+          </td>
+          <td>
+            {{ user.email }}
+          </td>
+          <td class="tabular">
+            {{ user.token }}
+          </td>
+          <td style="text-align: center;">
+            <a :href="'/panel/users/edit?username='+user.username">
+              <i class="material-icons">edit</i>
+            </a>
+          </td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
 </div>
 
 <script>
-	new Vue({
-	  el: "#app",
-	  data: {
-	    users: <%-JSON.stringify(users)%>
-	  }
-	})
+  new Vue({
+    el: "#app",
+    data: {
+      users: <%-JSON.stringify(users)%>
+    }
+  })
 </script>
