@@ -1,73 +1,124 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>Sherlock - Register</title>
-  <link href="/static/styles/login.css" rel="stylesheet">
-  <link href="https://use.typekit.net/fjt0pow.css" rel="stylesheet">
-  <link href="https://rsms.me/inter/inter.css" rel="stylesheet">
-  <script src="/static/scripts/jquery/3.1.1.js"></script>
+  <link href="/static/styles/login.css" rel="stylesheet" />
+  <link href="https://use.typekit.net/fjt0pow.css" rel="stylesheet" />
+  <link href="https://rsms.me/inter/inter.css" rel="stylesheet" />
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 <body>
-
-  <div class="container">
+  <div id="app" class="container">
     <div class="header">
-      <img src="/static/images/logo.svg" height="72px">
+      <img src="/static/images/logo.svg" height="72px" />
       <div class="title">Registration</div>
-      <div class="message">You'll need a registration key before continuing. Ask Kurisu for one!</div>
-      <div class="errors"></div>
+      <div class="message"
+      >You'll need a registration key before continuing. Ask Kurisu for
+      one!</div
+      >
+      <div v-if="error" class="errors">{{ errorMessage }}</div>
     </div>
     <div class="form">
       <form target="" id="form">
-        <input id="username" type="text" placeholder="Username" required autocomplete="off">
-        <input id="email" type="email" placeholder="Email" required autocomplete="off">
-        <input id="password" type="password" placeholder="Password" required autocomplete="new-password">
-        <input id="password2" type="password" placeholder="Confirm Password" required autocomplete="new-password">
-        <input id="authkey" type="text" placeholder="Registration Key" required autocomplete="off">
+        <input
+        v-model="username"
+        id="username"
+        type="text"
+        placeholder="Username"
+        required
+        autocomplete="off"
+        />
+        <input
+        v-model="email"
+        id="email"
+        type="email"
+        placeholder="Email"
+        required
+        autocomplete="off"
+        />
+        <input
+        v-model="password"
+        id="password"
+        type="password"
+        placeholder="Password"
+        required
+        autocomplete="new-password"
+        />
+        <input
+        v-model="password2"
+        id="password2"
+        type="password"
+        placeholder="Confirm Password"
+        required
+        autocomplete="new-password"
+        />
+        <input
+        v-model="authkey"
+        id="authkey"
+        type="text"
+        placeholder="Registration Key"
+        required
+        autocomplete="off"
+        />
         <div class="submit">
-          <input type="submit" value="Register →">
+          <input @click="handleSubmit" type="submit" value="Register →" />
         </div>
       </form>
     </div>
   </div>
-
+  
   <script>
-    $("#form").on("submit", function(event) {
-      event.preventDefault();
-      var email = $("#email").val()
-      var username = $("#username").val();
-      var password = $("#password").val();
-      var password2 = $("#password2").val()
-      var auth = $("#authkey").val();
-      var payload = { email: email, username: username, password: password, auth: auth };
-
-      if (!email || !username || !password || !password2 || !auth) {
-        $(".errors").text('Please fill in all the fields').show();
-        return;
-      }
-
-      if (password !== password2) {
-        $(".errors").text('Password Mismatch').show();
-        return;
-      }
-
-      if (!(/^[a-zA-Z0-9]+$/).test(username)) {
-        $(".errors").text('Usernames can only contain letters and numbers').show();
-        return;
-      }
-
-      $.post("/api/register", payload, function(data) {
-        if (data.ok) {
-          window.location.replace("/panel/me");
-        } else {
-          $(".errors").text(data.error).show();
-          return;
+    new Vue({
+      el: "#app",
+      data: {
+        username: null,
+        email: null,
+        password: null,
+        password2: null,
+        authkey: null,
+        error: false,
+        errorMessage: null
+      },
+      methods: {
+        handleSubmit: function(event) {
+          event.preventDefault();
+          var payload = {
+            email: this.email,
+            username: this.username,
+            password: this.password,
+            auth: this.auth
+          };
+          if (
+          !this.email ||
+          !this.username ||
+          !this.password ||
+          !this.authkey
+          ) {
+            this.errorMessage = "Please fill in all the fields";
+            return (this.error = true);
+          }
+          if (this.password !== this.password2) {
+            this.errorMessage = "Password Mismatch";
+            return (this.error = true);
+          }
+          if (!/^[a-zA-Z0-9]+$/.test(this.username)) {
+            this.errorMessage =
+            "Usernames can only contain letters and numbers";
+            return (this.error = true);
+          }
+          axios.post("/api/register", payload).then(response => {
+            if (response.data.ok) {
+              window.location.replace("/panel/me");
+            } else {
+              this.errorMessage = response.data.error;
+              return (this.error = true);
+            }
+          });
         }
-      });
-
-      return;
+      }
     });
   </script>
-
 </body>
 </html>

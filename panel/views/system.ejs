@@ -1,52 +1,66 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<div id="app">
+  <span class="title">Node.js Version</span>
+  <input v-model="node" type="text" disabled />
+  
+  <br />
+  
+  <span class="title">Memory In Use</span>
+  <input v-model="memory" type="text" disabled />
+  
+  <br />
+  
+  <span class="title">Registration Key</span><br />
+  <input v-model="key" id="key" type="text" disabled />
+  
+  <br />
+  
+  <button @click="handleGenerate" id="generate" class="active"
+  >Generate Registration Key</button
+  >
+  <button @click="handleRestart" id="restart">Restart</button>
+  <button id="reload" disabled>Reload Endpoints</button>
+  
+  <br />
+  
+  <span id="response">{{ response }}</span>
+</div>
+
 <script>
-$(function() {
-    $("#generate").on("click", function(event) {
-        $.post("/api/regkey", {}, function(data) {
-            console.log(data);
-            if (data.ok) {
-                $("#key").val(data.key);
-                // $("#gen").prop("disabled", true);
-            } else {
-                $("#response").text("Error: " + data.error);
-            }
+  new Vue({
+    el: "#app",
+    data: {
+      node: "<%- node %>",
+      memory: "<%- memory %>",
+      key: null,
+      response: null
+    },
+    methods: {
+      handleGenerate: function(event) {
+        event.preventDefault();
+        axios.post("/api/regkey", {}).then(response => {
+          console.log(response.data);
+          if (response.data.ok) {
+            return (this.key = response.data.key);
+          }
         });
-    });
-
-    $("#restart").on("click", function(event) {
-        $("#response").text("Restarting...");
-        $.post("/api/system", { action: "shutdown" }, function(data) {
-            console.log(data);
-            if (data.ok) {
-                setTimeout(function() {
-                    window.location.replace("/panel");
-                }, 3500);
-            } else {
-                $("#response").text(data.error);
-            }
+      },
+      handleRestart: function(event) {
+        event.preventDefault();
+        this.response = "Restarting...";
+        axios.post("/api/system", { action: "shutdown" }).then(response => {
+          console.log(response.data);
+          if (response.data.ok) {
+            return setTimeout(function() {
+              window.location.replace("/panel");
+            }, 3500);
+          } else {
+            return (this.response = `Error: ${response.data.error}`);
+          }
         });
-    });
-});
+      }
+    }
+  });
 </script>
-
-<span class="title">Node.js Version</span>
-<input type="text" value="<%- node %>" disabled>
-
-<br>
-
-<span class="title">Memory In Use</span>
-<input type="text" value="<%- memory %>" disabled>
-
-<br>
-
-<span class="title">Registration Key</span><br>
-<input id="key" type="text" value="" disabled>
-
-<br>
-
-<button id="generate" class="active">Generate Registration Key</button>
-<button id="restart">Restart</button>
-<button id="reload" disabled>Reload Endpoints</button>
-
-<br>
-
-<span id="response"></span>
