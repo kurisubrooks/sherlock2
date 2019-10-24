@@ -6,7 +6,6 @@
 		<link href="/static/styles/login.css" rel="stylesheet" />
 		<link href="https://use.typekit.net/fjt0pow.css" rel="stylesheet" />
 		<link href="https://rsms.me/inter/inter.css" rel="stylesheet" />
-		<!--   <script src="/static/scripts/jquery/3.1.1.js"></script> -->
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 	</head>
@@ -71,28 +70,6 @@
 					}
 				}
 			});
-			/*     $("#form").on("submit", function(event) {
-      event.preventDefault();
-      var username = $("#username").val();
-      var password = $("#password").val();
-      var payload = { username: username, password: password };
-
-      if (!username || !password) {
-        $(".errors").text('Please fill in all the fields').show();
-        return;
-      }
-
-      $.post("/api/login", payload, function(data) {
-        if (data.ok) {
-          window.location.replace("/panel/me");
-        } else {
-          $(".errors").text(data.error).show();
-          return;
-        }
-      });
-
-      return;
-    }); */
 		</script>
 	</body>
 </html>

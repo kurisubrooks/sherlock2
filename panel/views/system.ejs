@@ -63,31 +63,4 @@
 			}
 		}
 	});
-	/* $(function() {
-    $("#generate").on("click", function(event) {
-        $.post("/api/regkey", {}, function(data) {
-            console.log(data);
-            if (data.ok) {
-                $("#key").val(data.key);
-                // $("#gen").prop("disabled", true);
-            } else {
-                $("#response").text("Error: " + data.error);
-            }
-        });
-    });
-
-    $("#restart").on("click", function(event) {
-        $("#response").text("Restarting...");
-        $.post("/api/system", { action: "shutdown" }, function(data) {
-            console.log(data);
-            if (data.ok) {
-                setTimeout(function() {
-                    window.location.replace("/panel");
-                }, 3500);
-            } else {
-                $("#response").text(data.error);
-            }
-        });
-    });
-}); */
 </script>
