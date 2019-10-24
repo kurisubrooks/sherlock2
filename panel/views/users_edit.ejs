@@ -1,16 +1,37 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
 <form id="form">
-    <% if (users) { %>
-        <span class="title">Username</span>
-        <input id="username" type="text" value="<%- user.username %>" autocomplete="off" required>
-        <br>
-        <span class="title">Email</span>
-        <input id="email" type="text" value="<%- user.email %>" autocomplete="off" required>
-        <br>
-        <span class="title">Token</span>
-        <input id="token" type="text" value="<%- user.token %>" autocomplete="off" disabled>
-        <br>
-        <input type="submit" value="Submit" disabled>
-    <% } else { %>
-        <span>User does not exist</span>
-    <% } %>
+	<div v-if="users">
+		<span class="title">Username</span>
+		<input
+			v-model="username"
+			id="username"
+			type="text"
+			autocomplete="off"
+			required
+		/>
+		<br />
+		<span class="title">Email</span>
+		<input v-model="email" id="email" type="text" autocomplete="off" required />
+		<br />
+		<span class="title">Token</span>
+		<input v-model="token" id="token" type="text" autocomplete="off" disabled />
+		<br />
+		<input type="submit" value="Submit" disabled />
+	</div>
+	<div v-else>
+		<span>User does not exist</span>
+	</div>
 </form>
+
+<script>
+	new Vue({
+	    el: "#form",
+	    data: {
+	        users: <%- users %>,
+	        username: "<%- user.username %>",
+	        email: "<%- user.email %>",
+	        token: "<%- user.token %>"
+	    }
+	})
+</script>
