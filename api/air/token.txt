@@ -1,0 +1,1 @@
+// https://api.waqi.info/api/token/hbs

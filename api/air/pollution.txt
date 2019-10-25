@@ -1,0 +1,8 @@
+/*
+    https://api.waqi.info/mapq/bounds/
+        ? bounds = -34.27310565528196,150.20233154296875,-33.31446310036172,151.49871826171875
+        & inc = placeholders
+        & k = token.rxs.obs[0].msg.token
+*/
+
+// token from token.js
