@@ -4,27 +4,25 @@
 <div id="app">
   <span class="title">Node.js Version</span>
   <input v-model="node" type="text" disabled />
-  
+
   <br />
-  
+
   <span class="title">Memory In Use</span>
   <input v-model="memory" type="text" disabled />
-  
+
   <br />
-  
+
   <span class="title">Registration Key</span><br />
   <input v-model="key" id="key" type="text" disabled />
-  
+
   <br />
-  
-  <button @click="handleGenerate" id="generate" class="active"
-  >Generate Registration Key</button
-  >
+
+  <button @click="handleGenerate" id="generate" class="active">Generate Registration Key</button>
   <button @click="handleRestart" id="restart">Restart</button>
   <button id="reload" disabled>Reload Endpoints</button>
-  
+
   <br />
-  
+
   <span id="response">{{ response }}</span>
 </div>
 

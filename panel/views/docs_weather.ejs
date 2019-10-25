@@ -11,22 +11,22 @@
 
 <h3>Details</h3>
 <table>
-    <tr>
-        <td>Request Types</td>
-        <td>GET/POST</td>
-    </tr>
-    <tr>
-        <td>Admin Only?</td>
-        <td>no</td>
-    </tr>
-    <tr>
-        <td>Token Required?</td>
-        <td>no</td>
-    </tr>
-    <tr>
-        <td>Rate Limiting?</td>
-        <td>no</td>
-    </tr>
+  <tr>
+    <td>Request Types</td>
+    <td>GET/POST</td>
+  </tr>
+  <tr>
+    <td>Admin Only?</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>Token Required?</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>Rate Limiting?</td>
+    <td>no</td>
+  </tr>
 </table>
 
 <br>
@@ -38,145 +38,145 @@
 
 <h3>Example <small>(using request-promise)</small></h3>
 <pre><code class="hljs javascript">await request({
-    method: "POST",
-    uri: "https://api.kurisubrooks.com/api/weather",
-    json: true
+  method: "POST",
+  uri: "https://api.kurisubrooks.com/api/weather",
+  json: true
 });</code></pre>
 
 <br>
 
 <h3>Response <small>(example)</small></h3>
 <pre><code class="hljs json">{
-    "ok": true,
-    "location": {
-        "full": "Penrith, Australia",
-        "city": "Penrith",
-        "state": "NSW",
-        "country": "AU",
-        "lat": "-33.72000122",
-        "long": "150.67999268",
-        "time": "1490169447",
-        "timezone": "Australia/Sydney",
-        "offset": "+1100"
+  "ok": true,
+  "location": {
+    "full": "Penrith, Australia",
+    "city": "Penrith",
+    "state": "NSW",
+    "country": "AU",
+    "lat": "-33.72000122",
+    "long": "150.67999268",
+    "time": "1490169447",
+    "timezone": "Australia/Sydney",
+    "offset": "+1100"
+  },
+  "weather": {
+    "icon": "mostly_cloudy_day",
+    "image": "https://api.kurisubrooks.com/static/weather/icons/mostly_cloudy_day_dark.png",
+    "condition": "Mostly Cloudy",
+    "temperature": 22,
+    "feels_like": 22,
+    "dewpoint": 20,
+    "humidity": "87%",
+    "pressure": "1013 mBar",
+    "visibility": "10.0 km",
+    "UV": 0,
+    "wind": {
+      "chill": "NA",
+      "direction": "South",
+      "degrees": 188,
+      "gust": "0 km/h",
+      "kph": "0 km/h"
     },
-    "weather": {
-        "icon": "mostly_cloudy_day",
-        "image": "https://api.kurisubrooks.com/static/weather/icons/mostly_cloudy_day_dark.png",
-        "condition": "Mostly Cloudy",
-        "temperature": 22,
-        "feels_like": 22,
-        "dewpoint": 20,
-        "humidity": "87%",
-        "pressure": "1013 mBar",
-        "visibility": "10.0 km",
-        "UV": 0,
-        "wind": {
-            "chill": "NA",
-            "direction": "South",
-            "degrees": 188,
-            "gust": "0 km/h",
-            "kph": "0 km/h"
+    "precipitation": {
+      "hour": " 0 mm",
+      "today": "13 mm"
+    }
+  },
+  "forecast": [
+    {
+      "date": {
+        "day": 22,
+        "month": 3,
+        "year": 2017,
+        "total": 80,
+        "display": {
+          "day": "Wednesday",
+          "day_short": "Wed",
+          "month": "March",
+          "month_short": "Mar"
         },
-        "precipitation": {
-            "hour": " 0 mm",
-            "today": "13 mm"
-        }
+        "time": "1490169600",
+        "timezone": "Australia/Sydney"
+      },
+      "icon": "isolated_scattered_tstorms_day",
+      "image": "https://api.kurisubrooks.com/static/weather/icons/isolated_scattered_tstorms_day_dark.png",
+      "condition": "Thunderstorm",
+      "high": 35,
+      "low": 19,
+      "humidity": "94%",
+      "rain_chance": "80%",
+      "rainfall": "5 mm",
+      "snowfall": "0 cm",
+      "wind": {
+        "max": "36 km/h",
+        "average": "1 km/h",
+        "direction": "SW",
+        "degrees": 227
+      }
     },
-    "forecast": [
-        {
-            "date": {
-                "day": 22,
-                "month": 3,
-                "year": 2017,
-                "total": 80,
-                "display": {
-                    "day": "Wednesday",
-                    "day_short": "Wed",
-                    "month": "March",
-                    "month_short": "Mar"
-                },
-                "time": "1490169600",
-                "timezone": "Australia/Sydney"
-            },
-            "icon": "isolated_scattered_tstorms_day",
-            "image": "https://api.kurisubrooks.com/static/weather/icons/isolated_scattered_tstorms_day_dark.png",
-            "condition": "Thunderstorm",
-            "high": 35,
-            "low": 19,
-            "humidity": "94%",
-            "rain_chance": "80%",
-            "rainfall": "5 mm",
-            "snowfall": "0 cm",
-            "wind": {
-                "max": "36 km/h",
-                "average": "1 km/h",
-                "direction": "SW",
-                "degrees": 227
-            }
+    {
+      "date": {
+        "day": 23,
+        "month": 3,
+        "year": 2017,
+        "total": 81,
+        "display": {
+          "day": "Thursday",
+          "day_short": "Thu",
+          "month": "March",
+          "month_short": "Mar"
         },
-        {
-            "date": {
-                "day": 23,
-                "month": 3,
-                "year": 2017,
-                "total": 81,
-                "display": {
-                    "day": "Thursday",
-                    "day_short": "Thu",
-                    "month": "March",
-                    "month_short": "Mar"
-                },
-                "time": "1490256000",
-                "timezone": "Australia/Sydney"
-            },
-            "icon": "cloudy",
-            "image": "https://api.kurisubrooks.com/static/weather/icons/cloudy_dark.png",
-            "condition": "Overcast",
-            "high": 22,
-            "low": 17,
-            "humidity": "84%",
-            "rain_chance": "20%",
-            "rainfall": "4 mm",
-            "snowfall": "0 cm",
-            "wind": {
-                "max": "16 km/h",
-                "average": "11 km/h",
-                "direction": "S",
-                "degrees": 185
-            }
+        "time": "1490256000",
+        "timezone": "Australia/Sydney"
+      },
+      "icon": "cloudy",
+      "image": "https://api.kurisubrooks.com/static/weather/icons/cloudy_dark.png",
+      "condition": "Overcast",
+      "high": 22,
+      "low": 17,
+      "humidity": "84%",
+      "rain_chance": "20%",
+      "rainfall": "4 mm",
+      "snowfall": "0 cm",
+      "wind": {
+        "max": "16 km/h",
+        "average": "11 km/h",
+        "direction": "S",
+        "degrees": 185
+      }
+    },
+    {
+      "date": {
+        "day": 24,
+        "month": 3,
+        "year": 2017,
+        "total": 82,
+        "display": {
+          "day": "Friday",
+          "day_short": "Fri",
+          "month": "March",
+          "month_short": "Mar"
         },
-        {
-            "date": {
-                "day": 24,
-                "month": 3,
-                "year": 2017,
-                "total": 82,
-                "display": {
-                    "day": "Friday",
-                    "day_short": "Fri",
-                    "month": "March",
-                    "month_short": "Mar"
-                },
-                "time": "1490342400",
-                "timezone": "Australia/Sydney"
-            },
-            "icon": "mostly_cloudy_day",
-            "image": "https://api.kurisubrooks.com/static/weather/icons/mostly_cloudy_day_dark.png",
-            "condition": "Mostly Cloudy",
-            "high": 23,
-            "low": 17,
-            "humidity": "80%",
-            "rain_chance": "20%",
-            "rainfall": "0 mm",
-            "snowfall": "0 cm",
-            "wind": {
-                "max": "16 km/h",
-                "average": "13 km/h",
-                "direction": "SSE",
-                "degrees": 162
-            }
-        }
-    ]
+        "time": "1490342400",
+        "timezone": "Australia/Sydney"
+      },
+      "icon": "mostly_cloudy_day",
+      "image": "https://api.kurisubrooks.com/static/weather/icons/mostly_cloudy_day_dark.png",
+      "condition": "Mostly Cloudy",
+      "high": 23,
+      "low": 17,
+      "humidity": "80%",
+      "rain_chance": "20%",
+      "rainfall": "0 mm",
+      "snowfall": "0 cm",
+      "wind": {
+        "max": "16 km/h",
+        "average": "13 km/h",
+        "direction": "SSE",
+        "degrees": 162
+      }
+    }
+  ]
 }</code></pre>
 
 <br><hr>
@@ -185,12 +185,11 @@
 <pre><code class="hljs json">Response Code: 500
 
 {
-    ok: false,
-    error: "Internal Server Error"
+  ok: false,
+  error: "Internal Server Error"
 }</code></pre>
+
 <blockquote>Something went wrong backend, this may occur if the weather data is corrupt. Try again later!</blockquote>
-
-
 
 <script src="/static/scripts/highlightjs/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>

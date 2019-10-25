@@ -1,25 +1,41 @@
 <li>User</li>
 <ul>
-    <a href="/panel/me"><li <% if (active === "me") { %>class="active"<% } %>>My Account</li></a>
-    <a href="/panel/logout" id="logout"><li>Log Out</li></a>
-    <!--<a href="/panel/user/edit"><li <% if (active === "users_chgpswd") { %>class="active"<% } %>>Change Password</li></a>-->
+  <a href="/panel/me">
+    <li <% if (active === "me") { %>class="active"<% } %>>My Account</li>
+  </a>
+  <a href="/panel/logout" id="logout">
+    <li>Log Out</li>
+  </a>
+  <!--<a href="/panel/user/edit">
+    <li <% if (active === "users_chgpswd") { %>class="active"<% } %>>Change Password</li>
+  </a>-->
 </ul>
 
 <li class="buffer"></li>
 
 <li>Docs</li>
 <ul>
-    <a href="/panel/docs/translate"><li <% if (active === "docs_translate") { %>class="active"<% } %>>Translate</li></a>
-    <a href="/panel/docs/weather"><li <% if (active === "docs_weather") { %>class="active"<% } %>>Weather</li></a>
-    <a href="/panel/docs/radar"><li <% if (active === "docs_radar") { %>class="active"<% } %>>Radar</li></a>
+  <a href="/panel/docs/translate">
+    <li <% if (active === "docs_translate") { %>class="active"<% } %>>Translate</li>
+  </a>
+  <a href="/panel/docs/weather">
+    <li <% if (active === "docs_weather") { %>class="active"<% } %>>Weather</li>
+  </a>
+  <a href="/panel/docs/radar">
+    <li <% if (active === "docs_radar") { %>class="active"<% } %>>Radar</li>
+  </a>
 </ul>
 
 <% if (admin) { %>
-    <li class="buffer"></li>
+  <li class="buffer"></li>
 
-    <li>Server</li>
-    <ul>
-        <a href="/panel/system"><li <% if (active === "system") { %>class="active"<% } %>>Control Panel</li></a>
-        <a href="/panel/users/manage"><li <% if (active === "users_manage") { %>class="active"<% } %>>Manage Users</li></a>
-    </ul>
+  <li>Server</li>
+  <ul>
+    <a href="/panel/system">
+      <li <% if (active === "system") { %>class="active"<% } %>>Control Panel</li>
+    </a>
+    <a href="/panel/users/manage">
+      <li <% if (active === "users_manage") { %>class="active"<% } %>>Manage Users</li>
+    </a>
+  </ul>
 <% } %>

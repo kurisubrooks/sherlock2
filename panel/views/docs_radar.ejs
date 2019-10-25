@@ -11,45 +11,45 @@
 
 <h3>Details</h3>
 <table>
-    <tr>
-        <td>Request Types</td>
-        <td>GET</td>
-    </tr>
-    <tr>
-        <td>Admin Only?</td>
-        <td>no</td>
-    </tr>
-    <tr>
-        <td>Token Required?</td>
-        <td>no</td>
-    </tr>
-    <tr>
-        <td>Rate Limiting?</td>
-        <td>no</td>
-    </tr>
+  <tr>
+    <td>Request Types</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td>Admin Only?</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>Token Required?</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>Rate Limiting?</td>
+    <td>no</td>
+  </tr>
 </table>
 
 <br>
 
 <h3>Params</h3>
 <table>
-    <tr>
-        <td>id</td>
-        <td>String, [ "sydney", "adelaide" ]</td>
-    </tr>
-    <tr>
-        <td>type</td>
-        <td>String, [ "static", "animated" ]</td>
-    </tr>
+  <tr>
+    <td>id</td>
+    <td>String, [ "sydney", "adelaide" ]</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>String, [ "static", "animated" ]</td>
+  </tr>
 </table>
 
 <br><hr>
 
 <h3>Example <small>(using request-promise)</small></h3>
 <pre><code class="hljs javascript">await request({
-    method: "GET",
-    uri: "https://api.kurisubrooks.com/api/radar",
-    encoding: null
+  method: "GET",
+  uri: "https://api.kurisubrooks.com/api/radar",
+  encoding: null
 });</code></pre>
 
 <br>
@@ -63,9 +63,10 @@
 <pre><code class="hljs json">Response Code: 400
 
 {
-    ok: false,
-    error: "Unknown Image Type"
+  ok: false,
+  error: "Unknown Image Type"
 }</code></pre>
+
 <blockquote>The provided value in the "type" field is not a valid image type</blockquote>
 
 <br>
@@ -73,9 +74,10 @@
 <pre><code class="hljs json">Response Code: 400
 
 {
-    ok: false,
-    error: "Unsupported Location"
+  ok: false,
+  error: "Unsupported Location"
 }</code></pre>
+
 <blockquote>The provided value in the "id" field is not a valid/supported location</blockquote>
 
 <br>
@@ -83,12 +85,11 @@
 <pre><code class="hljs json">Response Code: 500
 
 {
-    ok: false,
-    error: "Internal Server Error"
+  ok: false,
+  error: "Internal Server Error"
 }</code></pre>
+
 <blockquote>Something went wrong backend, this may occur if the weather data is corrupt. Try again later!</blockquote>
-
-
 
 <script src="/static/scripts/highlightjs/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>

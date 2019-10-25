@@ -9,7 +9,6 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
-
 <body>
   <div id="app" class="container">
     <div class="header">
@@ -20,20 +19,20 @@
     <div class="form">
       <form target="" id="form">
         <input
-        v-model="username"
-        id="username"
-        type="text"
-        placeholder="Username"
-        name="username"
-        required
+          v-model="username"
+          id="username"
+          type="text"
+          placeholder="Username"
+          name="username"
+          required
         />
         <input
-        v-model="password"
-        id="password"
-        type="password"
-        placeholder="Password"
-        name="password"
-        required
+          v-model="password"
+          id="password"
+          type="password"
+          placeholder="Password"
+          name="password"
+          required
         />
         <div class="submit">
           <input @click="handleSubmit" type="submit" value="Let's Go →" />
@@ -41,7 +40,7 @@
       </form>
     </div>
   </div>
-  
+
   <script>
     new Vue({
       el: "#app",
@@ -55,10 +54,12 @@
         handleSubmit: function(event) {
           event.preventDefault();
           var payload = { username: this.username, password: this.password };
+
           if (!this.username || !this.password) {
             this.errorMessage = "Please fill in all the fields";
             return (this.error = true);
           }
+
           axios.post("/api/login", payload).then(response => {
             if (response.data.ok) {
               window.location.replace("/panel/me");
