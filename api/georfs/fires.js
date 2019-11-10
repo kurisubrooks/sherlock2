@@ -38,17 +38,17 @@ const removeEvents = [
 ];
 
 const locations = {
-  'penrith': {
-    filter: require('./filters/penrith.json'),
-    center: ['-33.749', '150.712']
+  'local': {
+    filter: require('./filters/local.json'),
+    center: ['-33.74', '150.89']
   },
-  'canberra': {
-    filter: require('./filters/canberra.json'),
+  'emergency': {
+    filter: require('./filters/emergency.json'),
     center: ['-35.417', '149.072']
   },
   'all': {
     filter: require('./filters/all.json'),
-    center: ['-33.87', '151.20']
+    center: ['-33.87', '151.2']
   }
 };
 
@@ -65,7 +65,7 @@ class GeoRFS extends Endpoint {
       retriever: {
         name: 'rfs',
         format: 'json',
-        interval: 1,
+        interval: 2,
         url: 'https://www.rfs.nsw.gov.au/feeds/majorIncidents.json'
       }
     });
@@ -83,10 +83,12 @@ class GeoRFS extends Endpoint {
       return res.send(JSON.parse(store));
     }
 
-    if (!data.filter || data.filter === 'penrith') {
-      filters = locations.penrith;
-    } else if (data.filter === 'canberra') {
-      filters = locations.canberra;
+    console.log(data.filter);
+
+    if (!data.filter || data.filter === 'local') {
+      filters = locations.local;
+    } else if (data.filter === 'emergency') {
+      filters = locations.emergency;
     } else {
       filters = locations.all;
     }
@@ -114,6 +116,7 @@ class GeoRFS extends Endpoint {
               if (formatted) results.push(formatted); // eslint-disable-line max-depth
             }
           } catch(error) {
+            console.log(error);
             ++missing;
             continue;
           }
