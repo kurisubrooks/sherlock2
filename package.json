@@ -9,7 +9,7 @@
     "start": "node index"
   },
   "dependencies": {
-    "@turf/turf": "^5.1.6",
+    "@turf/turf": "^3.12.2",
     "bcrypt": "^3.0.6",
     "bluebird": "^3.7.0",
     "body-parser": "^1.19.0",

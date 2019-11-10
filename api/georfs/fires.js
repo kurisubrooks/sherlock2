@@ -83,8 +83,6 @@ class GeoRFS extends Endpoint {
       return res.send(JSON.parse(store));
     }
 
-    console.log(data.filter);
-
     if (!data.filter || data.filter === 'local') {
       filters = locations.local;
     } else if (data.filter === 'emergency') {
@@ -116,7 +114,7 @@ class GeoRFS extends Endpoint {
               if (formatted) results.push(formatted); // eslint-disable-line max-depth
             }
           } catch(error) {
-            console.log(error);
+            console.log(error.message);
             ++missing;
             continue;
           }
@@ -193,7 +191,9 @@ class GeoRFS extends Endpoint {
     }
 
     // if Level "Not Applicable" && Matches Blacklist, Remove
-    if (alertLevels.indexOf(properties.category) === 0 && removeEvents.includes(formatted.TYPE)) return false;
+    if (alertLevels.indexOf(properties.category) === 0 && removeEvents.includes(formatted.TYPE)) {
+      return false;
+    }
 
     // Format Data
     return {
@@ -204,15 +204,12 @@ class GeoRFS extends Endpoint {
       category: properties.category,
       location: formatted.LOCATION,
       status: formatted.STATUS,
+      updated: new Date(Date.parse(formatted.UPDATED)),
       size: Number(formatted.SIZE.replace(' ha', '')),
-      updated: {
-        unix: Date.parse(formatted.UPDATED),
-        timestamp: new Date(Date.parse(formatted.UPDATED))
-      },
       geojson: {
         type: feature.type,
         geometry: feature.geometry,
-        properties: { }
+        properties: {}
       }
     };
   }
