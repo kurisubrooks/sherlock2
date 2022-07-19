@@ -1,6 +1,6 @@
 const Endpoint = require('../../core/Endpoint');
 const request = require('request-promise');
-const GIF = require('gifencoder');
+const GIF = require('gif-encoder-2');
 const { createCanvas, Image } = require('canvas');
 const path = require('path');
 const fs = require('fs');
@@ -30,8 +30,19 @@ const list = {
     id: '001',
     type: 'radarzz',
     tz: 'Australia/Melbourne'
+  },
+  brisbane: {
+    id: '066',
+    type: 'radarz',
+    tz: 'Australia/Brisbane'
   }
 };
+
+// Terrain
+// https://data.weatherzone.com.au/maplayers/wz/terrain/terrain_radar_066_960x720.jpg
+
+// Place Names
+// https://data.weatherzone.com.au/maplayers/wz/locations/locations_radar_066_960x720.gif
 
 class Radar extends Endpoint {
   constructor() {
@@ -75,15 +86,15 @@ class Radar extends Endpoint {
         mlt: place.type,
         mlc: place.id,
         frames: frames,
-        md: '640x480',
-        radardimensions: '640x480',
+        md: '640x480', // 640x480, 960x720
+        radardimensions: '640x480', // 640x480, 960x720
         df: 'EEE HH:mm z',
         tz: place.tz
       }
     }, async(err, _, response) => {
       if (err) return this.handleError(err, res);
 
-      const encoder = new GIF(640, 480);
+      const encoder = new GIF(640, 480, 'neuquant', false, frames);
       const canvas = createCanvas(640, 480);
       const ctx = canvas.getContext('2d');
       const frame = new Image();
@@ -97,7 +108,7 @@ class Radar extends Endpoint {
         encoder.start();
         encoder.setRepeat(0);
         encoder.setDelay(220);
-        encoder.setQuality(100);
+        encoder.setQuality(1);
 
         let count = 0;
         const frames = { };
@@ -114,9 +125,10 @@ class Radar extends Endpoint {
               uri: item.image,
               encoding: null
             }, (error, response, body) => {
-              if (error) if (error) return this.handleError(error, res);
+              let errored = false;
+              if (error || response.statusCode !== 200) errored = true;
 
-              frames[id] = { radar: body, id: id, item: item, time: item.timestamp_string };
+              frames[id] = { radar: body, id: id, item: item, time: item.timestamp_string, errored };
 
               return resolve();
             });
@@ -129,7 +141,7 @@ class Radar extends Endpoint {
           frame.src = thisFrame.radar;
 
           ctx.drawImage(terrain, 0, 0);
-          ctx.drawImage(frame, 0, 0);
+          if (!thisFrame.errored) ctx.drawImage(frame, 0, 0);
           ctx.drawImage(locations, 0, 0);
 
           ctx.font = '16px sans-serif';
@@ -140,6 +152,12 @@ class Radar extends Endpoint {
 
           if (thisFrame.id === count) {
             encoder.setDelay(2250);
+          }
+
+          if (thisFrame.errored) {
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#FF0000';
+            ctx.fillText('Missing Frame', 640 / 2, 480 / 2);
           }
 
           encoder.addFrame(ctx);
