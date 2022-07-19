@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const bodyparser = require('body-parser');
 const session = require('express-session');
+const cors = require('cors');
 
 const keychain = require('../keychain.json');
 const Logger = require('./Util/Logger');
@@ -14,6 +15,7 @@ class RequestHandler {
     this.router = this.express.Router(); // eslint-disable-line new-cap
     this.server = app;
 
+    this.server.use(cors());
     this.server.use(bodyparser.json());
     this.server.use(bodyparser.urlencoded({ extended: true }));
     this.server.use(session({ resave: 1, saveUninitialized: 0, secret: keychain.session, maxAge: 168 * 60 * 60 * 1000 }));
@@ -87,7 +89,6 @@ class RequestHandler {
 
     this.log(true, ip, url, masked, user, method);
     res.set('X-Powered-By', 'Sherlock');
-    res.set('Access-Control-Allow-Origin', '*');
     return route.run(req, res, data);
   }
 
