@@ -24,7 +24,7 @@
     "gif-encoder-2": "^1.0.5",
     "gifencoder": "^1.0.6",
     "glob": "^7.1.4",
-    "moment-timezone": "^0.5.26",
+    "moment-timezone": "^0.5.35",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "sequelize": "^5.19.2",
