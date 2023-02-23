@@ -27,7 +27,7 @@
     "moment-timezone": "^0.5.26",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "sequelize": "^5.19.2",
+    "sequelize": "^6.28.2",
     "sqlite3": "^4.1.0",
     "to-markdown": "^3.0.3",
     "validator": "^13.7.0",
